@@ -1,1 +1,5 @@
+com/ecart/uiMain/Utils.class
+com/ecart/uiMain/Banners.class
+com/ecart/uiMain/TUI.class
 com/ecart/App.class
+com/ecart/gestorAplicacion/entites/Person.class
