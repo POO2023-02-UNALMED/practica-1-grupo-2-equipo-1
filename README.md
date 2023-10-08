@@ -14,6 +14,28 @@ por su cuenta otras tiendas. Nuestro modelo de negocios consiste en facilitar el
 (Order) y pagos opcionalmente fraccionables por cada orden (Payment). Por otro lado, los Admin de la aplicacion, pueden crear repartidores (Delivery) y administrar los recursos monetarios de la compañia.
 3. **Implementacion**: la clase abstracta Person es la clase padre de la que heredan User, Delivery y Admin y tienen sus propios metodos dinamicamente ligados. Cada uno tiene metodos para hacer sus funcionalidades (comprar, vender, etc). Todo se realiza mediante la TUI (Textual User Interface) que tiene varios metodos de con sobrecarga (Utils) y constantes en forma de un Enum para los banners (Banners). La mayoria de atributos de cada una de estas clases estan aislados a sus paquetes o a la misma clase, dependiendo del contexto de cada una.
 
+## 💻 Desarrollo
+
+Ecart utiliza Maven como herramiento de gestion del proyecto. Por tanto, es importante leer la siguiente informacion:
+
+### Directorios
+
+1. `src`: codigo fuente
+2. `target`: las clases pre-compiladas
+3. `bin`: el `.jar` final para producción
+
+### Comandos
+
+1. Probar el codigo
+```
+$ mvn -q compile exec:java
+```
+
+2. Compilar el `.jar`
+```
+$ mvn package -DskipTests
+```
+
 ## 🎨 Diseño
 
 El siguiente apartado contiene las clases (incluyendo sus atributos y metodos) y sus roles.
