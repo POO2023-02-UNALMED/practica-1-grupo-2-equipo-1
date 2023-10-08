@@ -4,9 +4,9 @@
 
 ## 📃 Descripcion
 
-ECart (Carrito Electronico) es una aplicacion de E-commerce para la compra y venta de productos creados por los usuarios. ECart permite convertir hobbies como Crochet,
-Origami, Dibujo, etc, en fuentes de ingresos rentable. Facilita la comercializacion de productos misceláneos ofreciendo hosting, ratings, exposicion y delivery rentable para los productos.
-Para tener una mejor compresion del producto, a continuacion se presenta un resumen desde 3 ambitos:
+ECart (Carrito Electronico) es una aplicacion de E-commerce para la compra y venta de productos creados por los usuarios. ECart permite convertir hobbies como Crochet, Origami, Dibujo, etc, en fuentes de ingresos rentable, facilitando la comercializacion de dichos productos misceláneos ofreciendo hosting, exposicion, menejo de tramites y delivery rentable.
+
+Para tener una mejor compresion del producto, a continuacion se presenta un resumen desde 3 ambitos fundamentales:
 
 1. Analisis: los usarios pueden crear "tiendas" (Store) virtuales de manera individual o conjunta, en las cuales pueden poner vender productos. Ademas, los usarios pueden ser recomendados y/o explorar
 por su cuenta otras tiendas y comprar productos. Nuestro modelo de negocios consiste en facilitar el transporte las mercancias. Nuestros Delivery's llegan a los hogares de los vendedores y entregan los paquetes a los destinatarios correspondientes.
