@@ -16,17 +16,29 @@ public class TUI {
 		// maps are abstracts, while HashMaps aren't
 		Map<String, Runnable> options = new HashMap<>();
 
-		options.put("Explore stores", () -> center("viewing stores", true));
-		options.put("Manage your stores", () -> center("manage your stores", true));
-		options.put("Managa your balance", () -> center("manage your balance", true));
-		// options.put("Update personal info", () -> center("showing menu to update
-		// personal info"));
+		
+		options.put("🛍️  Go shopping!", () -> center("viewing stores", true));
+		options.put("🏪 Manage your stores", () -> center("manage your stores", true));
+		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
+		options.put("👱 Profile settings", () -> center("showing menu to update personal info"));
 
-		Renderer.menu(Banners.LOGIN, options);
+		Renderer.menu(Banners.LOGIN, options, true, true);
+	}
+
+	/**
+	 * Generate dummy data.
+	 * This is for testing purposes only! while the persistence layer is baking...
+	 */
+	public static void dummyData() {
+		new User("q", "1");
 	}
 
 	/** Render main menu */
 	public static void menu() {
+
+		// dummy data. Don't delete (for now)
+		dummyData();
+
 		while (true) {
 
 			clear();
@@ -36,7 +48,7 @@ public class TUI {
 
 			print();
 			center("===== Empower Your Passion, Share Your Creations =====", true);
-			center("(Ctrl + C or Z to exit)", true);
+			center("(Ctrl + C to exit)", true);
 			print(2);
 
 			center("💁 Username: ", 11, false, true);
