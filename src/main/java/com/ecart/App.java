@@ -9,6 +9,7 @@ public class App {
 		if (System.console() != null) {
 			// executed before the main program exists (forcefully)
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				shutdown(false);
 			}));
 
 			menu();
