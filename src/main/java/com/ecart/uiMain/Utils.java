@@ -25,11 +25,13 @@ public class Utils {
 
 	/** Erase _totalLines_ amount of previous lines in screen */
 	public static void erase(int totalLines) {
-		// reference: https://www.quora.com/How-do-you-clear-a-line-from-a-Java-programs-output-screen
+		// reference:
+		// https://www.quora.com/How-do-you-clear-a-line-from-a-Java-programs-output-screen
 
 		for (int i = 0; i <= totalLines; i++) {
 			System.out.print("\033[2K\033[1G"); // del current line, move cursor to beginning
-			move(0); // move up
+			if (i != totalLines)
+				move(0); // move up, but if its the last line, stay put
 		}
 	}
 
@@ -55,7 +57,8 @@ public class Utils {
 
 	public static int averageLength(String[] str, boolean halve) {
 		float average = 0;
-		for (String line : str) average += line.length();
+		for (String line : str)
+			average += line.length();
 
 		return (int) ((average / str.length) / (halve ? 2 : 1));
 	}
@@ -63,6 +66,14 @@ public class Utils {
 	/** Print to STDOUT */
 	public static void print(String str, boolean nl) {
 		System.out.print(str + (nl ? "\n" : ""));
+	}
+
+	public static void centerBanner(Banners banner) {
+		int averageLength = averageLength(banner.split(), true);
+
+		for (String line : banner.split()) {
+			center(line, averageLength);
+		}
 	}
 
 	public static void center(String str) {
