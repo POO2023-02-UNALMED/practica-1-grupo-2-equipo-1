@@ -3,11 +3,14 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.entites.*;
 import java.util.Map;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import com.github.lalyos.jfiglet.FigletFont;
 
 /** Textual User Interface */
 public class TUI {
@@ -16,7 +19,7 @@ public class TUI {
 
 	public static void adminMenu() {}
 
-	public static void userMenu() {
+	public static void userMenu(User user) {
 		// maps are abstracts, while HashMaps aren't
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
 		
@@ -26,7 +29,24 @@ public class TUI {
 			LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 
 			submenu.put("🖼️  Select store", () -> center("viewing stores", true));
-			submenu.put("🗃️  Create store", () -> center("viewing stores", true));
+			submenu.put("🗃️  Create store", () -> {
+
+				Renderer.figletBanner("create  store");
+
+				ArrayList<String> questions = new ArrayList<>(List.of(
+					"💁 Store name",
+					"🔒 Passcode",
+					"📄 Description"
+				));
+				ArrayList<String> r = Renderer.questions(questions, 20);
+				boolean ok = user.createStore(r.get(0), r.get(1), r.get(2));
+
+				print(2);
+				if (ok) center("Created store successfully!", true);
+				else center("Failed to craete store", true);
+				sleep(2);
+
+			});
 			submenu.put("🥋 Join store", () -> center("viewing stores", true));
 
 			Renderer.menu(Banners.STORES, submenu, true);
@@ -64,9 +84,9 @@ public class TUI {
 			print(2);
 
 			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
-			ArrayList<String> results = Renderer.questions(questions, 6);
-			String username = results.get(0);
-			String password = results.get(1);
+			ArrayList<String> r = Renderer.questions(questions, 6);
+			String username = r.get(0);
+			String password = r.get(1);
 
 			Person person = User.getByCredentials(username, password);
 			if (person == null) person = Admin.getByCredentials(username, password);
@@ -78,7 +98,7 @@ public class TUI {
 				center("Welcome back " + username + "!", true);
 				sleep(2);
 
-				if (person instanceof User) userMenu();
+				if (person instanceof User) userMenu((User) person);
 				else if (person instanceof Admin) adminMenu();
 
 			} else {
@@ -101,10 +121,10 @@ public class TUI {
 					}
 
 					print();
-					new User(username, password);
+					person = new User(username, password);
 					center("✅ Your account was created successfully!", true, false);
 					sleep(2);
-					userMenu();
+					userMenu((User) person);
 				} else {
 					center("🫂 Alright, see you later", true, false);
 					sleep(2);

@@ -18,6 +18,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+	<dependency>
+		<groupId>com.github.lalyos</groupId>
+		<artifactId>jfiglet</artifactId>
+		<version>0.0.9</version>
+	</dependency>
   </dependencies>
 	<build>
 		 <plugins>
