@@ -3,8 +3,10 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.entites.*;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /** Textual User Interface */
@@ -12,13 +14,23 @@ public class TUI {
 
 	private static Scanner scnr = new Scanner(System.in);
 
+	public static void adminMenu() {}
+
 	public static void userMenu() {
 		// maps are abstracts, while HashMaps aren't
-		Map<String, Runnable> options = new HashMap<>();
-
+		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
+		
 		
 		options.put("🛍️  Go shopping!", () -> center("viewing stores", true));
-		options.put("🏪 Manage your stores", () -> center("manage your stores", true));
+		options.put("🏪 Manage your stores", () -> {
+			LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
+
+			submenu.put("🖼️  Select store", () -> center("viewing stores", true));
+			submenu.put("🗃️  Create store", () -> center("viewing stores", true));
+			submenu.put("🥋 Join store", () -> center("viewing stores", true));
+
+			Renderer.menu(Banners.STORES, submenu, true);
+		});
 		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> center("showing menu to update personal info"));
 
@@ -51,49 +63,24 @@ public class TUI {
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
-			center("💁 Username: ", 11, false, true);
-			center("🔒 Password: ", 11, false, false);
+			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
+			ArrayList<String> results = Renderer.questions(questions, 6);
+			String username = results.get(0);
+			String password = results.get(1);
 
-			move(0);
-			erase();
+			Person person = User.getByCredentials(username, password);
+			if (person == null) person = Admin.getByCredentials(username, password);
 
-			center("💁 Username: ", 11, false, false);
-			String username = scnr.nextLine();
-
-			center("🔒 Password: ", 11, false, false);
-			String password = scnr.nextLine();
-
-			String ctype = ""; // if it passed, store the class type
-
-			for (Person e : Person.getInstances()) {
-				if (e.getUsername().equals(username)) {
-					if (e.getPassword().equals(password)) {
-						String classname = e.getClass().getName();
-						ctype = classname.substring(classname.lastIndexOf(".") + 1);
-					}
-					break;
-				}
-			}
 			print();
 
 			// show correct menu or prompt potential user to create an account
-			if (!ctype.isEmpty()) {
+			if (person != null) {
 				center("Welcome back " + username + "!", true);
 				sleep(2);
 
-				switch (ctype) {
-					case "User":
-						userMenu();
-						break;
-					case "Admin":
-						System.out.println("Processing for Admin");
-						break;
-					case "Delivery":
-						System.out.println("Processing for Delivery");
-						break;
-					default:
-						break;
-				}
+				if (person instanceof User) userMenu();
+				else if (person instanceof Admin) adminMenu();
+
 			} else {
 				center("Hmm looks like you don't have an account. Would you like to create one?", true);
 				center("[yes|no] 👉 ", 2, true, false);
@@ -103,7 +90,7 @@ public class TUI {
 
 				if (input.equals("yes")) {
 					while (true) {
-						if (Person.getUserNames().contains(username)) {
+						if (User.getUsernames().contains(username)) {
 							center("Your desired username is already being used", true);
 							center("New username: ", 2, true, false);
 							username = scnr.nextLine();
