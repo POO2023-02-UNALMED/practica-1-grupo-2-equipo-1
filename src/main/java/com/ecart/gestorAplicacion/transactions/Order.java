@@ -1,12 +1,13 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.entites.Delivery;
 import com.ecart.gestorAplicacion.transactions.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Order {
+public class Order {
     private List<Product> selectedProducts;
     private int points;
 
@@ -44,4 +45,17 @@ class Order {
     public int getPointsEarned() {
         return points;
     }
+
+    public void payment() {
+        Payment paymentShoppingCart = new Payment(calculateTotal());
+    }
+
+    public void installmentPayment(int numberOfInstallments) {
+        Payment installPaymentShoppingcart = new Payment(calculateTotal(), true, numberOfInstallments);
+    }
+
+    public void sendOrder(Delivery delivery) {
+        delivery.receiveOrder(this);
+    }
 }
+
