@@ -56,6 +56,7 @@ public class Product {
         return availableProducts;
     }
 
+
     public static void createRandomProducts() {
         String[] productNames = {"Product A", "Product B", "Product C", "Product D", "Product E", "Product F", "Product G", "Product H", "Product I", "Product J", "Product K", "Product L", "Product M", "Product N", "Product O"};
         double minPrice = 10.0;
@@ -65,6 +66,7 @@ public class Product {
         for (int i = 0; i < 15; i++) {
             String name = productNames[i];
             double price = minPrice + (maxPrice - minPrice) * new Random().nextDouble();
+            price = Math.round(price * 100.0) / 100.0; // Redondear a dos decimales
             String description = descriptions[i];
             int quantity = new Random().nextInt(50); // Cantidad aleatoria
 

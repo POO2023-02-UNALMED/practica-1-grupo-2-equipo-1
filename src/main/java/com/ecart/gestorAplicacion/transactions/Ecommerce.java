@@ -37,12 +37,17 @@ public class Ecommerce {
 
             Product selectedProduct = productList.get(productNumber - 1);
 
+            // Mostrar la descripción del producto seleccionado.
+            System.out.println("Descripción: " + selectedProduct.getDescription());
+
             System.out.println("¿Cuántos productos desea comprar?");
             int cantidad = Integer.parseInt(scanner.nextLine());
-
-            shoppingCart.addProduct(selectedProduct.getName(), selectedProduct.getPrice(), cantidad);
-            order.addProduct(selectedProduct.getName(), selectedProduct.getPrice(), cantidad);
-
+            // Funcionalidad incorrecta
+            // Corregir añadir el producto al array de productos disponibles
+/*
+            shoppingCart.addProduct(selectedProduct, cantidad);
+            order.addProduct(selectedProduct, cantidad);
+*/
             System.out.println("¿Desea agregar otro producto? (s/n)");
             String respuesta = scanner.nextLine();
 
@@ -63,15 +68,15 @@ public class Ecommerce {
         String respuestaPuntos = scanner.nextLine();
 
         if (respuestaPuntos.equals("s")) {
-            order.getPoints();
+            order.getPoints(totalCompra);
         }
 
-        System.out.println("¿Cómo desea pagar? (efectivo/tarjeta)");
+        System.out.println("¿Cómo desea pagar?\n1. Efectivo\n2. Tarjeta");
         String tipoPago = scanner.nextLine();
 
-        if (tipoPago.equals("efectivo")) {
+        if (tipoPago.equals("1")) {
             handleCashPayment(totalCompra);
-        } else if (tipoPago.equals("tarjeta")) {
+        } else if (tipoPago.equals("2")) {
             handleCardPayment();
         } else {
             System.out.println("Opción inválida. Por favor, seleccione efectivo o tarjeta.");

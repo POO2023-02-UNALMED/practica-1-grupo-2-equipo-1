@@ -1,37 +1,47 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.transactions.Product;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class Order {
-    private ArrayList<Product> products;
+    private List<Product> selectedProducts;
+    private int points;
 
     public Order() {
-        products = new ArrayList<>();
+        selectedProducts = new ArrayList<>();
     }
 
-    public void addProduct(String name, double price, int quantity) {
-        //Product product = new Product(name, price, quantity);
-        //products.add(product);
+    public void addProduct(Product product, int quantity) {
+        // Agregar el producto con la cantidad al pedido
+        Product orderProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity);
+        selectedProducts.add(orderProduct);
+    }
+
+    public List<Product> getSelectedProducts() {
+        return selectedProducts;
     }
 
     public double calculateTotal() {
         double total = 0;
 
-        for (Product product : products) {
+        for (Product product : selectedProducts) {
             total += product.getPrice() * product.getQuantity();
         }
 
         return total;
     }
 
-    public void getPoints() {
-        Scanner scanner = new Scanner(System.in);
+    public void getPoints(double totalCompra) {
+        double factorConversion = 4198.48;
+        int puntos = (int) (totalCompra * factorConversion / 700);
 
-        System.out.println("¿Cuántos puntos desea acumular?");
-        int puntos = Integer.parseInt(scanner.nextLine());
+        System.out.println("¡Felicitaciones! Ha ganado " + puntos + " puntos con esta compra.");
+    }
 
-        // Lógica para acumular puntos
+    public int getPointsEarned() {
+        return points;
     }
 }
-
