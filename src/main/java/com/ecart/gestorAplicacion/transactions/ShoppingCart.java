@@ -30,18 +30,5 @@ public class ShoppingCart {
 
         return total;
     }
-
-    public void payment() {
-        Payment paymentShoppingCart = new Payment(calculateTotal());
-
-    }
-
-    public void installmentPayment(int numberOfInstallments) {
-        Payment installPaymentShoppingcart = new Payment(calculateTotal(), true, numberOfInstallments);
-    }
-
-    public void sendShoppingCart(Delivery delivery) {
-        delivery.receiveShoppingCart(this);
-    }
 }
 
