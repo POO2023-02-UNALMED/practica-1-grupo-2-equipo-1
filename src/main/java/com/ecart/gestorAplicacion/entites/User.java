@@ -3,7 +3,6 @@ package com.ecart.gestorAplicacion.entites;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.ecart.gestorAplicacion.ID;
 import com.ecart.gestorAplicacion.merchandise.Store;
 
 public class User extends Person {
@@ -52,9 +51,12 @@ public class User extends Person {
 		User.instances = instances;
 	}
 
-	public void createStore(String name, String passcode) {
-		Store store = new Store(name, passcode);
+	public boolean createStore(String name, String passcode, String description) {
+		Store store = new Store(name, passcode, description);
 		stores.add(store);
+		store.addMember(this);
+
+		return true;
 	}
 
 	public void joinStore() {

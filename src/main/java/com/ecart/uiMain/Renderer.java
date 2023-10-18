@@ -2,13 +2,15 @@ package com.ecart.uiMain;
 
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.merchandise.Tags;
+import com.github.lalyos.jfiglet.FigletFont;
 import com.ecart.App;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 
 class Renderer {
 
@@ -25,8 +27,33 @@ class Renderer {
 	} // multiple stacked
 
 	private static void errorMenu() {
-		center("Please pick one of the option");
+		center("Please pick one of the options", true);
 		sleep(2);
+	}
+
+	public static void figletBanner(String banner) {
+		figletBanner(banner, 15);
+	}
+
+	public static void figletBanner(String banner, int vcentr) {
+		figletBanner(banner, vcentr, 3);
+	}
+
+	public static void figletBanner(String banner, int vcentr, int postSpaces) {
+		vcenter(vcentr);
+
+		try {
+			banner = FigletFont.convertOneLine(banner);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int averageLength = averageLength(banner.split("\n"), true);
+
+		for (String line : banner.split("\n"))
+			center(line, averageLength);
+
+		print(postSpaces);
 	}
 
 	public static String prompt() {
@@ -99,7 +126,7 @@ class Renderer {
 
 			for (int i = 0; i < orderedOptions.size(); i++) {
 				Map.Entry<String, Runnable> entry = orderedOptions.get(i);
-				print(" ".repeat(biggest) + "(" + i + ") " + entry.getKey());
+				print(" ".repeat(biggest) + "(" + (i + 1) + ") " + entry.getKey());
 			}
 
 			if (exit)
@@ -122,12 +149,11 @@ class Renderer {
 					App.shutdown(true);
 				else
 					errorMenu();
-			} else if (Integer.valueOf(input) <= orderedOptions.size()) {
-				Map.Entry<String, Runnable> entry = orderedOptions.get(Integer.valueOf(input));
+			} else if ((Integer.valueOf(input) - 1) <= orderedOptions.size()) {
+				Map.Entry<String, Runnable> entry = orderedOptions.get(Integer.valueOf(input) - 1);
 				Runnable fn = entry.getValue();
 				clear();
 				fn.run();
-				sleep(1); // testing
 			} else {
 				errorMenu();
 			}

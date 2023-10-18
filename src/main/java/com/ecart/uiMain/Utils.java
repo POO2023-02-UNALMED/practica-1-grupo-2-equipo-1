@@ -71,9 +71,8 @@ public class Utils {
 	public static void centerBanner(Banners banner) {
 		int averageLength = averageLength(banner.split(), true);
 
-		for (String line : banner.split()) {
+		for (String line : banner.split())
 			center(line, averageLength);
-		}
 	}
 
 	public static void center(String str) {
