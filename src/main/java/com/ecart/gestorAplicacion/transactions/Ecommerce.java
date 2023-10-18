@@ -1,33 +1,43 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Ecommerce {
     private String cedula;
     private ShoppingCart shoppingCart;
     private Order order;
+    private List<Product> productList;
 
     public Ecommerce(String cedula) {
         this.cedula = validateCedula(cedula);
         this.shoppingCart = new ShoppingCart();
         this.order = new Order();
+        this.productList = createProductList(); // Crea una lista de productos aquí.
     }
 
     public void runShoppingProcess() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("¿Qué producto desea comprar?");
-            String producto = scanner.nextLine();
+            displayProductList(); // Muestra la lista de productos.
 
-            System.out.println("¿Cuál es el precio del producto?");
-            double precio = Double.parseDouble(scanner.nextLine());
+            System.out.println("¿Qué producto desea comprar? (Ingrese el número del producto)");
+            int productNumber = Integer.parseInt(scanner.nextLine());
+
+            if (productNumber < 1 || productNumber > productList.size()) {
+                System.out.println("Número de producto inválido. Por favor, elija un número válido.");
+                continue;
+            }
+
+            Product selectedProduct = productList.get(productNumber - 1);
 
             System.out.println("¿Cuántos productos desea comprar?");
             int cantidad = Integer.parseInt(scanner.nextLine());
 
-            shoppingCart.addProduct(producto, precio, cantidad);
-            order.addProduct(producto, precio, cantidad);
+            shoppingCart.addProduct(selectedProduct.getName(), selectedProduct.getPrice(), cantidad);
+            order.addProduct(selectedProduct.getName(), selectedProduct.getPrice(), cantidad);
 
             System.out.println("¿Desea agregar otro producto? (s/n)");
             String respuesta = scanner.nextLine();
@@ -61,6 +71,14 @@ public class Ecommerce {
             handleCardPayment();
         } else {
             System.out.println("Opción inválida. Por favor, seleccione efectivo o tarjeta.");
+        }
+    }
+
+    private void displayProductList() {
+        System.out.println("Lista de Productos:");
+        for (int i = 0; i < productList.size(); i++) {
+            Product product = productList.get(i);
+            System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getPrice());
         }
     }
 
@@ -98,13 +116,22 @@ public class Ecommerce {
             if (cedula.matches("\\d{8,}")) {
                 return cedula;
             }
-            if(cedula.matches(".*[a-zA-Z].*")){
-                System.out.println("La cédula no puede contener letras.\nPor favor, ingrese su cédula nuevamente:");
-            } else {
+            if (cedula.matches(".*[a-zA-Z].*")){
+                System.out.println("La cédula no debe contener letras.\nPor favor, ingrese su cédula nuevamente:");
+            }
+            else {
                 System.out.println("La cédula debe contener al menos 8 números.\nPor favor, ingrese su cédula nuevamente:");
             }
             cedula = scanner.nextLine();
         }
+    }
+
+    private List<Product> createProductList() {
+        List<Product> products = new ArrayList<>();
+        products.add(new Product("Producto A", 10.0, 0));
+        products.add(new Product("Producto B", 15.0, 5));
+        products.add(new Product("Producto C", 20.0, 3));
+        return products;
     }
 
     public static void main(String[] args) {
@@ -118,3 +145,4 @@ public class Ecommerce {
         ecommerce.runShoppingProcess();
     }
 }
+
