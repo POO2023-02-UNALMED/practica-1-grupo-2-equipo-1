@@ -8,20 +8,24 @@ public class Ecommerce {
     private String cedula;
     private ShoppingCart shoppingCart;
     private Order order;
-    private List<Product> productList;
 
     public Ecommerce(String cedula) {
         this.cedula = validateCedula(cedula);
         this.shoppingCart = new ShoppingCart();
         this.order = new Order();
-        this.productList = createProductList(); // Crea una lista de productos aquí.
     }
 
     public void runShoppingProcess() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            displayProductList(); // Muestra la lista de productos.
+            List<Product> productList = Product.getAvailableProducts();
+
+            System.out.println("Lista de Productos Disponibles:");
+            for (int i = 0; i < productList.size(); i++) {
+                Product product = productList.get(i);
+                System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getPrice());
+            }
 
             System.out.println("¿Qué producto desea comprar? (Ingrese el número del producto)");
             int productNumber = Integer.parseInt(scanner.nextLine());
@@ -74,13 +78,6 @@ public class Ecommerce {
         }
     }
 
-    private void displayProductList() {
-        System.out.println("Lista de Productos:");
-        for (int i = 0; i < productList.size(); i++) {
-            Product product = productList.get(i);
-            System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getPrice());
-        }
-    }
 
     private void handleCashPayment(double totalCompra) {
         Scanner scanner = new Scanner(System.in);
@@ -125,7 +122,7 @@ public class Ecommerce {
             cedula = scanner.nextLine();
         }
     }
-
+/*
     private List<Product> createProductList() {
         List<Product> products = new ArrayList<>();
         products.add(new Product("Producto A", 10.0, 0));
@@ -133,7 +130,7 @@ public class Ecommerce {
         products.add(new Product("Producto C", 20.0, 3));
         return products;
     }
-
+*/
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

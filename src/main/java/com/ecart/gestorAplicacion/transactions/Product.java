@@ -1,14 +1,24 @@
 package com.ecart.gestorAplicacion.transactions;
 
-class Product {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Product {
     private String name;
     private double price;
     private int quantity;
+    private double discount;
 
-    public Product(String name, double price, int quantity) {
+    // Lista estática de productos disponibles
+    private static List<Product> availableProducts = new ArrayList<>();
+
+    public Product(String name, double price, int quantity, double discount) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.discount = discount;
+        // Agregar el producto a la lista de productos disponibles al crear una instancia.
+        availableProducts.add(this);
     }
 
     public String getName() {
@@ -34,5 +44,19 @@ class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    // Obtener la lista de productos disponibles
+    public static List<Product> getAvailableProducts() {
+        return availableProducts;
+    }
 }
+
 
