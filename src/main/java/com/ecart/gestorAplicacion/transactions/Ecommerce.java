@@ -3,14 +3,18 @@ package com.ecart.gestorAplicacion.transactions;
 import java.util.Scanner;
 
 public class Ecommerce {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ShoppingCart shoppingCart = new ShoppingCart();
-        Order order = new Order();
+    private String cedula;
+    private ShoppingCart shoppingCart;
+    private Order order;
 
-        System.out.println("Bienvenido a la tienda en línea.");
-        System.out.println("Por favor, ingrese su cédula:");
-        String cedula = scanner.nextLine();
+    public Ecommerce(String cedula) {
+        this.cedula = validateCedula(cedula);
+        this.shoppingCart = new ShoppingCart();
+        this.order = new Order();
+    }
+
+    public void runShoppingProcess() {
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("¿Qué producto desea comprar?");
@@ -60,7 +64,7 @@ public class Ecommerce {
         }
     }
 
-    private static void handleCashPayment(double totalCompra) {
+    private void handleCashPayment(double totalCompra) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Por favor, ingrese el valor a pagar:");
         double valorPago = Double.parseDouble(scanner.nextLine());
@@ -74,7 +78,7 @@ public class Ecommerce {
         System.out.println("Gracias por su compra. Su cambio es: " + cambio);
     }
 
-    private static void handleCardPayment() {
+    private void handleCardPayment() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Por favor, ingrese el número de tarjeta:");
         String numeroTarjeta = scanner.nextLine();
@@ -87,5 +91,30 @@ public class Ecommerce {
 
         System.out.println("Gracias por su compra.");
     }
-}
 
+    private String validateCedula(String cedula) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            if (cedula.matches("\\d{8,}")) {
+                return cedula;
+            }
+            if(cedula.matches(".*[a-zA-Z].*")){
+                System.out.println("La cédula no puede contener letras.\nPor favor, ingrese su cédula nuevamente:");
+            } else {
+                System.out.println("La cédula debe contener al menos 8 números.\nPor favor, ingrese su cédula nuevamente:");
+            }
+            cedula = scanner.nextLine();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bienvenido a la tienda en línea.");
+        System.out.println("Por favor, ingrese su cédula:");
+        String cedula = scanner.nextLine();
+
+        Ecommerce ecommerce = new Ecommerce(cedula);
+        ecommerce.runShoppingProcess();
+    }
+}
