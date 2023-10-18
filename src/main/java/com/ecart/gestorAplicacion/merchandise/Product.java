@@ -67,7 +67,7 @@ class Product {
 	// 	customerReviews.add(review);
 	// }
 
-	// public List<String> getCustomerReviews() {
+	// public List<String>< getCustomerReviews() {
 	// 	return customerReviews;
 	// }
 
