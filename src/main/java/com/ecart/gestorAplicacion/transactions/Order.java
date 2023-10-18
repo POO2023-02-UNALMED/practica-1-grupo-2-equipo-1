@@ -1,16 +1,14 @@
 package com.ecart.gestorAplicacion.transactions;
 
-import com.ecart.gestorAplicacion.transactions.Product;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 class Order {
     private List<Product> selectedProducts;
     private int points;
 
     public Order() {
+
         selectedProducts = new ArrayList<>();
     }
 
@@ -31,17 +29,40 @@ class Order {
             total += product.getPrice() * product.getQuantity();
         }
 
+        //double factorConversion = 4198.48;
+
         return total;
     }
 
-    public void getPoints(double totalCompra) {
-        double factorConversion = 4198.48;
-        int puntos = (int) (totalCompra * factorConversion / 700);
+    public String getPoints(double totalCompra) {
 
-        System.out.println("¡Felicitaciones! Ha ganado " + puntos + " puntos con esta compra.");
+        int puntos = (int) (totalCompra / 700);
+/*
+        //convertir de manera auxiliar
+        String puntoString = Integer.toString(puntos);
+        int longitud = puntoString.length();
+*/
+        String message = "¡Felicitaciones! Ha ganado " + puntos + " puntos con esta compra.";
+        int messageLength = message.length();
+
+
+        int cellWidth = messageLength +4;  // Agregar espacio para los bordes y espacios adicionales
+
+        // Línea superior e inferior de la celda
+
+        String border = "+" + "-".repeat(cellWidth) + "+";
+
+
+
+        // Ajustar el mensaje al ancho de la celda y centrarlo
+        int padding = (cellWidth - messageLength) / 2;
+        String formattedMessage = "|" + " ".repeat(padding) + message + " ".repeat(padding) + "|";
+
+        return border + "\n" + formattedMessage + "\n" + border;
     }
 
-    public int getPointsEarned() {
+
+    public int getPoints() {
         return points;
     }
 }
