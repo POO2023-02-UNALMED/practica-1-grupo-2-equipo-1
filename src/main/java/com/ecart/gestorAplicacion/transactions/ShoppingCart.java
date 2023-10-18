@@ -1,23 +1,28 @@
 package com.ecart.gestorAplicacion.transactions;
 
 import java.util.ArrayList;
+import java.util.List;
 
-class ShoppingCart {
-    private ArrayList<Product> products;
+public class ShoppingCart {
+    private List<Product> cartItems;
 
     public ShoppingCart() {
-        products = new ArrayList<>();
+        cartItems = new ArrayList<>();
     }
 
-    public void addProduct(String name, double price, int quantity) {
-        //Product product = new Product(name, price);
-        //products.add(product);
+    public void addProduct(Product product, int quantity) {
+        Product cartProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity);
+        cartItems.add(cartProduct);
+    }
+
+    public List<Product> getCartItems() {
+        return cartItems;
     }
 
     public double calculateTotal() {
         double total = 0;
 
-        for (Product product : products) {
+        for (Product product : cartItems) {
             total += product.getPrice() * product.getQuantity();
         }
 
