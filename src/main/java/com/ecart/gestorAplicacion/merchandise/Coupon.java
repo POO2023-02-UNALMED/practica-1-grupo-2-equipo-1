@@ -1,3 +1,5 @@
 package com.ecart.gestorAplicacion.merchandise;
 
-public class Coupon {}
+public class Coupon {
+
+}
