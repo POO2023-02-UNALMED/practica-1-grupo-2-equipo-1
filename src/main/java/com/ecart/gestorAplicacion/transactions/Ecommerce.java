@@ -138,6 +138,8 @@ public class Ecommerce {
         System.out.println("Por favor, ingrese su cédula:");
         String cedula = scanner.nextLine();
 
+        Product.createRandomProducts();
+
         Ecommerce ecommerce = new Ecommerce(cedula);
         ecommerce.runShoppingProcess();
     }

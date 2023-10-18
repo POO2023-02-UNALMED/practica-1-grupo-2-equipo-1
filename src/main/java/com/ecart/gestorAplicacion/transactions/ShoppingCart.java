@@ -10,8 +10,8 @@ class ShoppingCart {
     }
 
     public void addProduct(String name, double price, int quantity) {
-        Product product = new Product(name, price, quantity);
-        products.add(product);
+        //Product product = new Product(name, price);
+        //products.add(product);
     }
 
     public double calculateTotal() {
