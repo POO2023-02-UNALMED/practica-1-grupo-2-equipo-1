@@ -2,6 +2,8 @@ package com.ecart.uiMain;
 
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.entites.*;
+import com.ecart.gestorAplicacion.meta.Retval;
+
 import java.util.Map;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class TUI {
 			LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 
 			submenu.put("🖼️  Select store", () -> center("viewing stores", true));
+
 			submenu.put("🗃️  Create store", () -> {
 
 				Renderer.figletBanner("create  store");
@@ -39,15 +42,27 @@ public class TUI {
 					"📄 Description"
 				));
 				ArrayList<String> r = Renderer.questions(questions, 20);
-				boolean ok = user.createStore(r.get(0), r.get(1), r.get(2));
+				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2));
 
 				print(2);
-				if (ok) center("Created store successfully!", true);
-				else center("Failed to craete store", true);
+				center(retval.getMessage(), true);
 				sleep(2);
-
 			});
-			submenu.put("🥋 Join store", () -> center("viewing stores", true));
+
+			submenu.put("🥋 Join store", () -> {
+				Renderer.figletBanner("join  store");
+
+				ArrayList<String> questions = new ArrayList<>(List.of(
+					"💁 Store name",
+					"🔒 Passcode"
+				));
+				ArrayList<String> r = Renderer.questions(questions, 20);
+				Retval retval = user.addStore(r.get(0), r.get(1));
+
+				print(2);
+				center(retval.getMessage(), true);
+				sleep(2);
+			});
 
 			Renderer.menu(Banners.STORES, submenu, true);
 		});
@@ -88,8 +103,9 @@ public class TUI {
 			String username = r.get(0);
 			String password = r.get(1);
 
-			Person person = User.getByCredentials(username, password);
-			if (person == null) person = Admin.getByCredentials(username, password);
+			Person person = User.validate(username, password);
+			// TODO: rework Admin too
+			// if (person == null) person = Admin.validate(username, password);
 
 			print();
 
@@ -110,7 +126,7 @@ public class TUI {
 
 				if (input.equals("yes")) {
 					while (true) {
-						if (User.getUsernames().contains(username)) {
+						if (User.validate(username) != null) {
 							center("Your desired username is already being used", true);
 							center("New username: ", 2, true, false);
 							username = scnr.nextLine();
