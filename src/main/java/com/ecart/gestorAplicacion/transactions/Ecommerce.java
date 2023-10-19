@@ -60,6 +60,11 @@ public class Ecommerce {
         double totalDescuentos = shoppingCart.calculateTotal() - totalCompra;
         double iva = totalCompra * 0.19;
 
+        // Generar la factura de la compra
+        String factura = order.generateInvoice(iva, totalDescuentos);
+        // Imprimir la factura
+        System.out.println(factura);
+
         System.out.println("El total de la compra es: " + totalCompra);
         System.out.println("El total de descuentos es: " + totalDescuentos);
         System.out.println("El IVA es: " + iva);
