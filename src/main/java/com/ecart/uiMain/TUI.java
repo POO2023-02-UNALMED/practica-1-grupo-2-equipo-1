@@ -104,13 +104,13 @@ public class TUI {
 
 			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
 			// int numCols = tags.length;
-			// // int numCols = 2;
-			//
+			// int numCols = 2;
+
 			// System.out.println(Renderer.minBoxSize(Tags.PHOTOGRAPHY, "sys name: "));
 			// System.out.println(Renderer.minBoxSize(Tags.PLUSHIES, "sys name: "));
-			//
+
 			// try {
-			// 	Renderer.renderTiledPattern(tags, numCols, "sys name: ");
+			// 	Renderer.renderTiledPattern(tags, numCols, "tag: ");
 			// } catch (Exception e) {
 			// 	System.err.println("An error occurred: " + e.getMessage());
 			// }
