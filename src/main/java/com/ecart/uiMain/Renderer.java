@@ -160,40 +160,13 @@ class Renderer {
 				line.append(border + " ".repeat(padding[0]) + subscript + tag.name() + " ".repeat(padding[1]) + border);
 				line.append("  ");
 
-				// line.append(border + marker.repeat(mbs) + border);
-				// line.append("  ");
-
 				if (counter == numCols)
 					break;
 				counter++;
 			}
 		}
 
-
 		return line.toString();
-
-		// StringBuilder line = new StringBuilder();
-		// int counter = 1;
-		// for (Tags tag : tags) {
-		// // very hacky, not to happy with the implementation
-		// int addi = 1;
-		// int subi = (subscript.length() % 2 != 0 ? 1 : 0);
-		//
-		// int comparer = biggestStringSize(tag.split()) + subscript.length() +
-		// tag.name().length();
-		// if (comparer % 2 == 0) addi = 3;
-		// else if (comparer % 5 == 0) addi = 2;
-		//
-		// // if(subscript.length() % 2 != 0) addi = addi + 2;
-		//
-		// line.append(border + marker.repeat(minBoxSize(tag, subscript) + addi) +
-		// border + " ");
-		// if (counter == numCols)
-		// break;
-		// counter++;
-		// }
-		// print();
-		// return line.toString();
 	}
 
 	public static void renderTiledPattern(Tags[] tags, int numCols, String subscript) {
@@ -201,8 +174,6 @@ class Renderer {
 		String horizontalLine = generateHorizontalLine(tags, numCols, subscript, "-", "+");
 		String horizontalSpaces = generateHorizontalLine(tags, numCols, subscript, " ", "|");
 		String bottomText = generateHorizontalLine(tags, numCols, subscript, " ", "|", true);
-		// String horizontalSpaces = generateHorizontalLine(tags, numCols, subscript, "
-		// // ", "|");
 
 		System.out.println(horizontalLine);
 		for (int row = 0; row < linesCount; row++) {
