@@ -2,6 +2,7 @@ package com.ecart.uiMain;
 
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.entites.*;
+import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 
 import java.util.Map;
@@ -19,28 +20,30 @@ public class TUI {
 
 	private static Scanner scnr = new Scanner(System.in);
 
-	public static void adminMenu() {}
+	public static void adminMenu() {
+	}
 
 	public static void userMenu(User user) {
 		// maps are abstracts, while HashMaps aren't
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
-		
-		
+
 		options.put("🛍️  Go shopping!", () -> center("viewing stores", true));
 		options.put("🏪 Manage your stores", () -> {
 			LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 
-			submenu.put("🖼️  Select store", () -> center("viewing stores", true));
+			submenu.put("🖼️  View your store", () -> {
+				Renderer.figletBanner("your  stores");
+				sleep(3);
+			});
 
 			submenu.put("🗃️  Create store", () -> {
 
 				Renderer.figletBanner("create  store");
 
 				ArrayList<String> questions = new ArrayList<>(List.of(
-					"💁 Store name",
-					"🔒 Passcode",
-					"📄 Description"
-				));
+						"💁 Store name",
+						"🔒 Passcode",
+						"📄 Description"));
 				ArrayList<String> r = Renderer.questions(questions, 20);
 				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2));
 
@@ -53,9 +56,8 @@ public class TUI {
 				Renderer.figletBanner("join  store");
 
 				ArrayList<String> questions = new ArrayList<>(List.of(
-					"💁 Store name",
-					"🔒 Passcode"
-				));
+						"💁 Store name",
+						"🔒 Passcode"));
 				ArrayList<String> r = Renderer.questions(questions, 20);
 				Retval retval = user.addStore(r.get(0), r.get(1));
 
@@ -98,6 +100,24 @@ public class TUI {
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
+			sleep(1);
+
+			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
+			// int numCols = tags.length;
+			// // int numCols = 2;
+			//
+			// System.out.println(Renderer.minBoxSize(Tags.PHOTOGRAPHY, "sys name: "));
+			// System.out.println(Renderer.minBoxSize(Tags.PLUSHIES, "sys name: "));
+			//
+			// try {
+			// 	Renderer.renderTiledPattern(tags, numCols, "sys name: ");
+			// } catch (Exception e) {
+			// 	System.err.println("An error occurred: " + e.getMessage());
+			// }
+			//
+			// if (true)
+			// 	return;
+
 			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
 			ArrayList<String> r = Renderer.questions(questions, 6);
 			String username = r.get(0);
@@ -114,8 +134,10 @@ public class TUI {
 				center("Welcome back " + username + "!", true);
 				sleep(2);
 
-				if (person instanceof User) userMenu((User) person);
-				else if (person instanceof Admin) adminMenu();
+				if (person instanceof User)
+					userMenu((User) person);
+				else if (person instanceof Admin)
+					adminMenu();
 
 			} else {
 				center("Hmm looks like you don't have an account. Would you like to create one?", true);

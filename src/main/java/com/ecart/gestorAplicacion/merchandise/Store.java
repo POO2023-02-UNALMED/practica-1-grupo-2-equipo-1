@@ -8,6 +8,7 @@ import com.ecart.gestorAplicacion.meta.Retval;
 
 public class Store extends Entity {
 	private String description;
+	private Tags tag;
 
 	// private ArrayList<ID> products;
 	private ArrayList<User> members;
@@ -73,6 +74,16 @@ public class Store extends Entity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Tags getTag() {
+		return tag;
+	}
+
+	public void setTag(Tags tag) {
+		this.tag = tag;
+	}
+
+
 
 	//
 	// // meta constructor for dup name validation

@@ -93,6 +93,81 @@ class Renderer {
 		menu(banner, options, ret, false);
 	}
 
+	private static String generateHorizontalLine(Tags[] tags, int numCols, String subscript, String marker, String border) {
+		StringBuilder line = new StringBuilder();
+		int counter = 1;
+		for (Tags tag : tags) {
+			// very hacky, not to happy with the implementation
+			int addi = 1;
+			int comparer = biggestStringSize(tag.split()) + subscript.length() + tag.name().length();
+			if (comparer % 2 == 0) addi = 3;
+			else if (comparer % 5 == 0) addi = 2;
+
+			line.append(border + marker.repeat(minBoxSize(tag, subscript) + addi) + border + "  ");
+			if (counter == numCols)
+				break;
+			counter++;
+		}
+		print();
+		return line.toString();
+	}
+
+	private static int biggestStringSize(String[] strings) {
+		int biggest = 0;
+
+		for (String line : strings) {
+			if (line.length() > biggest)
+				biggest = line.length();
+		}
+
+		return biggest;
+	}
+
+	public static int minBoxSize(Tags tag, String subscript) {
+		int biggest = biggestStringSize(tag.split());
+
+		subscript = tag.name() + subscript;
+		if (subscript.length() > biggest)
+			biggest = subscript.length();
+
+		if (biggest % 2 != 0)
+			biggest++;
+
+		return biggest;
+	}
+
+	public static void renderTiledPattern(Tags[] tags, int numCols, String subscript) {
+		int linesCount = tags[0].split().length;
+		String horizontalLine = generateHorizontalLine(tags, numCols, subscript, "-", " ");
+		String horizontalSpaces = generateHorizontalLine(tags, numCols, subscript, " ", "|");
+
+		System.out.println(horizontalLine);
+		for (int row = 0; row < linesCount; row++) {
+			for (int col = 0; col < numCols; col++) {
+				if (col > 0) {
+					print("  ", false);
+				}
+				String[] lines = tags[col].split();
+				String line = lines[row];
+
+				int padding = 0;
+				int minBoxSize = minBoxSize(tags[col], subscript);
+				if (minBoxSize > line.length()) {
+					padding = minBoxSize - line.length();
+					padding = (int) Math.ceil(padding / 2);
+					if (padding % 2 != 0)
+						padding++;
+				}
+
+				print("| " + " ".repeat(padding) + line + " ".repeat(padding) + " |", false);
+			}
+			print();
+		}
+
+		print(horizontalSpaces);
+		print(horizontalLine);
+	}
+
 	/**
 	 * Renders a menu. Supports at most 8-9 entries (depending if @param exit is
 	 * passed)
