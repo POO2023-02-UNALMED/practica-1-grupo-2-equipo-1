@@ -1,13 +1,13 @@
 package com.ecart.gestorAplicacion.merchandise;
 
 import com.ecart.gestorAplicacion.entites.User;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
 
 public class Product {
     private String name;
@@ -19,6 +19,10 @@ public class Product {
     private static List<Product> availableProducts = new ArrayList<>();
 
     private List<User> subscribers = new ArrayList<>();
+    
+    private List<Coupon> coupons = new ArrayList<>();
+    
+    private List<Review> reviews = new ArrayList<>();
 
     public Product(String name, double price, String description, int quantity) {
         this.name = name;
@@ -138,5 +142,21 @@ public class Product {
 
     public void setFormattedPrice(String formattedPrice) {
         this.formattedPrice = formattedPrice;
+    }
+    
+    public void addCoupon(Coupon coupon) {
+    	this.coupons.add(coupon);
+    }
+    
+    public List<Coupon> getCoupons(){
+    	return this.coupons;
+    }
+    
+    public void addReview(Review review) {
+    	this.reviews.add(review);
+    }
+    
+    public List<Review> getReviews(){
+    	return this.reviews;
     }
 }
