@@ -81,7 +81,6 @@ public class TUI {
 
 				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getTagByName(tagName));
 
-				print(2);
 				center(retval.getMessage(), true);
 				sleep(2);
 			});
