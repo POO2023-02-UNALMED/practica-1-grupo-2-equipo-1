@@ -24,7 +24,7 @@ public class Ecommerce {
             System.out.println("Lista de Productos Disponibles:");
             for (int i = 0; i < productList.size(); i++) {
                 Product product = productList.get(i);
-                System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getPrice());
+                System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getFormattedPrice());
             }
 
             System.out.println("¿Qué producto desea comprar? (Ingrese el número del producto)");
@@ -44,10 +44,10 @@ public class Ecommerce {
             int cantidad = Integer.parseInt(scanner.nextLine());
             // Funcionalidad incorrecta
             // Corregir añadir el producto al array de productos disponibles
-/*
+
             shoppingCart.addProduct(selectedProduct, cantidad);
             order.addProduct(selectedProduct, cantidad);
-*/
+
             System.out.println("¿Desea agregar otro producto? (s/n)");
             String respuesta = scanner.nextLine();
 
@@ -60,6 +60,13 @@ public class Ecommerce {
         double totalDescuentos = shoppingCart.calculateTotal() - totalCompra;
         double iva = totalCompra * 0.19;
 
+        // Generar la factura de la compra
+        String factura = order.generateInvoice(iva, totalDescuentos);
+        // Agregar la factura a purchases (historial de facturas)
+        Purchases purchase = new Purchases(factura, cedula);
+        // Imprimir la factura
+        System.out.println(factura);
+
         System.out.println("El total de la compra es: " + totalCompra);
         System.out.println("El total de descuentos es: " + totalDescuentos);
         System.out.println("El IVA es: " + iva);
@@ -68,7 +75,12 @@ public class Ecommerce {
         String respuestaPuntos = scanner.nextLine();
 
         if (respuestaPuntos.equals("s")) {
-            order.getPoints(totalCompra);
+
+            // de manera local, de manera auxiliar
+            // Esta como prueba
+            String pointsMessage = order.getPoints(totalCompra);
+            System.out.println(pointsMessage);
+
         }
 
         System.out.println("¿Cómo desea pagar?\n1. Efectivo\n2. Tarjeta");

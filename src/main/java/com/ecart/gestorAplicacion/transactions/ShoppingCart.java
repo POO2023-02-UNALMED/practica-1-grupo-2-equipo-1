@@ -1,5 +1,7 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.entites.Delivery;
+
 import java.util.ArrayList;
 import java.util.List;
 
