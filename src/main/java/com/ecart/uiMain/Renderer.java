@@ -183,11 +183,8 @@ class Renderer {
 				tagsBatch[k] = allTags[j];
 			}
 
-			// render(tagsBatch);
 			renderTiledPattern(tagsBatch, 3, null, "Tag name: ", true, 2);
 		}
-
-		// renderTiledPattern(Tags.values(), 3, null, "Tag: ", true, 2);
 	}
 
 	public static void renderCard(Tags[] tag, LinkedHashMap<String, String> data) {

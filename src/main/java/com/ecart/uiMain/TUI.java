@@ -128,63 +128,6 @@ public class TUI {
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
-			// Renderer.renderAllTags();
-
-			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
-			// int numCols = tags.length;
-			//
-			// LinkedHashMap<String, String> data = new LinkedHashMap<>();
-			//
-			// data.put("Name: ", "hello world");
-			// data.put("Tag: ", "photography");
-			// data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
-
-			// Renderer.renderTiledPattern(tags, 3, null, "superlongtag: ", false, 3);
-			// Renderer.renderCard(tags, data);
-
-			// int numCols = 2;
-
-			// System.out.println(Renderer.minBoxSize(Tags.PHOTOGRAPHY, "sys name: "));
-			// System.out.println(Renderer.minBoxSize(Tags.PLUSHIES, "sys name: "));
-			//
-			//
-
-			// List<String> keys = new ArrayList<String>(data.keySet());
-			// List<String> values = new ArrayList<String>(data.values());
-			//
-			// print("key: " + keys.get(0));
-			// print("value: " + values.get(0));
-
-			// try {
-			// Renderer.renderCard(tags, data);
-			// } catch (Exception e) {
-			// System.err.println("An error occurred: " + e.getMessage());
-			// }
-
-			// int index = 0;
-			//
-			// ArrayList<String> keys = (ArrayList<String>) data.keySet();
-			// print("key: " + keys.get(0));
-			//
-			// print("key: " + keys.get(index));
-			// for (String item : keys) {
-			// System.out.println(item);
-			// }
-
-			// Set<String> keySet = data.keySet();
-			// String[] keyArray = keySet.toArray(new String[keySet.size()]);
-			//
-			// Integer index = 1;
-			// String key = keyArray[index - 1];
-			//
-			// System.out.println("Value at index " + index
-			// + " is : " + data.get(key));
-
-			// options.put("🛍️ Go shopping!", () -> center("viewing stores", true));
-
-			// if (true)
-			// return;
-
 			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
 			ArrayList<String> r = Renderer.questions(questions, 6);
 			String username = r.get(0);
