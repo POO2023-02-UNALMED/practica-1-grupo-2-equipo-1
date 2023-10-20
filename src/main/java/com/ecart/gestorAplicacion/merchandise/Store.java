@@ -43,13 +43,25 @@ public class Store extends Entity {
 	}
 
 	public static Store validate(String name) {
-		return validate(name, "5Bp9aR3cQz*");
+		return validate(name, null, instances, false);
 	}
 
-	public static Store validate(String name, String passcode) {
-		for (Store store : instances) {
-			if (store.getName().equals(name)
-					&& (store.getPassword().equals(passcode) && !passcode.equals("5Bp9aR3cQz*"))) {
+	public static Store validate(String name, String password) {
+		return validate(name, password, instances, true);
+	}
+
+	public static Store validate(String name, ArrayList<Store> arr) {
+		return validate(name, null, arr, false);
+	}
+
+	public static Store validate(String name, String password, ArrayList<Store> arr, boolean checkPassword) {
+		for (Store store : arr) {
+			if (store.getName().equals(name)) {
+				if (checkPassword) {
+					if (!store.getPassword().equals(password))
+						continue;
+				}
+
 				return store;
 			}
 		}
@@ -62,7 +74,8 @@ public class Store extends Entity {
 
 	public Retval addUser(String name) {
 		User newUser = User.validate(name, members);
-		if (newUser != null) return new Retval("Failed to join store. User is already a member of the store", false);
+		if (newUser != null)
+			return new Retval("Failed to join store. User is already a member of the store", false);
 
 		return new Retval("Joined store successfully");
 	}
@@ -74,7 +87,7 @@ public class Store extends Entity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public Tags getTag() {
 		return tag;
 	}
@@ -82,8 +95,6 @@ public class Store extends Entity {
 	public void setTag(Tags tag) {
 		this.tag = tag;
 	}
-
-
 
 	//
 	// // meta constructor for dup name validation
