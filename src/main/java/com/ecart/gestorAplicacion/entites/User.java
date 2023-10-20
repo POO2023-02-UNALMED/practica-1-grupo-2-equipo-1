@@ -53,10 +53,6 @@ public class User extends Person {
 		User.instances = instances;
 	}
 
-	public ArrayList<Product> getSuscribedProducts() {
-		return suscribedProducts;
-	}
-
 	public boolean createStore(String name, String passcode, String description) {
 		Store store = new Store(name, passcode, description);
 		stores.add(store);
@@ -79,6 +75,10 @@ public class User extends Person {
 
 	public void suscribeToProduct(Product product) {
 		suscribedProducts.add(product);
+	}
+
+	public ArrayList<Product> getSuscribedProducts() {
+		return suscribedProducts;
 	}
 
 }

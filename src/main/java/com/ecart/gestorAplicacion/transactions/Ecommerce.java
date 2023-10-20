@@ -62,6 +62,8 @@ public class Ecommerce {
 
         // Generar la factura de la compra
         String factura = order.generateInvoice(iva, totalDescuentos);
+        // Agregar la factura a purchases (historial de facturas)
+        Purchases purchase = new Purchases(factura, cedula);
         // Imprimir la factura
         System.out.println(factura);
 
