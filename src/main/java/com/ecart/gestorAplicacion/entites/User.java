@@ -18,21 +18,25 @@ public class User extends Person {
 	}
 
 	public static User validate(String username) {
-		return validate(username, "5Bp9aR3cQz*", instances);
+		return validate(username, null, instances, false);
 	}
 
 	public static User validate(String username, ArrayList<User> arr) {
-		return validate(username, "5Bp9aR3cQz*", arr);
+		return validate(username, null, arr, false);
 	}
 
 	public static User validate(String username, String password) {
-		return validate(username, password, instances);
+		return validate(username, password, instances, true);
 	}
 
-	public static User validate(String username, String password, ArrayList<User> arr) {
+	public static User validate(String username, String password, ArrayList<User> arr, boolean checkPassword) {
+
 		for (User user : arr) {
-			if (user.getName().equals(username)
-					&& (user.getPassword().equals(password) && !password.equals("5Bp9aR3cQz*"))) {
+			if (user.getName().equals(username)) {
+				if (checkPassword) {
+					if (!user.getPassword().equals(password)) continue;
+				}
+
 				return user;
 			}
 		}

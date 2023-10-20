@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import com.github.lalyos.jfiglet.FigletFont;
 
@@ -20,6 +21,25 @@ import com.github.lalyos.jfiglet.FigletFont;
 public class TUI {
 
 	private static Scanner scnr = new Scanner(System.in);
+
+	private static String getRepeatedInput(String[] questions, Predicate<String> condition) {
+		String input = "";
+		while (true) {
+			boolean nl = true;
+			for (int i = 0; i < questions.length; i++) {
+				if (i == questions.length - 1)
+					nl = false;
+				center(questions[i], true, nl);
+			}
+
+			input = scnr.nextLine();
+			if (condition.test(input)) erase(questions.length);
+			else break;
+		}
+
+		erase(questions.length);
+		return input;
+	}
 
 	public static void adminMenu() {
 	}
@@ -52,9 +72,12 @@ public class TUI {
 				center(retval.getMessage(), true);
 				sleep(2);
 
-				// if (retval.getStatus()) {
-				//
-				// }
+				if (retval.ok()) {
+					clear();
+					print(3);
+					Renderer.renderAllTags();
+					sleep(3);
+				}
 			});
 
 			submenu.put("🥋 Join store", () -> {
@@ -106,7 +129,6 @@ public class TUI {
 			print(2);
 
 			// Renderer.renderAllTags();
-			
 
 			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
 			// int numCols = tags.length;
@@ -117,8 +139,8 @@ public class TUI {
 			// data.put("Tag: ", "photography");
 			// data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
 
-				// Renderer.renderTiledPattern(tags, 3, null, "superlongtag: ", false, 3);
-				// Renderer.renderCard(tags, data);
+			// Renderer.renderTiledPattern(tags, 3, null, "superlongtag: ", false, 3);
+			// Renderer.renderCard(tags, data);
 
 			// int numCols = 2;
 
@@ -134,11 +156,10 @@ public class TUI {
 			// print("value: " + values.get(0));
 
 			// try {
-			// 	Renderer.renderCard(tags, data);
+			// Renderer.renderCard(tags, data);
 			// } catch (Exception e) {
-			// 	System.err.println("An error occurred: " + e.getMessage());
+			// System.err.println("An error occurred: " + e.getMessage());
 			// }
-
 
 			// int index = 0;
 			//
@@ -161,9 +182,8 @@ public class TUI {
 
 			// options.put("🛍️ Go shopping!", () -> center("viewing stores", true));
 
-
 			// if (true)
-			// 	return;
+			// return;
 
 			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
 			ArrayList<String> r = Renderer.questions(questions, 6);
@@ -187,22 +207,17 @@ public class TUI {
 					adminMenu();
 
 			} else {
-				center("Hmm looks like you don't have an account. Would you like to create one?", true);
-				center("[yes|no] 👉 ", 2, true, false);
-				String input = scnr.nextLine();
-
-				erase(2);
+				String input = getRepeatedInput(
+					new String[] {"Hmm looks like you don't have an account. Would you like to create one?", "[yes|no] 👉 "},
+					i_ -> !(i_.equals("yes") == true || i_.equals("no") == true)
+				);
 
 				if (input.equals("yes")) {
-					while (true) {
-						if (User.validate(username) != null) {
-							center("Your desired username is already being used", true);
-							center("New username: ", 2, true, false);
-							username = scnr.nextLine();
-							erase(2);
-							continue;
-						}
-						break;
+					if (User.validate(username) != null) {
+						username = getRepeatedInput(
+							new String[] {"Your desired username is already being used", "New username: "},
+							i -> User.validate(i) != null
+						);
 					}
 
 					print();

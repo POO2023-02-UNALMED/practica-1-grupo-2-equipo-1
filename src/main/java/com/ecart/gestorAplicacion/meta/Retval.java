@@ -5,22 +5,22 @@ package com.ecart.gestorAplicacion.meta;
  */
 public class Retval {
 	private String message;
-	private boolean status;
+	private boolean ok;
 
 	public Retval(String message) {
 		this(message, true);
 	}
 
-	public Retval(String message, boolean status) {
+	public Retval(String message, boolean ok) {
 		this.message = message;
-		this.status = status;
+		this.ok = ok;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public boolean getStatus() {
-		return status;
+	public boolean ok() {
+		return ok;
 	}
 }
