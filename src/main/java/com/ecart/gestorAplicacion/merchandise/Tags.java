@@ -64,4 +64,13 @@ public enum Tags {
 	public String[] split() {
 		return icon.split("\n");
 	}
+
+	public static Tags getTagByName(String name) {
+		for (Tags tag : Tags.values()) {
+			if (tag.name().equalsIgnoreCase(name)) {
+				return tag;
+			}
+		}
+		return null;
+	}
 }

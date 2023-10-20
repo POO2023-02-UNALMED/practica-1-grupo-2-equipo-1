@@ -15,9 +15,10 @@ public class Store extends Entity {
 
 	private static ArrayList<Store> instances = new ArrayList<>();
 
-	public Store(String name, String password, String description) {
+	public Store(String name, String password, String description, Tags tag) {
 		super(name, password);
 		this.description = description;
+		this.tag = tag;
 
 		this.members = new ArrayList<>();
 		instances.add(this);
@@ -31,12 +32,12 @@ public class Store extends Entity {
 	 * @param description
 	 * @return
 	 */
-	public static Store create(String name, String passcode, String description) {
+	public static Store create(String name, String passcode, String description, Tags tag) {
 		Store newStore = validate(name);
 		if (newStore != null)
 			return null;
 
-		newStore = new Store(name, passcode, description);
+		newStore = new Store(name, passcode, description, tag);
 
 		instances.add(newStore);
 		return newStore;

@@ -66,18 +66,24 @@ public class TUI {
 						"🔒 Passcode",
 						"📄 Description"));
 				ArrayList<String> r = Renderer.questions(questions, 20);
-				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2));
+				sleep(1);
+
+				clear();
+				print(3);
+				Renderer.renderAllTags();
+
+				print(2);
+
+				String tagName = getRepeatedInput(
+					new String[] {"Please select what Tag you would like for your store", "(type the name) 👉 "},
+					i -> Tags.getTagByName(i) == null
+				);
+
+				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getTagByName(tagName));
 
 				print(2);
 				center(retval.getMessage(), true);
 				sleep(2);
-
-				if (retval.ok()) {
-					clear();
-					print(3);
-					Renderer.renderAllTags();
-					sleep(3);
-				}
 			});
 
 			submenu.put("🥋 Join store", () -> {

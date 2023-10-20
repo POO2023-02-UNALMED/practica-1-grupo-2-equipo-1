@@ -3,6 +3,7 @@ package com.ecart.gestorAplicacion.entites;
 import java.util.ArrayList;
 
 import com.ecart.gestorAplicacion.merchandise.Store;
+import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 
 public class User extends Person {
@@ -43,8 +44,8 @@ public class User extends Person {
 		return null;
 	}
 
-	public Retval createStore(String name, String password, String description) {
-		Store newStore = Store.create(name, password, description);
+	public Retval createStore(String name, String password, String description, Tags tag) {
+		Store newStore = Store.create(name, password, description, tag);
 		if (newStore == null)
 			return new Retval("Failed to create store, name already in use", false);
 
