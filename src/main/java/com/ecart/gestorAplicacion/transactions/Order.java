@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Locale;
 import java.text.NumberFormat;
 
+import com.ecart.gestorAplicacion.merchandise.Product;
+
 public class Order {
     private Map<Product, Integer> selectedProducts;
     private int points;

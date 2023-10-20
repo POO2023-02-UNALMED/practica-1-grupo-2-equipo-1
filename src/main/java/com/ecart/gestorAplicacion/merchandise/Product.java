@@ -1,4 +1,4 @@
-package com.ecart.gestorAplicacion.transactions;
+package com.ecart.gestorAplicacion.merchandise;
 
 import com.ecart.gestorAplicacion.entites.User;
 
@@ -84,7 +84,7 @@ public class Product {
 
     public void subscribe(User user) {
         subscribers.add(user);
-        user.suscribeToProduct(this);
+        // user.suscribeToProduct(this);
     }
 
     public static void createRandomProducts() {

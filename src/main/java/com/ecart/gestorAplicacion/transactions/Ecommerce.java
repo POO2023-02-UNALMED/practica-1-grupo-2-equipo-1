@@ -1,5 +1,7 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.merchandise.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,7 +48,7 @@ public class Ecommerce {
             // Corregir añadir el producto al array de productos disponibles
 
             shoppingCart.addProduct(selectedProduct, cantidad);
-            order.addProduct(selectedProduct, cantidad);
+            // order.addProduct(selectedProduct, cantidad);
 
             System.out.println("¿Desea agregar otro producto? (s/n)");
             String respuesta = scanner.nextLine();

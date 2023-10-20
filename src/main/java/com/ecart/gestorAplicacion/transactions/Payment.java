@@ -1,5 +1,6 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.merchandise.Product;
 import java.util.ArrayList;
 import java.util.List;
 
