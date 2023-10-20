@@ -1,34 +1,45 @@
 package com.ecart.gestorAplicacion.transactions;
-
 import com.ecart.gestorAplicacion.entites.Delivery;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Locale;
+import java.text.NumberFormat;
 
 public class Order {
-    private List<Product> selectedProducts;
+    private Map<Product, Integer> selectedProducts;
     private int points;
 
     public Order() {
 
-        selectedProducts = new ArrayList<>();
+        selectedProducts = new HashMap<>();
     }
 
     public void addProduct(Product product, int quantity) {
-        // Agregar el producto con la cantidad al pedido
-        Product orderProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity);
-        selectedProducts.add(orderProduct);
+        if (selectedProducts.containsKey(product)) {
+            // Si el producto ya está en el pedido, aumenta la cantidad
+            int currentQuantity = selectedProducts.get(product);
+            selectedProducts.put(product, currentQuantity + quantity);
+        } else {
+            // Si el producto no está en el pedido, agrégalo con la cantidad especificada
+            selectedProducts.put(product, quantity);
+        }
     }
 
-    public List<Product> getSelectedProducts() {
+    public Map<Product, Integer> getSelectedProducts() {
         return selectedProducts;
+    }
+
+    public void setSelectedProducts(Map<Product, Integer> selectedProducts) {
+        this.selectedProducts = selectedProducts;
     }
 
     public double calculateTotal() {
         double total = 0;
 
-        for (Product product : selectedProducts) {
-            total += product.getPrice() * product.getQuantity();
+        for (Map.Entry<Product, Integer> entry : selectedProducts.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            total += product.getPrice() * quantity;
         }
 
         //double factorConversion = 4198.48;
@@ -38,23 +49,35 @@ public class Order {
 
     public String generateInvoice(double iva, double descuentos) {
         StringBuilder invoice = new StringBuilder();
-        invoice.append("Factura de Compra:\n");
-        invoice.append("+-------------------------------------------------+\n");
-        invoice.append("| Producto                   | Cantidad | Precio  |\n");
-        invoice.append("+-------------------------------------------------+\n");
+        int productColumnWidth = 40; // Ancho de la columna de productos
+        int quantityColumnWidth = 10; // Ancho de la columna de cantidad
+        int priceColumnWidth = 15; // Ancho de la columna de precio
+        int lineLength = productColumnWidth + quantityColumnWidth + priceColumnWidth + 10;
 
-        for (Product product : selectedProducts) {
+        // Línea superior de la factura
+        String horizontalLine = "+" + "-".repeat(lineLength - 2) + "+";
+
+        invoice.append("Factura de Compra:\n");
+        invoice.append(horizontalLine).append("\n");
+        invoice.append(String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", "Producto", "Cantidad", "Precio"));
+        invoice.append(horizontalLine).append("\n");
+
+        for (Map.Entry<Product, Integer> entry : selectedProducts.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+
             String productName = product.getName();
-            String quantity = "1"; // Por ahora, asumimos que siempre es 1 unidad
+            String quantityStr = String.valueOf(quantity);
             String price = product.getFormattedPrice();
 
-            // Asegurarse de que los valores estén alineados a la derecha
-            String formattedProduct = String.format("| %-26s | %8s | %8s |\n", productName, quantity, price);
+            // Verificar si "price" es nulo y proporcionar un valor predeterminado
+            if (price == null) {
+                price = "0.00"; // Puedes establecer cualquier valor predeterminado que desees
+            }
 
-            invoice.append(formattedProduct);
+            invoice.append(String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", productName, quantity, price));
+            invoice.append(horizontalLine).append("\n");
         }
-
-        invoice.append("+-------------------------------------------------+\n");
 
         // Asegurarse de que los valores estén alineados a la derecha en el resumen
         String subtotalLabel = "Subtotal:";
@@ -62,52 +85,65 @@ public class Order {
         String descuentosLabel = "Descuentos:";
         String totalLabel = "Total:";
 
-        String formattedSubtotal = String.format("| %-27s | %7s | %8s |\n", subtotalLabel, "", getFormattedSubtotal());
-        String formattedIVA = String.format("| %-27s | %7s | %8s |\n", ivaLabel, "", getFormattedIVA(iva));
-        String formattedDescuentos = String.format("| %-27s | %7s | %8s |\n", descuentosLabel, "", getFormattedDescuentos(descuentos));
-        String formattedTotal = String.format("| %-27s | %7s | %8s |\n", totalLabel, "", getFormattedTotal(iva, descuentos));
+        String formattedSubtotal = String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", subtotalLabel, "", formatPriceInColombianPesos(getFormattedSubtotal()));
+        String formattedIVA = String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", ivaLabel, "", formatPriceInColombianPesos(getFormattedIVA(iva)));
+        String formattedDescuentos = String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", descuentosLabel, "", formatPriceInColombianPesos(getFormattedDescuentos(descuentos)));
+        String formattedTotal = String.format("| %-"+ productColumnWidth +"s | %"+ quantityColumnWidth +"s | %"+ priceColumnWidth +"s |\n", totalLabel, "", formatPriceInColombianPesos(getFormattedTotal(iva, descuentos)));
 
         invoice.append(formattedSubtotal);
+        invoice.append(horizontalLine).append("\n");
         invoice.append(formattedIVA);
+        invoice.append(horizontalLine).append("\n");
         invoice.append(formattedDescuentos);
+        invoice.append(horizontalLine).append("\n");
         invoice.append(formattedTotal);
-
-        invoice.append("+-------------------------------------------------+\n");
+        invoice.append(horizontalLine).append("\n");
 
         return invoice.toString();
     }
 
 
+    // Formatear el precio en pesos colombianos
+    private String formatPriceInColombianPesos(double price) {
+        Locale colombianLocale = new Locale("es", "CO");
+        NumberFormat colombianCurrencyFormat = NumberFormat.getCurrencyInstance(colombianLocale);
+        return colombianCurrencyFormat.format(price);
+    }
 
-    private String getFormattedSubtotal() {
+
+
+    private double getFormattedSubtotal() {
         // Calcular el subtotal (total sin IVA ni descuentos)
         double subtotal = calculateTotal();
         // Pesos colombianos
-        return String.format("$%.2f", subtotal);
+        //return String.format("$%.2f", subtotal);
+        return subtotal;
     }
 
 
-    private String getFormattedIVA(double iva) {
+    private double getFormattedIVA(double iva) {
         // Formatear el IVA en pesos colombianos u otro formato deseado
-        return String.format("$%.2f", iva);
+        //return String.format("$%.2f", iva);
+        return iva;
     }
 
-    private String getFormattedDescuentos(double descuentos) {
+    private double getFormattedDescuentos(double descuentos) {
         // Formatear los descuentos en pesos colombianos u otro formato deseado
-        return String.format("$%.2f", descuentos);
+        //return String.format("$%.2f", descuentos);
+        return descuentos;
     }
 
-    private String getFormattedTotal(double iva, double descuentos) {
+    private double getFormattedTotal(double iva, double descuentos) {
         // Calcular el total con IVA y descuentos
         double total = calculateTotal(iva, descuentos);
         // Formatear el total en pesos colombianos u otro formato deseado
-        return String.format("$%.2f", total);
+        //return String.format("$%.2f", total);
+        return total;
     }
 
     private double calculateTotal(double iva, double descuentos) {
         double Subtotal = calculateTotal();
-        double sumaFinal = Subtotal + iva - descuentos;
-        return sumaFinal;
+        return Subtotal + iva - descuentos;
 
     }
 

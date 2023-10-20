@@ -130,6 +130,8 @@ public class Product {
         }
     }
 
+
+
     public String getFormattedPrice() {
         return formattedPrice;
     }
