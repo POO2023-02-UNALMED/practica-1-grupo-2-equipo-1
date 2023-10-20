@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.ecart.gestorAplicacion.merchandise.Store;
+import com.ecart.gestorAplicacion.transactions.Product;
 
 public class User extends Person {
 	private static ArrayList<User> instances = new ArrayList<>();
 	private ArrayList<Store> stores = new ArrayList<>();
+	private ArrayList<Product> suscribedProducts = new ArrayList<>();
 
 	public User(String username, String password) {
 		super(username, password);
@@ -51,6 +53,10 @@ public class User extends Person {
 		User.instances = instances;
 	}
 
+	public ArrayList<Product> getSuscribedProducts() {
+		return suscribedProducts;
+	}
+
 	public boolean createStore(String name, String passcode, String description) {
 		Store store = new Store(name, passcode, description);
 		stores.add(store);
@@ -70,4 +76,9 @@ public class User extends Person {
 	public void setStores(ArrayList<Store> stores) {
 		this.stores = stores;
 	}
+
+	public void suscribeToProduct(Product product) {
+		suscribedProducts.add(product);
+	}
+
 }

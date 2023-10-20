@@ -1,5 +1,7 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import com.ecart.gestorAplicacion.entites.User;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public class Product {
     private int quantity;
 
     private static List<Product> availableProducts = new ArrayList<>();
+
+    private List<User> subscribers = new ArrayList<>();
 
     public Product(String name, double price, String description, int quantity) {
         this.name = name;
@@ -74,6 +78,14 @@ public class Product {
         return availableProducts;
     }
 
+    public List<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void subscribe(User user) {
+        subscribers.add(user);
+        user.suscribeToProduct(this);
+    }
 
     public static void createRandomProducts() {
         String[] productNames = {"Product A", "Product B", "Product C", "Product D", "Product E", "Product F", "Product G", "Product H", "Product I", "Product J", "Product K", "Product L", "Product M", "Product N", "Product O"};
