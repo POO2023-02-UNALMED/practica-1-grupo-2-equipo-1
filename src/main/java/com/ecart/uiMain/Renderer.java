@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 class Renderer {
 
@@ -157,7 +158,7 @@ class Renderer {
 			for (Tags tag : tags) {
 				int[] padding = boxPadding(minBoxSize(tag, subscript), subscript + tag.name());
 
-				line.append(border + " ".repeat(padding[0]) + subscript + tag.name() + " ".repeat(padding[1]) + border);
+				line.append(border + " ".repeat(padding[0]) + subscript + tag.name().toLowerCase() + " ".repeat(padding[1]) + border);
 				line.append("  ");
 
 				if (counter == numCols)
@@ -169,13 +170,53 @@ class Renderer {
 		return line.toString();
 	}
 
-	public static void renderTiledPattern(Tags[] tags, int numCols, String subscript) {
+	public static void renderAllTags() {
+
+		Tags[] allTags = Tags.values();
+		int batchSize = 3; // number of Tags per batch
+
+		for (int i = 0; i < allTags.length; i += batchSize) {
+			int endIndex = Math.min(i + batchSize, allTags.length);
+			Tags[] tagsBatch = new Tags[endIndex - i];
+
+			for (int j = i, k = 0; j < endIndex; j++, k++) {
+				tagsBatch[k] = allTags[j];
+			}
+
+			// render(tagsBatch);
+			renderTiledPattern(tagsBatch, 3, null, "Tag name: ", true, 2);
+		}
+
+		// renderTiledPattern(Tags.values(), 3, null, "Tag: ", true, 2);
+	}
+
+	public static void renderCard(Tags[] tag, LinkedHashMap<String, String> data) {
+		renderTiledPattern(tag, 1, data, "bottoplceholdr", false, 3);
+	}
+
+	public static void renderTiledPattern(Tags[] tags, int numCols, LinkedHashMap<String, String> data, String subscript,
+			boolean addBottomText,
+			int verticalSpaces) {
+
 		int linesCount = tags[0].split().length;
 		String horizontalLine = generateHorizontalLine(tags, numCols, subscript, "-", "+");
 		String horizontalSpaces = generateHorizontalLine(tags, numCols, subscript, " ", "|");
 		String bottomText = generateHorizontalLine(tags, numCols, subscript, " ", "|", true);
 
-		System.out.println(horizontalLine);
+		int dataIndex = -1;
+		List<String> keys = new ArrayList<>();
+		List<String> values = new ArrayList<>();
+		if (data != null) {
+			keys = new ArrayList<String>(data.keySet());
+			values = new ArrayList<String>(data.values());
+		}
+
+		String entireLeftPadding = center(horizontalLine, 0, true, false, true);
+		center(horizontalLine, true);
+
+		for (int i = 0; i < verticalSpaces; i++)
+			center(horizontalSpaces, true);
+
 		for (int row = 0; row < linesCount; row++) {
 			for (int col = 0; col < numCols; col++) {
 				if (col > 0) {
@@ -185,15 +226,31 @@ class Renderer {
 				String line = lines[row];
 
 				int[] padding = boxPadding(minBoxSize(tags[col], subscript), line);
+				String currLine = "|" + " ".repeat(padding[0]) + line + " ".repeat(padding[1]) + "|";
 
-				print("|" + " ".repeat(padding[0]) + line + " ".repeat(padding[1]) + "|", false);
+				if (col == 0)
+					print(entireLeftPadding + currLine, false);
+				else
+					print(currLine, false);
+
+				if (data != null) {
+					if (dataIndex >= 0 && dataIndex < keys.size())
+						print("\t" + keys.get(dataIndex) + values.get(dataIndex), false);
+				}
+
+				dataIndex++;
+
 			}
 			print();
 		}
 
-		print(horizontalSpaces);
-		print(bottomText);
-		print(horizontalLine);
+		for (int i = 0; i < verticalSpaces; i++)
+			center(horizontalSpaces, true);
+
+		if (addBottomText)
+			center(bottomText, true);
+
+		center(horizontalLine, true);
 	}
 
 	/**

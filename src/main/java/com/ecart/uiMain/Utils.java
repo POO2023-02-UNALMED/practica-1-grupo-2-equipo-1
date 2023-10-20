@@ -76,28 +76,36 @@ public class Utils {
 	}
 
 	public static void center(String str) {
-		center(str, 0, false, true);
+		center(str, 0, false, true, false);
 	}
 
 	public static void center(String str, int offset) {
-		center(str, offset, false, true);
+		center(str, offset, false, true, false);
 	}
 
 	public static void center(String str, boolean true_center) {
-		center(str, 0, true_center, true);
+		center(str, 0, true_center, true, false);
 	}
 
 	public static void center(String str, boolean true_center, boolean nl) {
-		center(str, 0, true_center, nl);
+		center(str, 0, true_center, nl, false);
+	}
+
+	public static void center(String str, int offset, boolean true_center, boolean nl) {
+		center(str, offset, true_center, nl, false);
 	}
 
 	/** Center text horizontally in the screen */
-	public static void center(String str, int offset, boolean true_center, boolean nl) {
-		print(" ".repeat(
+	public static String center(String str, int offset, boolean true_center, boolean nl, boolean getSpace) {
+		String space = " ".repeat(
 				(getDimensions()[1] / 2)
 						- offset
-						- (true_center ? str.length() / 2 : 0))
-				+ str, nl);
+						- (true_center ? str.length() / 2 : 0));
+
+		if (getSpace) return space;
+		else print(space + str, nl);
+
+		return "";
 	}
 
 	/** Center text vertically in the screen */
