@@ -92,8 +92,6 @@ public class TUI {
 
 				storeSubmenu.put("🩳 Create product", () -> {
 					Renderer.figletBanner("create  product");
-				
-					
 
 					ArrayList<String> questions = new ArrayList<>(List.of(
 							"📛 name",
@@ -118,7 +116,9 @@ public class TUI {
 								Integer.parseInt(r.get(3)),
 								Tags.getTagByName(tagName));
 					} catch (ClassCastException e) {
-						retval = new Retval("Failed to parse your input. Make sure you are not typing letters in the place of numbers", false);
+						retval = new Retval(
+								"Failed to parse your input. Make sure you are not typing letters in the place of numbers",
+								false);
 					}
 
 					center(retval.getMessage(), true);
@@ -139,6 +139,45 @@ public class TUI {
 					sleep(2);
 				});
 
+				storeSubmenu.put("🗃️  Update settings", () -> {
+					Renderer.figletBanner("update  settings", 20);
+
+					LinkedHashMap<String, String> data = new LinkedHashMap<>();
+
+					data.put("Name: ", userStore.getName());
+					data.put("Passcode: ", userStore.getPassword());
+					data.put("Description: ", userStore.getDescription());
+
+					Renderer.renderCard(userStore.getTag(), data);
+
+					print(2);
+					center("Only type what you wish to change. Press <Enter> for the rest", true);
+					print();
+
+					ArrayList<String> questions = new ArrayList<>(List.of(
+							"💁 New store name",
+							"🔒 New passcode",
+							"📄 New description"));
+					ArrayList<String> r = Renderer.questions(questions, 20);
+
+					Retval retval = new Retval("Updated settings successfully!", true);
+
+					if (r.get(0) != "" && Store.validate(r.get(0)) != null)
+						retval = new Retval("The store name is already taken", false);
+					else {
+						if (r.get(0) != "")
+							userStore.setName(r.get(0));
+						if (r.get(1) != "")
+							userStore.setPassword(r.get(1));
+						if (r.get(2) != "")
+							userStore.setDescription(r.get(2));
+					}
+
+					print(2);
+					center(retval.getMessage(), true);
+					sleep(2);
+				});
+
 				Renderer.menu("management", storeSubmenu, true, false, true);
 			});
 
@@ -146,12 +185,19 @@ public class TUI {
 
 				Renderer.figletBanner("create  store");
 
+
 				ArrayList<String> questions = new ArrayList<>(List.of(
 						"💁 Store name",
 						"🔒 Passcode",
 						"📄 Description"));
 				ArrayList<String> r = Renderer.questions(questions, 20);
 				sleep(1);
+
+				if (r.get(0) == "") {
+					center(new Retval("The name of the store must be non-empty", false).getMessage(), true);
+					sleep(2);
+					return;
+				}
 
 				clear();
 				print(3);
