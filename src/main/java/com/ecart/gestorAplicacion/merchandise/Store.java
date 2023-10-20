@@ -10,7 +10,7 @@ public class Store extends Entity {
 	private String description;
 	private Tags tag;
 
-	// private ArrayList<ID> products;
+	private ArrayList<Product> products;
 	private ArrayList<User> members;
 
 	private static ArrayList<Store> instances = new ArrayList<>();
@@ -21,6 +21,7 @@ public class Store extends Entity {
 		this.tag = tag;
 
 		this.members = new ArrayList<>();
+		this.products = new ArrayList<>();
 		instances.add(this);
 	}
 
@@ -81,6 +82,16 @@ public class Store extends Entity {
 		return new Retval("Joined store successfully");
 	}
 
+	public Retval createProduct(String name, double price, String description, int quantity, Tags tag) {
+		Product newProduct = Product.create(name, price, description, quantity, tag, this.getProducts());
+		if (newProduct == null)
+			return new Retval("Failed create product. The product already exists inside of the store", false);
+
+		this.products.add(newProduct);
+
+		return new Retval("Created product successfully!");
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -95,6 +106,30 @@ public class Store extends Entity {
 
 	public void setTag(Tags tag) {
 		this.tag = tag;
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
+	}
+
+	public ArrayList<User> getMembers() {
+		return members;
+	}
+
+	public void setMembers(ArrayList<User> members) {
+		this.members = members;
+	}
+
+	public static ArrayList<Store> getInstances() {
+		return instances;
+	}
+
+	public static void setInstances(ArrayList<Store> instances) {
+		Store.instances = instances;
 	}
 
 	//

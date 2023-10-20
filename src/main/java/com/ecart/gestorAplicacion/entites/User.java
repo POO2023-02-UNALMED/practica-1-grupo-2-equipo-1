@@ -55,6 +55,9 @@ public class User extends Person {
 	//
 	// 	// if (this.validate())
 	// }
+	public Retval createProduct(Store store, String name, double price, String description, int quantity, Tags tag) {
+		return store.createProduct(name, price, description, quantity, tag);
+	}
 
 	public Retval createStore(String name, String password, String description, Tags tag) {
 		// sync stores

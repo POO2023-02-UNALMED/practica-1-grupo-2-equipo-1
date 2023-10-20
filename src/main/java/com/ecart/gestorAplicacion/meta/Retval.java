@@ -7,6 +7,10 @@ public class Retval {
 	private String message;
 	private boolean ok;
 
+	public Retval() {
+		this("", false);
+	}
+
 	public Retval(String message) {
 		this(message, true);
 	}

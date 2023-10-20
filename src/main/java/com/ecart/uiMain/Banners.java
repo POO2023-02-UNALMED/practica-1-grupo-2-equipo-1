@@ -51,4 +51,13 @@ public enum Banners {
 	public String[] split() {
 		return banner.split("\n");
 	}
+
+	public static Banners getBannerByName(String name) {
+		for (Banners banner : Banners.values()) {
+			if (banner.name().equalsIgnoreCase(name)) {
+				return banner;
+			}
+		}
+		return null;
+	}
 }

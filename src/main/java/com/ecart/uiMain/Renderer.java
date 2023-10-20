@@ -41,7 +41,8 @@ class Renderer {
 	}
 
 	public static void figletBanner(String banner, int vcentr, int postSpaces) {
-		vcenter(vcentr);
+		if (vcentr > 0)
+			vcenter(vcentr);
 
 		try {
 			banner = FigletFont.convertOneLine(banner);
@@ -88,10 +89,6 @@ class Renderer {
 		}
 
 		return answers;
-	}
-
-	public static void menu(Banners banner, LinkedHashMap<String, Runnable> options, boolean ret) {
-		menu(banner, options, ret, false);
 	}
 
 	private static int biggestStringSize(String[] strings) {
@@ -158,7 +155,8 @@ class Renderer {
 			for (Tags tag : tags) {
 				int[] padding = boxPadding(minBoxSize(tag, subscript), subscript + tag.name());
 
-				line.append(border + " ".repeat(padding[0]) + subscript + tag.name().toLowerCase() + " ".repeat(padding[1]) + border);
+				line.append(border + " ".repeat(padding[0]) + subscript + tag.name().toLowerCase() + " ".repeat(padding[1])
+						+ border);
 				line.append("  ");
 
 				if (counter == numCols)
@@ -188,13 +186,13 @@ class Renderer {
 	}
 
 	public static void renderCard(Tags tag, LinkedHashMap<String, String> data) {
-		renderTiledPattern(new Tags[] {tag}, 1, data, "bottoplceholdr", false, 3, 8);
+		renderTiledPattern(new Tags[] { tag }, 1, data, "bottoplceholdr", false, 3, 8);
 	}
 
 	public static void renderTiledPattern(Tags[] tags, int numCols, LinkedHashMap<String, String> data, String subscript,
 			boolean addBottomText,
 			int verticalSpaces) {
-		renderTiledPattern(tags, numCols, data, subscript,addBottomText, verticalSpaces, 0);
+		renderTiledPattern(tags, numCols, data, subscript, addBottomText, verticalSpaces, 0);
 	}
 
 	public static void renderTiledPattern(Tags[] tags, int numCols, LinkedHashMap<String, String> data, String subscript,
@@ -256,6 +254,18 @@ class Renderer {
 		print(entireLeftPadding + horizontalLine);
 	}
 
+	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret) {
+		menu(banner, options, ret, false, false, 15);
+	}
+
+	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit) {
+		menu(banner, options, ret, exit, false, 15);
+	}
+
+	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit, boolean useFiglet) {
+		menu(banner, options, ret, exit, useFiglet, 15);
+	}
+
 	/**
 	 * Renders a menu. Supports at most 8-9 entries (depending if @param exit is
 	 * passed)
@@ -265,7 +275,8 @@ class Renderer {
 	 * @param ret
 	 * @param exit
 	 */
-	public static void menu(Banners banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit) {
+	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit,
+			boolean useFiglet, int vcentr) {
 		// TODo: didn't know about LinkedHashMaps before writing this
 		ArrayList<Map.Entry<String, Runnable>> orderedOptions = new ArrayList<>(options.entrySet());
 
@@ -273,8 +284,12 @@ class Renderer {
 			clear();
 
 			// banner
-			vcenter(15);
-			centerBanner(banner);
+			vcenter(vcentr);
+			if (useFiglet)
+				Renderer.figletBanner(banner, 0, 0);
+			else
+				centerBanner(Banners.getBannerByName(banner));
+
 			print(4);
 
 			// left-align all of the options

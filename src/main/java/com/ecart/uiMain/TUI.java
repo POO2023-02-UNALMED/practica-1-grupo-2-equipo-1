@@ -34,8 +34,10 @@ public class TUI {
 			}
 
 			input = scnr.nextLine();
-			if (condition.test(input)) erase(questions.length);
-			else break;
+			if (condition.test(input))
+				erase(questions.length);
+			else
+				break;
 		}
 
 		erase(questions.length);
@@ -75,7 +77,69 @@ public class TUI {
 					print();
 				}
 
-				sleep(3);
+				String storeName = getRepeatedInput(
+						new String[] { "Please select one store you would you manage", "(type its name) 👉 " },
+						i -> Store.validate(i, user.getStores()) == null);
+
+				Store userStore = Store.validate(storeName, user.getStores());
+
+				clear();
+
+				LinkedHashMap<String, Runnable> storeSubmenu = new LinkedHashMap<>();
+
+				// public Retval createProduct(String name, double price, String description,
+				// int quantity, Tags tag) {
+
+				storeSubmenu.put("🩳 Create product", () -> {
+					Renderer.figletBanner("create  product");
+				
+					
+
+					ArrayList<String> questions = new ArrayList<>(List.of(
+							"📛 name",
+							"💲 price",
+							"📄 description",
+							"🗳️  quantity"));
+					ArrayList<String> r = Renderer.questions(questions, 20);
+
+					clear();
+					print(3);
+					Renderer.renderAllTags();
+
+					print(2);
+
+					String tagName = getRepeatedInput(
+							new String[] { "Please select what Tag you would like for your product", "(type the name) 👉 " },
+							i -> Tags.getTagByName(i) == null);
+
+					Retval retval = new Retval();
+					try {
+						retval = user.createProduct(userStore, r.get(0), Double.parseDouble(r.get(1)), r.get(2),
+								Integer.parseInt(r.get(3)),
+								Tags.getTagByName(tagName));
+					} catch (ClassCastException e) {
+						retval = new Retval("Failed to parse your input. Make sure you are not typing letters in the place of numbers", false);
+					}
+
+					center(retval.getMessage(), true);
+					sleep(2);
+				});
+
+				storeSubmenu.put("❗ Delete product", () -> {
+					Renderer.figletBanner("delete  product");
+
+					ArrayList<String> questions = new ArrayList<>(List.of(
+							"💁 Store name",
+							"🔒 Passcode"));
+					ArrayList<String> r = Renderer.questions(questions, 20);
+					Retval retval = user.addStore(r.get(0), r.get(1));
+
+					print(2);
+					center(retval.getMessage(), true);
+					sleep(2);
+				});
+
+				Renderer.menu("management", storeSubmenu, true, false, true);
 			});
 
 			submenu.put("🗃️  Create store", () -> {
@@ -96,9 +160,8 @@ public class TUI {
 				print(2);
 
 				String tagName = getRepeatedInput(
-					new String[] {"Please select what Tag you would like for your store", "(type the name) 👉 "},
-					i -> Tags.getTagByName(i) == null
-				);
+						new String[] { "Please select what Tag you would like for your store", "(type the name) 👉 " },
+						i -> Tags.getTagByName(i) == null);
 
 				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getTagByName(tagName));
 
@@ -120,12 +183,12 @@ public class TUI {
 				sleep(2);
 			});
 
-			Renderer.menu(Banners.STORES, submenu, true);
+			Renderer.menu("stores", submenu, true);
 		});
 		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> center("showing menu to update personal info"));
 
-		Renderer.menu(Banners.LOGIN, options, true, true);
+		Renderer.menu("login", options, true, true);
 	}
 
 	/**
@@ -154,11 +217,10 @@ public class TUI {
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
-
 			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
 			// int numCols = tags.length;
 			//
-			
+
 			// sleep(3);
 
 			// if (true) return;
@@ -186,16 +248,15 @@ public class TUI {
 
 			} else {
 				String input = getRepeatedInput(
-					new String[] {"Hmm looks like you don't have an account. Would you like to create one?", "[yes|no] 👉 "},
-					i_ -> !(i_.equals("yes") == true || i_.equals("no") == true)
-				);
+						new String[] { "Hmm looks like you don't have an account. Would you like to create one?",
+								"[yes|no] 👉 " },
+						i_ -> !(i_.equals("yes") == true || i_.equals("no") == true));
 
 				if (input.equals("yes")) {
 					if (User.validate(username) != null) {
 						username = getRepeatedInput(
-							new String[] {"Your desired username is already being used", "New username: "},
-							i -> User.validate(i) != null
-						);
+								new String[] { "Your desired username is already being used", "New username: " },
+								i -> User.validate(i) != null);
 					}
 
 					print();
