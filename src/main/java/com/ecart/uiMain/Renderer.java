@@ -187,13 +187,19 @@ class Renderer {
 		}
 	}
 
-	public static void renderCard(Tags[] tag, LinkedHashMap<String, String> data) {
-		renderTiledPattern(tag, 1, data, "bottoplceholdr", false, 3);
+	public static void renderCard(Tags tag, LinkedHashMap<String, String> data) {
+		renderTiledPattern(new Tags[] {tag}, 1, data, "bottoplceholdr", false, 3, 8);
 	}
 
 	public static void renderTiledPattern(Tags[] tags, int numCols, LinkedHashMap<String, String> data, String subscript,
 			boolean addBottomText,
 			int verticalSpaces) {
+		renderTiledPattern(tags, numCols, data, subscript,addBottomText, verticalSpaces, 0);
+	}
+
+	public static void renderTiledPattern(Tags[] tags, int numCols, LinkedHashMap<String, String> data, String subscript,
+			boolean addBottomText,
+			int verticalSpaces, int offset) {
 
 		int linesCount = tags[0].split().length;
 		String horizontalLine = generateHorizontalLine(tags, numCols, subscript, "-", "+");
@@ -208,11 +214,11 @@ class Renderer {
 			values = new ArrayList<String>(data.values());
 		}
 
-		String entireLeftPadding = center(horizontalLine, 0, true, false, true);
-		center(horizontalLine, true);
+		String entireLeftPadding = " ".repeat(center(horizontalLine, 0, true, false, true).length() - offset);
+		print(entireLeftPadding + horizontalLine);
 
 		for (int i = 0; i < verticalSpaces; i++)
-			center(horizontalSpaces, true);
+			print(entireLeftPadding + horizontalSpaces);
 
 		for (int row = 0; row < linesCount; row++) {
 			for (int col = 0; col < numCols; col++) {
@@ -242,12 +248,12 @@ class Renderer {
 		}
 
 		for (int i = 0; i < verticalSpaces; i++)
-			center(horizontalSpaces, true);
+			print(entireLeftPadding + horizontalSpaces);
 
 		if (addBottomText)
-			center(bottomText, true);
+			print(entireLeftPadding + bottomText);
 
-		center(horizontalLine, true);
+		print(entireLeftPadding + horizontalLine);
 	}
 
 	/**

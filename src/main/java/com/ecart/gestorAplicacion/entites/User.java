@@ -44,7 +44,29 @@ public class User extends Person {
 		return null;
 	}
 
+	// public void sync(String storeName) {
+	// 	Store storeInUser = Store.validate(storeName, stores);
+	// 	if (storeInUser != null) { // if there is store in user
+	// 		if (Store.validate(storeName) == null) { // but none on Store instances
+	// 			 stores.remove(storeInUser);
+	// 			this.deleteStore(storeName); // delete it from user
+	// 		}
+	// 	}
+	//
+	// 	// if (this.validate())
+	// }
+
 	public Retval createStore(String name, String password, String description, Tags tag) {
+		// sync stores
+		// if (Store.validate(name, stores) != null) { // if there is store in user
+		// 	if (Store.validate(name) == null) { // check if there is no store in stores
+		// 		this.deleteStore(name); // delete it from user
+		// 		return new Retval("Failed to create store. You were part of a store with this name, but it got deleted", false);
+		// 	} else {
+		// 		return new Retval("Failed to create store, you aleardy belong to a store with this name", false);
+		// 	}
+		// }
+
 		Store newStore = Store.create(name, password, description, tag);
 		if (newStore == null)
 			return new Retval("Failed to create store, name already in use", false);
@@ -63,7 +85,33 @@ public class User extends Person {
 			return new Retval("Error: the store does not exist", false);
 
 		Retval retval = existingStore.addUser(this.getName());
+		if (retval.ok()) this.stores.add(existingStore);
 
 		return retval;
+	}
+
+	public ArrayList<Store> getStores() {
+		return stores;
+	}
+
+	public void setStores(ArrayList<Store> stores) {
+		this.stores = stores;
+	}
+
+	public void deleteStore(String name) {
+	  for (Store store : stores) {
+			if (store.getName().equals(name)) {
+				 stores.remove(store);
+				 break;
+			}
+	  }
+	}
+
+	public static ArrayList<User> getInstances() {
+		return instances;
+	}
+
+	public static void setInstances(ArrayList<User> instances) {
+		User.instances = instances;
 	}
 }

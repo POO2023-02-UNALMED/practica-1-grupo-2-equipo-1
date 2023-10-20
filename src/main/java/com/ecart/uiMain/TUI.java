@@ -2,6 +2,7 @@ package com.ecart.uiMain;
 
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.entites.*;
+import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 
@@ -52,8 +53,28 @@ public class TUI {
 		options.put("🏪 Manage your stores", () -> {
 			LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 
-			submenu.put("🖼️  View your store", () -> {
-				Renderer.figletBanner("your  stores");
+			submenu.put("🖼️  View your stores", () -> {
+				Renderer.figletBanner("your  stores", 20);
+
+				ArrayList<Store> stores = user.getStores();
+
+				if (stores.isEmpty()) {
+					center("Looks like you don't have any stores!", true);
+					sleep(2);
+					return;
+				}
+
+				for (Store store : stores) {
+					LinkedHashMap<String, String> data = new LinkedHashMap<>();
+
+					data.put("Name: ", store.getName());
+					data.put("Tag: ", store.getTag().name());
+					data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
+
+					Renderer.renderCard(store.getTag(), data);
+					print();
+				}
+
 				sleep(3);
 			});
 
@@ -132,6 +153,15 @@ public class TUI {
 			center("===== Empower Your Passion, Share Your Creations =====", true);
 			center("(Ctrl + C to exit)", true);
 			print(2);
+
+
+			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
+			// int numCols = tags.length;
+			//
+			
+			// sleep(3);
+
+			// if (true) return;
 
 			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
 			ArrayList<String> r = Renderer.questions(questions, 6);
