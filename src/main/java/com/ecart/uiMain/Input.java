@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 
 import com.ecart.App;
 
-class Input {
+public final class Input {
 	private static Scanner scnr = new Scanner(System.in);
 
 	/**

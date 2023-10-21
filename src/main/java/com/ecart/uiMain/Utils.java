@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /** TUI Utilities */
-public class Utils {
+public final class Utils {
 
 	/** Clear the terminal screen */
 	public static void clear() {

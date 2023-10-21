@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-class Renderer {
+public final class Renderer {
 
 	public static void centerBanner(Banners banner) {
 		int averageLength = averageLength(banner.split(), true);
