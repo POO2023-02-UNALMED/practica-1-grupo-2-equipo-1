@@ -3,18 +3,13 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.github.lalyos.jfiglet.FigletFont;
-import com.ecart.App;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 class Renderer {
-	private static Scanner scnr = new Scanner(System.in);
 
 	public static void centerBanner(Banners banner) {
 		int averageLength = averageLength(banner.split(), true);
@@ -47,10 +42,6 @@ class Renderer {
 			center(line, averageLength);
 
 		print(postSpaces);
-	}
-
-	public static String prompt() {
-		return "";
 	}
 
 	public static int minBoxSize(Tags tag, String subscript) {

@@ -7,17 +7,8 @@ import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 
-import java.util.Map;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.function.Predicate;
-
-import com.github.lalyos.jfiglet.FigletFont;
 
 /** Textual User Interface */
 public class TUI {

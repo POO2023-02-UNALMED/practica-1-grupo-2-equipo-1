@@ -20,43 +20,43 @@ public class Ecommerce {
     public void runShoppingProcess() {
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
-            List<Product> productList = Product.getAvailableProducts();
-
-            System.out.println("Lista de Productos Disponibles:");
-            for (int i = 0; i < productList.size(); i++) {
-                Product product = productList.get(i);
-                System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getFormattedPrice());
-            }
-
-            System.out.println("¿Qué producto desea comprar? (Ingrese el número del producto)");
-            int productNumber = Integer.parseInt(scanner.nextLine());
-
-            if (productNumber < 1 || productNumber > productList.size()) {
-                System.out.println("Número de producto inválido. Por favor, elija un número válido.");
-                continue;
-            }
-
-            Product selectedProduct = productList.get(productNumber - 1);
-
-            // Mostrar la descripción del producto seleccionado.
-            System.out.println("Descripción: " + selectedProduct.getDescription());
-
-            System.out.println("¿Cuántos productos desea comprar?");
-            int cantidad = Integer.parseInt(scanner.nextLine());
-            // Funcionalidad incorrecta
-            // Corregir añadir el producto al array de productos disponibles
-
-            shoppingCart.addProduct(selectedProduct, cantidad);
-            // order.addProduct(selectedProduct, cantidad);
-
-            System.out.println("¿Desea agregar otro producto? (s/n)");
-            String respuesta = scanner.nextLine();
-
-            if (respuesta.equals("n")) {
-                break;
-            }
-        }
+        // while (true) {
+        //     List<Product> productList = Product.getAvailableProducts();
+        //
+        //     System.out.println("Lista de Productos Disponibles:");
+        //     for (int i = 0; i < productList.size(); i++) {
+        //         Product product = productList.get(i);
+        //         System.out.println((i + 1) + ". " + product.getName() + " - Precio: $" + product.getFormattedPrice());
+        //     }
+        //
+        //     System.out.println("¿Qué producto desea comprar? (Ingrese el número del producto)");
+        //     int productNumber = Integer.parseInt(scanner.nextLine());
+        //
+        //     if (productNumber < 1 || productNumber > productList.size()) {
+        //         System.out.println("Número de producto inválido. Por favor, elija un número válido.");
+        //         continue;
+        //     }
+        //
+        //     Product selectedProduct = productList.get(productNumber - 1);
+        //
+        //     // Mostrar la descripción del producto seleccionado.
+        //     System.out.println("Descripción: " + selectedProduct.getDescription());
+        //
+        //     System.out.println("¿Cuántos productos desea comprar?");
+        //     int cantidad = Integer.parseInt(scanner.nextLine());
+        //     // Funcionalidad incorrecta
+        //     // Corregir añadir el producto al array de productos disponibles
+        //
+        //     shoppingCart.addProduct(selectedProduct, cantidad);
+        //     // order.addProduct(selectedProduct, cantidad);
+        //
+        //     System.out.println("¿Desea agregar otro producto? (s/n)");
+        //     String respuesta = scanner.nextLine();
+        //
+        //     if (respuesta.equals("n")) {
+        //         break;
+        //     }
+        // }
 
         double totalCompra = order.calculateTotal();
         double totalDescuentos = shoppingCart.calculateTotal() - totalCompra;
@@ -151,16 +151,16 @@ public class Ecommerce {
     }
 */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bienvenido a la tienda en línea.");
         System.out.println("Por favor, ingrese su cédula:");
-        String cedula = scanner.nextLine();
+        // String cedula = scanner.nextLine();
 
-        Product.createRandomProducts();
+        // Product.createRandomProducts();
 
-        Ecommerce ecommerce = new Ecommerce(cedula);
-        ecommerce.runShoppingProcess();
+        // Ecommerce ecommerce = new Ecommerce(cedula);
+        // ecommerce.runShoppingProcess();
     }
 }
 
