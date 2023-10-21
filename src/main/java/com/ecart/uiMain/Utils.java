@@ -63,16 +63,20 @@ public class Utils {
 		return (int) ((average / str.length) / (halve ? 2 : 1));
 	}
 
+	public static int getBiggestStringSize(String[] strings) {
+		int biggest = 0;
+
+		for (String line : strings) {
+			if (line.length() > biggest)
+				biggest = line.length();
+		}
+
+		return biggest;
+	}
+
 	/** Print to STDOUT */
 	public static void print(String str, boolean nl) {
 		System.out.print(str + (nl ? "\n" : ""));
-	}
-
-	public static void centerBanner(Banners banner) {
-		int averageLength = averageLength(banner.split(), true);
-
-		for (String line : banner.split())
-			center(line, averageLength);
 	}
 
 	public static void center(String str) {

@@ -1,6 +1,6 @@
 package com.ecart;
 
-import static com.ecart.uiMain.TUI.menu;
+import static com.ecart.uiMain.TUI.mainMenu;
 import static com.ecart.uiMain.Utils.clear;
 
 /** App's entry point */
@@ -12,7 +12,7 @@ public class App {
 				shutdown(false);
 			}));
 
-			menu();
+			mainMenu();
 		// } else
 		// 	System.err.println("The system is not running interactively");
 	}

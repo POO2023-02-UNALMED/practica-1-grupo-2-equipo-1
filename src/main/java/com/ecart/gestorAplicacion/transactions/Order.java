@@ -70,7 +70,10 @@ public class Order {
 
             String productName = product.getName();
             String quantityStr = String.valueOf(quantity);
-            String price = product.getFormattedPrice();
+				String price = "0";
+
+				// commented in the mean time
+            // String price = product.getFormattedPrice();
 
             // Verificar si "price" es nulo y proporcionar un valor predeterminado
             if (price == null) {

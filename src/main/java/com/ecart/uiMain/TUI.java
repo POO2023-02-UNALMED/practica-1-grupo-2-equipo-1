@@ -1,6 +1,7 @@
 package com.ecart.uiMain;
 
 import static com.ecart.uiMain.Utils.*;
+import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.*;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
@@ -20,29 +21,6 @@ import com.github.lalyos.jfiglet.FigletFont;
 
 /** Textual User Interface */
 public class TUI {
-
-	private static Scanner scnr = new Scanner(System.in);
-
-	private static String getRepeatedInput(String[] questions, Predicate<String> condition) {
-		String input = "";
-		while (true) {
-			boolean nl = true;
-			for (int i = 0; i < questions.length; i++) {
-				if (i == questions.length - 1)
-					nl = false;
-				center(questions[i], true, nl);
-			}
-
-			input = scnr.nextLine();
-			if (condition.test(input))
-				erase(questions.length);
-			else
-				break;
-		}
-
-		erase(questions.length);
-		return input;
-	}
 
 	public static void adminMenu() {
 	}
@@ -77,7 +55,7 @@ public class TUI {
 					print();
 				}
 
-				String storeName = getRepeatedInput(
+				String storeName = conditionalInquiry(
 						new String[] { "Please select one store you would you manage", "(type its name) 👉 " },
 						i -> Store.validate(i, user.getStores()) == null);
 
@@ -93,12 +71,13 @@ public class TUI {
 				storeSubmenu.put("🩳 Create product", () -> {
 					Renderer.figletBanner("create  product");
 
-					ArrayList<String> questions = new ArrayList<>(List.of(
-							"📛 name",
-							"💲 price",
-							"📄 description",
-							"🗳️  quantity"));
-					ArrayList<String> r = Renderer.questions(questions, 20);
+					String[] r = questionnaire(
+							new String[] {
+									"📛 name",
+									"💲 price",
+									"📄 description",
+									"🗳️  quantity"
+							});
 
 					clear();
 					print(3);
@@ -106,14 +85,14 @@ public class TUI {
 
 					print(2);
 
-					String tagName = getRepeatedInput(
+					String tagName = conditionalInquiry(
 							new String[] { "Please select what Tag you would like for your product", "(type the name) 👉 " },
 							i -> Tags.getByName(i) == null);
 
 					Retval retval = new Retval();
 					try {
-						retval = user.createProduct(userStore, r.get(0), Double.parseDouble(r.get(1)), r.get(2),
-								Integer.parseInt(r.get(3)),
+						retval = user.createProduct(userStore, r[0], Double.parseDouble(r[1]), r[2],
+								Integer.parseInt(r[3]),
 								Tags.getByName(tagName));
 					} catch (ClassCastException e) {
 						retval = new Retval(
@@ -128,11 +107,13 @@ public class TUI {
 				storeSubmenu.put("❗ Delete product", () -> {
 					Renderer.figletBanner("delete  product");
 
-					ArrayList<String> questions = new ArrayList<>(List.of(
-							"💁 Store name",
-							"🔒 Passcode"));
-					ArrayList<String> r = Renderer.questions(questions, 20);
-					Retval retval = user.addStore(r.get(0), r.get(1));
+					String[] r = questionnaire(
+							new String[] {
+									"💁 Store name",
+									"🔒 Passcode"
+							});
+
+					Retval retval = user.addStore(r[0], r[1]);
 
 					print(2);
 					center(retval.getMessage(), true);
@@ -142,8 +123,7 @@ public class TUI {
 				storeSubmenu.put("💁 Remove members", () -> {
 					Renderer.figletBanner("manage  members");
 
-
-					String memberName = getRepeatedInput(
+					String memberName = conditionalInquiry(
 							new String[] { "Which member would you like to remove?", "(type their name) 👉 " },
 							i -> Tags.getByName(i) == null);
 
@@ -167,23 +147,24 @@ public class TUI {
 					center("Only type what you wish to change. Press <Enter> for the rest", true);
 					print();
 
-					ArrayList<String> questions = new ArrayList<>(List.of(
-							"💁 New store name",
-							"🔒 New passcode",
-							"📄 New description"));
-					ArrayList<String> r = Renderer.questions(questions, 20);
+					String[] r = questionnaire(
+							new String[] {
+									"💁 New store name",
+									"🔒 New passcode",
+									"📄 New description"
+							});
 
 					Retval retval = new Retval("Updated settings successfully!", true);
 
-					if (r.get(0) != "" && Store.validate(r.get(0)) != null)
+					if (r[0] != "" && Store.validate(r[0]) != null)
 						retval = new Retval("The store name is already taken", false);
 					else {
-						if (r.get(0) != "")
-							userStore.setName(r.get(0));
-						if (r.get(1) != "")
-							userStore.setPassword(r.get(1));
-						if (r.get(2) != "")
-							userStore.setDescription(r.get(2));
+						if (r[0] != "")
+							userStore.setName(r[0]);
+						if (r[1] != "")
+							userStore.setPassword(r[1]);
+						if (r[2] != "")
+							userStore.setDescription(r[2]);
 					}
 
 					print(2);
@@ -191,21 +172,22 @@ public class TUI {
 					sleep(2);
 				});
 
-				Renderer.menu("management", storeSubmenu, true, false, true);
+				menu("management", storeSubmenu, true, false, true);
 			});
 
 			submenu.put("🗃️  Create store", () -> {
 
 				Renderer.figletBanner("create  store");
 
-				ArrayList<String> questions = new ArrayList<>(List.of(
-						"💁 Store name",
-						"🔒 Passcode",
-						"📄 Description"));
-				ArrayList<String> r = Renderer.questions(questions, 20);
+				String[] r = questionnaire(
+						new String[] {
+								"💁 Store name",
+								"🔒 Passcode",
+								"📄 Description"
+						});
 				sleep(1);
 
-				if (r.get(0) == "") {
+				if (r[0] == "") {
 					center(new Retval("The name of the store must be non-empty", false).getMessage(), true);
 					sleep(2);
 					return;
@@ -217,11 +199,11 @@ public class TUI {
 
 				print(2);
 
-				String tagName = getRepeatedInput(
+				String tagName = conditionalInquiry(
 						new String[] { "Please select what Tag you would like for your store", "(type the name) 👉 " },
 						i -> Tags.getByName(i) == null);
 
-				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getByName(tagName));
+				Retval retval = user.createStore(r[0], r[1], r[2], Tags.getByName(tagName));
 
 				center(retval.getMessage(), true);
 				sleep(2);
@@ -230,23 +212,25 @@ public class TUI {
 			submenu.put("🥋 Join store", () -> {
 				Renderer.figletBanner("join  store");
 
-				ArrayList<String> questions = new ArrayList<>(List.of(
-						"💁 Store name",
-						"🔒 Passcode"));
-				ArrayList<String> r = Renderer.questions(questions, 20);
-				Retval retval = user.addStore(r.get(0), r.get(1));
+				String[] r = questionnaire(
+						new String[] {
+								"💁 Store name",
+								"🔒 Passcode"
+						});
+
+				Retval retval = user.addStore(r[0], r[1] );
 
 				print(2);
 				center(retval.getMessage(), true);
 				sleep(2);
 			});
 
-			Renderer.menu("stores", submenu, true);
+			menu("stores", submenu, true);
 		});
 		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> center("showing menu to update personal info"));
 
-		Renderer.menu("login", options, true, true);
+		menu("login", options, true, true);
 	}
 
 	/**
@@ -258,7 +242,7 @@ public class TUI {
 	}
 
 	/** Render main menu */
-	public static void menu() {
+	public static void mainMenu() {
 
 		// dummy data. Don't delete (for now)
 		dummyData();
@@ -268,25 +252,18 @@ public class TUI {
 			clear();
 			vcenter(12);
 
-			centerBanner(Banners.MAIN);
+			Renderer.centerBanner(Banners.MAIN);
 
 			print();
 			center("===== Empower Your Passion, Share Your Creations =====", true);
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
-			// Tags[] tags = { Tags.PHOTOGRAPHY, Tags.PLUSHIES, Tags.MUSIC };
-			// int numCols = tags.length;
-			//
+			String[] r = questionnaire(
+					new String[] { "💁 Username", "🔒 Password" }, 6);
 
-			// sleep(3);
-
-			// if (true) return;
-
-			ArrayList<String> questions = new ArrayList<>(List.of("💁 Username", "🔒 Password"));
-			ArrayList<String> r = Renderer.questions(questions, 6);
-			String username = r.get(0);
-			String password = r.get(1);
+			String username = r[0];
+			String password = r[1];
 
 			Person person = User.validate(username, password);
 			// TODO: rework Admin too
@@ -305,14 +282,14 @@ public class TUI {
 					adminMenu();
 
 			} else {
-				String input = getRepeatedInput(
+				String input = conditionalInquiry(
 						new String[] { "Hmm looks like you don't have an account. Would you like to create one?",
 								"[yes|no] 👉 " },
 						i_ -> !(i_.equals("yes") == true || i_.equals("no") == true));
 
 				if (input.equals("yes")) {
 					if (User.validate(username) != null) {
-						username = getRepeatedInput(
+						username = conditionalInquiry(
 								new String[] { "Your desired username is already being used", "New username: " },
 								i -> User.validate(i) != null);
 					}
