@@ -108,13 +108,13 @@ public class TUI {
 
 					String tagName = getRepeatedInput(
 							new String[] { "Please select what Tag you would like for your product", "(type the name) 👉 " },
-							i -> Tags.getTagByName(i) == null);
+							i -> Tags.getByName(i) == null);
 
 					Retval retval = new Retval();
 					try {
 						retval = user.createProduct(userStore, r.get(0), Double.parseDouble(r.get(1)), r.get(2),
 								Integer.parseInt(r.get(3)),
-								Tags.getTagByName(tagName));
+								Tags.getByName(tagName));
 					} catch (ClassCastException e) {
 						retval = new Retval(
 								"Failed to parse your input. Make sure you are not typing letters in the place of numbers",
@@ -136,6 +136,19 @@ public class TUI {
 
 					print(2);
 					center(retval.getMessage(), true);
+					sleep(2);
+				});
+
+				storeSubmenu.put("💁 Remove members", () -> {
+					Renderer.figletBanner("manage  members");
+
+
+					String memberName = getRepeatedInput(
+							new String[] { "Which member would you like to remove?", "(type their name) 👉 " },
+							i -> Tags.getByName(i) == null);
+
+					print(2);
+					// center(retval.getMessage(), true);
 					sleep(2);
 				});
 
@@ -185,7 +198,6 @@ public class TUI {
 
 				Renderer.figletBanner("create  store");
 
-
 				ArrayList<String> questions = new ArrayList<>(List.of(
 						"💁 Store name",
 						"🔒 Passcode",
@@ -207,9 +219,9 @@ public class TUI {
 
 				String tagName = getRepeatedInput(
 						new String[] { "Please select what Tag you would like for your store", "(type the name) 👉 " },
-						i -> Tags.getTagByName(i) == null);
+						i -> Tags.getByName(i) == null);
 
-				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getTagByName(tagName));
+				Retval retval = user.createStore(r.get(0), r.get(1), r.get(2), Tags.getByName(tagName));
 
 				center(retval.getMessage(), true);
 				sleep(2);

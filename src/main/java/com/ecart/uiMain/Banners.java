@@ -1,6 +1,8 @@
 package com.ecart.uiMain;
 
-public enum Banners {
+import com.ecart.gestorAplicacion.meta.Pictogram;
+
+public enum Banners implements Pictogram<Banners> {
 	MAIN("""
 			   ▄████████  ▄████████    ▄████████    ▄████████     ███
 			  ███    ███ ███    ███   ███    ███   ███    ███ ▀█████████▄
@@ -43,16 +45,18 @@ public enum Banners {
 	}
 
 	/** Get the raw banner */
+	@Override
 	public String get() {
 		// they are stored as String[], so they must be converted
 		return String.join("\n", banner);
 	}
 
+	@Override
 	public String[] split() {
 		return banner.split("\n");
 	}
 
-	public static Banners getBannerByName(String name) {
+	public static Banners getByName(String name) {
 		for (Banners banner : Banners.values()) {
 			if (banner.name().equalsIgnoreCase(name)) {
 				return banner;
@@ -60,4 +64,6 @@ public enum Banners {
 		}
 		return null;
 	}
+
+
 }

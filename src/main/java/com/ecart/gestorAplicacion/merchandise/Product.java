@@ -1,7 +1,6 @@
 package com.ecart.gestorAplicacion.merchandise;
 
 import com.ecart.gestorAplicacion.entites.User;
-import com.ecart.gestorAplicacion.meta.Indexable;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

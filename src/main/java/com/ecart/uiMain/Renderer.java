@@ -288,7 +288,7 @@ class Renderer {
 			if (useFiglet)
 				Renderer.figletBanner(banner, 0, 0);
 			else
-				centerBanner(Banners.getBannerByName(banner));
+				centerBanner(Banners.getByName(banner));
 
 			print(4);
 

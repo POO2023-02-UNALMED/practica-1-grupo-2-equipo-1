@@ -2,6 +2,8 @@ package com.ecart.gestorAplicacion.meta;
 
 /**
  * Generic return value holder
+ *
+ * Allows for communication between classes
  */
 public class Retval {
 	private String message;
