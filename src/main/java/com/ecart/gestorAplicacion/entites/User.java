@@ -61,6 +61,8 @@ public class User extends Person {
 		return store.createProduct(name, price, description, quantity, tag, this);
 	}
 
+	// guia
+
 	public Retval createStore(String name, String password, String description, Tags tag) {
 
 		Store newStore = Store.create(name, password, description, tag);

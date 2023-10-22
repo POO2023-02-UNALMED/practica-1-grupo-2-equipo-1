@@ -53,7 +53,7 @@ public class Delivery extends Person {
         if(!Person.isAddressAvailable(address))
             return null;
 
-        newDelivery = new Delivery(name, password, address);
+        newDelivery = new Delivery(name, password, getAddress());
         return newDelivery;
     }
 

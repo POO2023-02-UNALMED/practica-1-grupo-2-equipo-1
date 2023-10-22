@@ -1,10 +1,12 @@
 package com.ecart.gestorAplicacion.entites;
 
+import com.ecart.gestorAplicacion.meta.Retval;
+
 import java.util.ArrayList;
 
 public class Admin extends Person {
 	private static ArrayList<Admin> instances = new ArrayList<>();
-	private  ArrayList<Delivery> deliveries = new ArrayList<>();
+	private  ArrayList<Delivery> delivery = new ArrayList<>();
 
 
 	public Admin(String username, String password, int[] address) {
@@ -52,5 +54,33 @@ public class Admin extends Person {
 		return newAdmin;
 	}
 
+	public Retval createDelivery(String name, String password){
+		Delivery newDelivery = Delivery.create(name, password, getAddress());
+		if (newDelivery == null)
+			return new Retval("Failed to create store, name already in use", false);
+		return this.addDelivery(newDelivery);
+	}
+
+	public Retval addDelivery(Delivery delivery){
+		return addDelivery(delivery.getName(), delivery.getPassword());
+
+	}
+
+
+
+	public Retval addDelivery(String name, String password) {
+		Delivery existingDelivery = Delivery.validate(name, password);
+		if (existingDelivery == null){
+			return new Retval("Error: the store does not exist", false);
+		}
+/*
+		Retval retval = Delivery.create(name, password, getAddress());
+		if (retval.ok()) this.delivery.add(existingDelivery);
+
+		return retval;
+	}
+*/
+		return null;
+	}
 }
 

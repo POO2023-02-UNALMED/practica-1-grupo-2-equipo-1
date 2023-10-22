@@ -25,7 +25,7 @@ public class Person extends Entity {
 	}
 
 
-	public int[] getAddress() {
+	public static int[] getAddress() {
 		return address;
 	}
 
