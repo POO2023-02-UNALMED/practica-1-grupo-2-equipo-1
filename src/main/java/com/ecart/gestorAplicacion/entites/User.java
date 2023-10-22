@@ -2,6 +2,7 @@ package com.ecart.gestorAplicacion.entites;
 
 import java.util.ArrayList;
 
+import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
@@ -44,31 +45,11 @@ public class User extends Person {
 		return null;
 	}
 
-	// public void sync(String storeName) {
-	// 	Store storeInUser = Store.validate(storeName, stores);
-	// 	if (storeInUser != null) { // if there is store in user
-	// 		if (Store.validate(storeName) == null) { // but none on Store instances
-	// 			 stores.remove(storeInUser);
-	// 			this.deleteStore(storeName); // delete it from user
-	// 		}
-	// 	}
-	//
-	// 	// if (this.validate())
-	// }
 	public Retval createProduct(Store store, String name, double price, String description, int quantity, Tags tag) {
 		return store.createProduct(name, price, description, quantity, tag);
 	}
 
 	public Retval createStore(String name, String password, String description, Tags tag) {
-		// sync stores
-		// if (Store.validate(name, stores) != null) { // if there is store in user
-		// 	if (Store.validate(name) == null) { // check if there is no store in stores
-		// 		this.deleteStore(name); // delete it from user
-		// 		return new Retval("Failed to create store. You were part of a store with this name, but it got deleted", false);
-		// 	} else {
-		// 		return new Retval("Failed to create store, you aleardy belong to a store with this name", false);
-		// 	}
-		// }
 
 		Store newStore = Store.create(name, password, description, tag);
 		if (newStore == null)
@@ -93,7 +74,15 @@ public class User extends Person {
 		return retval;
 	}
 
-	// public Retval listProduct()
+	public Retval listProduct(String productName, Store store, boolean doList) {
+		Product existingProduct = Product.validate(productName, store.getProducts());
+		if (existingProduct == null)
+			return new Retval("Error: there is no such product inside the store", false);
+
+		existingProduct.setListed(doList);
+
+		return new Retval("Unlisted product succesfully");
+	}
 
 	public ArrayList<Store> getStores() {
 		return stores;

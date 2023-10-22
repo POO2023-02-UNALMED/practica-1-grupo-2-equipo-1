@@ -19,7 +19,7 @@ public final class Renderer {
 	}
 
 	public static void figletBanner(String banner) {
-		figletBanner(banner, 15);
+		figletBanner(banner, 20);
 	}
 
 	public static void figletBanner(String banner, int vcentr) {
@@ -42,33 +42,6 @@ public final class Renderer {
 			center(line, averageLength);
 
 		print(postSpaces);
-	}
-
-	public static void drawAllTags() {
-		drawAllTags(3);
-	}
-
-	public static void drawAllTags(int batchSize) {
-
-		Tags[] allTags = Tags.values();
-
-		for (int i = 0; i < allTags.length; i += batchSize) {
-
-			int endIndex = Math.min(i + batchSize, allTags.length);
-			Renderable[] unitsBatch = new Renderable[endIndex - i];
-
-			for (int j = i, k = 0; j < endIndex; j++, k++) {
-				unitsBatch[k] = new Renderable(
-						allTags[j],
-						new String[] { allTags[j].name() },
-						null);
-			}
-
-			drawTiledPattern_(
-					unitsBatch,
-					new String[] { "Tag name: " },
-					null, 3, 0, 2, true);
-		}
 	}
 
 	public static int minBoxSize(Tags tag, String captionLabel, String caption) {
@@ -99,7 +72,8 @@ public final class Renderer {
 		return padding;
 	}
 
-	private static String generateHorizontalLine(Renderable[] units, String biggestCaptionLabel, int cols, String border, String spacer, int captionIndex) {
+	// private static String generateHorizontalLine(Renderable[] units, String biggestCaptionLabel, int cols, String border, String spacer, int captionIndex) {
+	private static String generateHorizontalLine(Renderable[] units, int cols, String border, String spacer,  String biggestCaptionLabel, String actualCaptionLabel, int captionIndex) {
 		StringBuilder line = new StringBuilder();
 		int renderedCols = 1;
 		int biggestMbs = 0;
@@ -113,18 +87,17 @@ public final class Renderer {
 			if (individualMbs > biggestMbs) biggestMbs = individualMbs;
 		}
 
-
 		for (int i = 0; i < units.length; i++) {
 			Renderable u = units[i];
 
-			if (captionIndex != -1) {
-				String caption = u.getCaptions()[captionIndex];
-				int[] padding = boxPadding(biggestMbs, biggestCaptionLabel + caption);
+			if (actualCaptionLabel != null && captionIndex != -1) {
+				String actualCaption = u.getCaptions()[captionIndex];
+				int[] padding = boxPadding(biggestMbs, actualCaptionLabel + actualCaption);
 
 				line.append(
 					border +
 					" ".repeat(padding[0]) +
-					biggestCaptionLabel + caption.toLowerCase() +
+					actualCaptionLabel + actualCaption.toLowerCase() +
 					" ".repeat(padding[1]) +
 					border
 				);
@@ -151,16 +124,16 @@ public final class Renderer {
 
 	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels) {
 		if (captionsLabels == null) captionsLabels = new String[] {"bottoplceholdr"};
-		drawTiledPattern_(new Renderable[] {unit}, captionsLabels, sideDataLabels, 1, 8, 2, false);
+		drawTiledPattern(new Renderable[] {unit}, captionsLabels, sideDataLabels, 1, 8, 2, false);
 	}
 
-	public static void drawTiledPattern_(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols, int offset, int verticalSpacers, boolean printCaptions) {
+	public static void drawTiledPattern(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols, int offset, int verticalSpacers, boolean printCaptions) {
 		if (captionsLabels == null)
 			captionsLabels = new String[] { "" };
 
 		String biggestCaptionLabel = getBiggestString(captionsLabels);
 		int biggestMbs = 0;
-		int dataIndex = -1;
+		int dataIndex = 0;
 
 		for (int i = 0; i < units.length; i++) {
 			Renderable u = units[i];
@@ -171,14 +144,14 @@ public final class Renderer {
 			if (individualMbs > biggestMbs) biggestMbs = individualMbs;
 		}
 
-		String horizontalHeaders = generateHorizontalLine(units, biggestCaptionLabel, cols, "+", "-", -1);
-		String horizontalSpacers = generateHorizontalLine(units, biggestCaptionLabel, cols, "|", " ", -1);
+		String horizontalHeaders = generateHorizontalLine(units, cols, "+", "-", biggestCaptionLabel, null, -1);
+		String horizontalSpacers = generateHorizontalLine(units, cols, "|", " ", biggestCaptionLabel, null, -1);
 		String[] horizontalCaptions = new String[captionsLabels.length];
 		String entireLeftPadding = " ".repeat(center(horizontalHeaders, 0, true, false, true).length() - offset);
 		int linesCount = units[0].getTag().split().length;
 
 		for (int i = 0; i < captionsLabels.length; i++) {
-			horizontalCaptions[i] = generateHorizontalLine(units, captionsLabels[i], cols, "|", " ", i);
+			horizontalCaptions[i] = generateHorizontalLine(units, cols, "|", " ", biggestCaptionLabel, captionsLabels[i], i);
 		}
 
 		print(entireLeftPadding + horizontalHeaders);

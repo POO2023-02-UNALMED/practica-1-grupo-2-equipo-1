@@ -3,6 +3,7 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.*;
+import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.uiMain.menus.userMenu.userMenu;
 
@@ -17,7 +18,10 @@ public final class TUI {
 	 * This is for testing purposes only! while the persistence layer is baking...
 	 */
 	public static void dummyData() {
-		new User("q", "1");
+		User q = new User("q", "1");
+		q.createStore("unal", "pass1234", "super cool store", Tags.getByName("office"));
+		q.createProduct(Store.validate("unal", q.getStores()), "boombox", (double) 20, "super cool sound box", 10, Tags.getByName("music"));
+		q.createProduct(Store.validate("unal", q.getStores()), "pencil", (double) 20, "super cool pencil", 100, Tags.getByName("office"));
 	}
 
 	/** Render main menu */

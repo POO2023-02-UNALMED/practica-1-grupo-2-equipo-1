@@ -10,6 +10,7 @@ import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.uiMain.Renderer;
+import com.ecart.uiMain.menus.Commons;
 import com.ecart.uiMain.menus.userMenu.manageStores.viewStores.viewStores;
 
 final public class manageStores {
@@ -32,10 +33,10 @@ final public class manageStores {
 		}
 
 		clear();
-		print(3);
-		Renderer.drawAllTags();
+		print();
+		Commons.drawAllTags();
 
-		print(2);
+		print();
 
 		String tagName = conditionalInquiry(
 				new String[] { "Please select what Tag you would like for your store", "(type the name) 👉 " },

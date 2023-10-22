@@ -6,11 +6,13 @@ import java.util.LinkedHashMap;
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.User;
+import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
+import com.ecart.uiMain.menus.Commons;
 
 final public class viewStores {
 	private static void createProduct(User user, Store userStore) {
@@ -25,10 +27,10 @@ final public class viewStores {
 				});
 
 		clear();
-		print(3);
-		Renderer.drawAllTags();
+		print();
+		Commons.drawAllTags();
 
-		print(2);
+		print();
 
 		String tagName = conditionalInquiry(
 				new String[] { "Please select what Tag you would like for your product", "(type the name) 👉 " },
@@ -52,21 +54,85 @@ final public class viewStores {
 	private static void removeProduct(User user, Store userStore) {
 		Renderer.figletBanner("remove  product");
 
-		print(2);
-		center("Removing a product will unlist it for the public", true);
-		print();
+		Commons.drawProducts(userStore);
 
-		String[] r = questionnaire(
+		String productName = conditionalInquiry(
+				new String[] { "Removing a product will unlist it for the public", "(type the name) 👉 " },
+				i -> Product.validate(i, userStore.getProducts()) == null);
+
+		Retval retval = user.listProduct(productName, userStore, false);
+
+		Commons.dialog(retval);
+	}
+
+	private static void updateProduct(User user, Store userStore) {
+		Renderer.figletBanner("update  product");
+
+		Commons.drawProducts(userStore);
+
+		String productName = conditionalInquiry(
+				new String[] { "Which product would you like to update?", "(type the name) 👉 " },
+				i -> Product.validate(i, userStore.getProducts()) == null);
+
+		clear();
+		Renderer.figletBanner("new  properties");
+
+		Product storeProduct = Product.validate(productName, userStore.getProducts());
+
+		Renderable unit = new Renderable(
+				storeProduct.getTag(),
+				new String[] { userStore.getTag().name() },
 				new String[] {
-						"💁 Store name",
-						"🔒 Passcode"
+						storeProduct.getName(),
+						"$" + Double.toString(storeProduct.getPrice()),
+						Integer.toString(storeProduct.getQuantity()),
+						Boolean.toString(storeProduct.isListed()),
+						storeProduct.getDescription()
 				});
 
-		Retval retval = user.addStore(r[0], r[1]);
+		Renderer.drawCard(unit, null, new String[] {
+				"Name: ", "Price: ", "Quantity: ", "Is listed: ", "Description: "
+		});
 
 		print(2);
-		center(retval.getMessage(), true);
-		sleep(2);
+		center("Only type what you wish to change. Press <Enter> for the rest", true);
+		print();
+		
+		String[] r = questionnaire(
+				new String[] {
+						"💁 New name",
+						"💲 New price",
+						"📋 Updated quantity",
+						"📫 Update listing",
+						"📄 Update description",
+				});
+
+		Retval retval = new Retval("Updated settings successfully!", true);
+
+		if (r[0] != "" && Product.validate(r[0], userStore.getProducts()) != null)
+			retval = new Retval("The store name is already taken", false);
+		else {
+			try {
+				if (r[0] != "")
+					storeProduct.setName(r[0]);
+				if (r[1] != "")
+					storeProduct.setPrice(Double.parseDouble(r[1]));
+				if (r[2] != "")
+					storeProduct.setQuantity(Integer.parseInt(r[2]));
+				if (r[3] != "")
+					storeProduct.setListed(Boolean.parseBoolean(r[3]));
+				if (r[4] != "")
+					storeProduct.setDescription(r[4]);
+
+				retval = new Retval("Updated product's settings successfully", true);
+			} catch (ClassCastException e) {
+				retval = new Retval(
+						"Failed to parse your input. Make sure you are not typing letters in the place of numbers",
+						false);
+			}
+		}
+
+		Commons.dialog(retval);
 	}
 
 	private static void removeMembers(User user, Store userStore) {
@@ -85,16 +151,16 @@ final public class viewStores {
 		Renderer.figletBanner("update  settings", 20);
 
 		Renderable unit = new Renderable(
-			userStore.getTag(),
-			new String[] {userStore.getTag().name()},
-			new String[] {
-				userStore.getName(),
-				userStore.getPassword(),
-				userStore.getDescription(),
-		});
+				userStore.getTag(),
+				new String[] { userStore.getTag().name() },
+				new String[] {
+						userStore.getName(),
+						userStore.getPassword(),
+						userStore.getDescription(),
+				});
 
 		Renderer.drawCard(unit, null, new String[] {
-			"Name: ", "Passcode: ", "Description: "
+				"Name: ", "Passcode: ", "Description: "
 		});
 
 		print(2);
@@ -128,7 +194,7 @@ final public class viewStores {
 	}
 
 	public static void call(User user) {
-		Renderer.figletBanner("your  stores", 20);
+		Renderer.figletBanner("your  stores");
 
 		ArrayList<Store> stores = user.getStores();
 
@@ -146,16 +212,16 @@ final public class viewStores {
 			data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
 
 			Renderable unit = new Renderable(
-				store.getTag(),
-				new String[] {store.getTag().name()},
-				new String[] {
-					store.getName(),
-					store.getTag().name(),
-					"🌟 🌟 🌟 🌟 🌟"
-			});
+					store.getTag(),
+					new String[] { store.getTag().name() },
+					new String[] {
+							store.getName(),
+							store.getTag().name(),
+							"🌟 🌟 🌟 🌟 🌟"
+					});
 
 			Renderer.drawCard(unit, null, new String[] {
-				"Name: ", "Tag: ", "Reviews: "
+					"Name: ", "Tag: ", "Reviews: "
 			});
 
 			print();
@@ -173,6 +239,7 @@ final public class viewStores {
 
 		submenu.put("🩳 Create product", () -> createProduct(user, userStore));
 		submenu.put("❗ Remove product", () -> removeProduct(user, userStore));
+		submenu.put("💲 Update product", () -> updateProduct(user, userStore));
 		submenu.put("💁 Remove members", () -> removeMembers(user, userStore));
 		submenu.put("🗃️  Update settings", () -> updateSettings(user, userStore));
 
