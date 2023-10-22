@@ -12,8 +12,8 @@ public class User extends Person {
 
 	private static ArrayList<User> instances = new ArrayList<>();
 
-	public User(String username, String password) {
-		super(username, password);
+	public User(String username, String password, int[] address) {
+		super(username, password, address);
 
 		this.stores = new ArrayList<>();
 		instances.add(this);
@@ -43,6 +43,18 @@ public class User extends Person {
 			}
 		}
 		return null;
+	}
+
+	public static User create(String name, String password, int[] address) {
+		User newUser = validate(name);
+		if (newUser != null)
+			return null;
+
+		if(!Person.isAddressAvailable(address))
+			return null;
+
+		newUser = new User(name, password, address);
+		return newUser;
 	}
 
 	public Retval createProduct(Store store, String name, double price, String description, int quantity, Tags tag) {

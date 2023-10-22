@@ -40,7 +40,7 @@ public class Store extends Entity {
 
 		newStore = new Store(name, passcode, description, tag);
 
-		instances.add(newStore);
+		// instances.add(newStore);
 		return newStore;
 	}
 

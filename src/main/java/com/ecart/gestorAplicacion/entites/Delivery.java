@@ -10,8 +10,8 @@ public class Delivery extends Person {
     private ArrayList<Order> orders;
     private ArrayList<ShoppingCart> shoppingCarts;
 
-    public Delivery(String username, String password) {
-        super(username, password);
+    public Delivery(String username, String password, int[] address) {
+        super(username, password, address);
         instances.add(this);
         orders = new ArrayList<>();
         shoppingCarts = new ArrayList<>();

@@ -18,7 +18,7 @@ public final class TUI {
 	 * This is for testing purposes only! while the persistence layer is baking...
 	 */
 	public static void dummyData() {
-		User q = new User("q", "1");
+		User q = new User("q", "1", new int[]{50,50});
 		q.createStore("unal", "pass1234", "super cool store", Tags.getByName("office"));
 		q.createProduct(Store.validate("unal", q.getStores()), "boombox", (double) 20, "super cool sound box", 10, Tags.getByName("music"));
 		q.createProduct(Store.validate("unal", q.getStores()), "pencil", (double) 20, "super cool pencil", 100, Tags.getByName("office"));
@@ -77,8 +77,31 @@ public final class TUI {
 								i -> User.validate(i) != null);
 					}
 
+					String calle = "";
+					String carrera = "";
+					while (true) {
+						calle = conditionalInquiry(
+								new String[] { "We need your address to be able to register you in the system", "Your calle (number from 0 to 100): " },
+								i ->  (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
+
+						carrera = conditionalInquiry(
+								new String[] { "We need your address to be able to register you in the system", "Your carrera (number from 0 to 100): " },
+								i ->  (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
+
+						if (!Person.isAddressAvailable(new int[]{ Integer.parseInt(calle), Integer.parseInt(carrera)})) {
+							center("⚠️  This address is already taken", true);
+							sleep(2);
+							erase(1);
+						} else break;
+					}
+
 					print();
-					person = new User(username, password);
+					person = User.create(
+						username,
+						password,
+						new int[]{ Integer.parseInt(calle), Integer.parseInt(carrera)}
+					);
+
 					center("✅ Your account was created successfully!", true, false);
 					sleep(2);
 					userMenu.call((User) person);

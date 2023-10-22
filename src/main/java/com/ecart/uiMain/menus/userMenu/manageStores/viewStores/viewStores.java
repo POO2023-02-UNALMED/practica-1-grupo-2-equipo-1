@@ -240,7 +240,7 @@ final public class viewStores {
 		submenu.put("🩳 Create product", () -> createProduct(user, userStore));
 		submenu.put("❗ Remove product", () -> removeProduct(user, userStore));
 		submenu.put("💲 Update product", () -> updateProduct(user, userStore));
-		submenu.put("💁 Remove members", () -> removeMembers(user, userStore));
+		// submenu.put("💁 Remove members", () -> removeMembers(user, userStore)); // not for now
 		submenu.put("🗃️  Update settings", () -> updateSettings(user, userStore));
 
 		menu("management", submenu, true, false, true);
