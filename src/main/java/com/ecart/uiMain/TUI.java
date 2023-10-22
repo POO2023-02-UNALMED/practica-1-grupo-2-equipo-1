@@ -3,13 +3,7 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.*;
-import com.ecart.gestorAplicacion.merchandise.Store;
-import com.ecart.gestorAplicacion.merchandise.Tags;
-import com.ecart.gestorAplicacion.meta.Retval;
-import com.ecart.uiMain.menus.userMenu;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import com.ecart.uiMain.menus.userMenu.userMenu;
 
 /** Textual User Interface */
 public final class TUI {
@@ -61,7 +55,7 @@ public final class TUI {
 				sleep(2);
 
 				if (person instanceof User)
-					userMenu.mainMenu((User) person);
+					userMenu.call((User) person);
 				else if (person instanceof Admin)
 					adminMenu();
 
@@ -82,7 +76,7 @@ public final class TUI {
 					person = new User(username, password);
 					center("✅ Your account was created successfully!", true, false);
 					sleep(2);
-					userMenu.mainMenu((User) person);
+					userMenu.call((User) person);
 				} else {
 					center("🫂 Alright, see you later", true, false);
 					sleep(2);

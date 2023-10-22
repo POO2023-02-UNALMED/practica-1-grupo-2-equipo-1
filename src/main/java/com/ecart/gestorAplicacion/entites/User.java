@@ -93,6 +93,8 @@ public class User extends Person {
 		return retval;
 	}
 
+	// public Retval listProduct()
+
 	public ArrayList<Store> getStores() {
 		return stores;
 	}

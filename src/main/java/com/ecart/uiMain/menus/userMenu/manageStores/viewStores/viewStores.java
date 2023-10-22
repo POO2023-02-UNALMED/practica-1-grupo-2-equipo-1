@@ -1,4 +1,4 @@
-package com.ecart.uiMain.menus;
+package com.ecart.uiMain.menus.userMenu.manageStores.viewStores;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,29 +11,8 @@ import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.uiMain.Renderer;
 
-/*
- * The nomenclature being used is:
- * every "main" menu is named as is, and any submenus are named with "_m0", where
- * "mo" should be replaced with the main menus' name. Submenus can have multiple
- * submenus too.
- *
- * For example:
- *
- * manageStores(): the main menu
- * _mg_viewStores(): submenu 
- * _mg_vs_createProduct(): submenu option of the submenu
- *
- * Tips:
- *		1. In the source code, keep them ordered as in the menus themselves
- *		2. Remove articles and pronouns from the (sub)menus' function names
- *
- * */
-
-final public class userMenu {
-
-	// ############### manageStores
-	// #################### _mg_viewStores 
-	private static void _mg_vs_createProduct(User user, Store userStore) {
+final public class viewStores {
+	private static void createProduct(User user, Store userStore) {
 		Renderer.figletBanner("create  product");
 
 		String[] r = questionnaire(
@@ -69,8 +48,12 @@ final public class userMenu {
 		sleep(2);
 	}
 
-	private static void _mg_vs_deleteProduct(User user, Store userStore) {
-		Renderer.figletBanner("delete  product");
+	private static void removeProduct(User user, Store userStore) {
+		Renderer.figletBanner("remove  product");
+
+		print(2);
+		center("Removing a product will unlist it for the public", true);
+		print();
 
 		String[] r = questionnaire(
 				new String[] {
@@ -85,7 +68,7 @@ final public class userMenu {
 		sleep(2);
 	}
 
-	private static void _mg_vs_removeMembers(User user, Store userStore) {
+	private static void removeMembers(User user, Store userStore) {
 		Renderer.figletBanner("manage  members");
 
 		String memberName = conditionalInquiry(
@@ -97,7 +80,7 @@ final public class userMenu {
 		sleep(2);
 	}
 
-	private static void _mg_vs_updateSettings(User user, Store userStore) {
+	private static void updateSettings(User user, Store userStore) {
 		Renderer.figletBanner("update  settings", 20);
 
 		LinkedHashMap<String, String> data = new LinkedHashMap<>();
@@ -138,7 +121,7 @@ final public class userMenu {
 
 	}
 
-	private static void _mg_viewStores(User user) {
+	public static void call(User user) {
 		Renderer.figletBanner("your  stores", 20);
 
 		ArrayList<Store> stores = user.getStores();
@@ -168,88 +151,13 @@ final public class userMenu {
 
 		clear();
 
-		LinkedHashMap<String, Runnable> storeSubmenu = new LinkedHashMap<>();
-
-		storeSubmenu.put("🩳 Create product", () -> _mg_vs_createProduct(user, userStore));
-		storeSubmenu.put("❗ Delete product", () -> _mg_vs_deleteProduct(user, userStore));
-		storeSubmenu.put("💁 Remove members", () -> _mg_vs_removeMembers(user, userStore));
-		storeSubmenu.put("🗃️  Update settings", () -> _mg_vs_updateSettings(user, userStore));
-
-		menu("management", storeSubmenu, true, false, true);
-	}
-	// #################### _mg_viewStores 
-
-	private static void _mg_createStore(User user) {
-		Renderer.figletBanner("create  store");
-
-		String[] r = questionnaire(
-				new String[] {
-						"💁 Store name",
-						"🔒 Passcode",
-						"📄 Description"
-				});
-		sleep(1);
-
-		if (r[0] == "") {
-			center(new Retval("The name of the store must be non-empty", false).getMessage(), true);
-			sleep(2);
-			return;
-		}
-
-		clear();
-		print(3);
-		Renderer.renderAllTags();
-
-		print(2);
-
-		String tagName = conditionalInquiry(
-				new String[] { "Please select what Tag you would like for your store", "(type the name) 👉 " },
-				i -> Tags.getByName(i) == null);
-
-		Retval retval = user.createStore(r[0], r[1], r[2], Tags.getByName(tagName));
-
-		center(retval.getMessage(), true);
-		sleep(2);
-	}
-
-	private static void _mg_joinStore(User user) {
-		Renderer.figletBanner("join  store");
-
-		String[] r = questionnaire(
-				new String[] {
-						"💁 Store name",
-						"🔒 Passcode"
-				});
-
-		Retval retval = user.addStore(r[0], r[1]);
-
-		print(2);
-		center(retval.getMessage(), true);
-		sleep(2);
-	}
-
-	private static void manageStores(User user) {
-
 		LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 
-		submenu.put("🖼️  View your stores", () -> _mg_viewStores(user));
-		submenu.put("🗃️  Create store", () -> _mg_createStore(user));
-		submenu.put("🥋 Join store", () -> _mg_joinStore(user));
+		submenu.put("🩳 Create product", () -> createProduct(user, userStore));
+		submenu.put("❗ Remove product", () -> removeProduct(user, userStore));
+		submenu.put("💁 Remove members", () -> removeMembers(user, userStore));
+		submenu.put("🗃️  Update settings", () -> updateSettings(user, userStore));
 
-		menu("stores", submenu, true);
+		menu("management", submenu, true, false, true);
 	}
-	// ############### manageStores
-
-	public static void mainMenu(User user) {
-		// maps are abstracts, while HashMaps aren't
-		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
-
-		options.put("🛍️  Go shopping!", () -> center("viewing stores", true));
-		options.put("🏪 Manage your stores", () -> manageStores(user));
-		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
-		options.put("👱 Profile settings", () -> center("showing menu to update personal info"));
-
-		menu("login", options, true, true);
-	}
-
 }

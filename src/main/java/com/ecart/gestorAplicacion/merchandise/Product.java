@@ -15,6 +15,7 @@ public class Product {
 	private String description;
 	private int quantity;
 	private Tags tag;
+	private boolean listed;
 
 	// private List<User> subscribers = new ArrayList<>();
 	// private List<Coupon> coupons = new ArrayList<>();
@@ -28,6 +29,7 @@ public class Product {
 		this.description = description;
 		this.quantity = quantity;
 		this.tag = tag;
+		this.listed = true;
 
 		instances.add(this);
 	}
@@ -107,27 +109,28 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	// public List<User> getSubscribers() {
-	// return subscribers;
-	// }
-	//
-	// public void subscribe(User user) {
-	// subscribers.add(user);
-	// }
-	//
-	// public void addCoupon(Coupon coupon) {
-	// this.coupons.add(coupon);
-	// }
-	//
-	// public List<Coupon> getCoupons() {
-	// return this.coupons;
-	// }
-	//
-	// public void addReview(Review review) {
-	// this.reviews.add(review);
-	// }
-	//
-	// public List<Review> getReviews() {
-	// return this.reviews;
-	// }
+	public Tags getTag() {
+		return tag;
+	}
+
+	public void setTag(Tags tag) {
+		this.tag = tag;
+	}
+
+	public boolean isListed() {
+		return listed;
+	}
+
+	public void setListed(boolean listed) {
+		this.listed = listed;
+	}
+
+	public static ArrayList<Product> getInstances() {
+		return instances;
+	}
+
+	public static void setInstances(ArrayList<Product> instances) {
+		Product.instances = instances;
+	}
+
 }
