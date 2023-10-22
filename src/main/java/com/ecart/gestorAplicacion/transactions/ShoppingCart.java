@@ -16,8 +16,8 @@ public class ShoppingCart {
 
     public void addProduct(Product product, int quantity) {
 			// temporary fix
-        Product cartProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity, Tags.PHOTOGRAPHY);
-        cartItems.add(cartProduct);
+        // Product cartProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity, Tags.PHOTOGRAPHY);
+        // cartItems.add(cartProduct);
     }
 
     public List<Product> getCartItems() {
