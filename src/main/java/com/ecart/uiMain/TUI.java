@@ -18,17 +18,23 @@ public final class TUI {
 	 * This is for testing purposes only! while the persistence layer is baking...
 	 */
 	public static void dummyData() {
-		User q = new User("q", "1", new int[]{50,50});
+		User q = new User("q", "1", new int[] { 50, 50 });
 		q.createStore("unal", "pass1234", "super cool store", Tags.getByName("office"));
-		q.createProduct(Store.validate("unal", q.getStores()), "boombox", (double) 20, "super cool sound box", 10, Tags.getByName("music"));
-		q.createProduct(Store.validate("unal", q.getStores()), "pencil", (double) 20, "super cool pencil", 100, Tags.getByName("office"));
-		q.createProduct(Store.validate("unal", q.getStores()), "paper", (double) 20, "super cool paper", 100, Tags.getByName("office"));
+		q.createProduct(Store.validate("unal", q.getStores()), "boombox", (double) 20, "super cool sound box", 10,
+				Tags.getByName("music"));
+		q.createProduct(Store.validate("unal", q.getStores()), "pencil", (double) 20, "super cool pencil", 100,
+				Tags.getByName("office"));
+		q.createProduct(Store.validate("unal", q.getStores()), "paper", (double) 20, "super cool paper", 100,
+				Tags.getByName("office"));
 
-		User p = new User("p", "2", new int[]{51,51});
+		User p = new User("p", "2", new int[] { 51, 51 });
 		p.createStore("deli postres", "pass1234", "super cool postres", Tags.getByName("food"));
-		p.createProduct(Store.validate("deli postres", p.getStores()), "postresito", (double) 20, "super cool postresito", 10, Tags.getByName("materials"));
-		p.createProduct(Store.validate("deli postres", p.getStores()), "servilleta", (double) 20, "super cool servilleta", 100, Tags.getByName("food"));
-		p.createProduct(Store.validate("deli postres", p.getStores()), "plato", (double) 20, "super cool plato", 100, Tags.getByName("food"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "postresito", (double) 20, "super cool postresito",
+				10, Tags.getByName("materials"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "servilleta", (double) 20, "super cool servilleta",
+				100, Tags.getByName("food"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "plato", (double) 20, "super cool plato", 100,
+				Tags.getByName("food"));
 	}
 
 	/** Render main menu */
@@ -88,26 +94,28 @@ public final class TUI {
 					String carrera = "";
 					while (true) {
 						calle = conditionalInquiry(
-								new String[] { "We need your address to be able to register you in the system", "Your calle (number from 0 to 100): " },
-								i ->  (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
+								new String[] { "We need your address to be able to register you in the system",
+										"Your calle (number from 0 to 100): " },
+								i -> (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
 
 						carrera = conditionalInquiry(
-								new String[] { "We need your address to be able to register you in the system", "Your carrera (number from 0 to 100): " },
-								i ->  (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
+								new String[] { "We need your address to be able to register you in the system",
+										"Your carrera (number from 0 to 100): " },
+								i -> (Integer.parseInt(i) > 100 || Integer.parseInt(i) < 0));
 
-						if (!Person.isAddressAvailable(new int[]{ Integer.parseInt(calle), Integer.parseInt(carrera)})) {
+						if (!Person.isAddressAvailable(new int[] { Integer.parseInt(calle), Integer.parseInt(carrera) })) {
 							center("⚠️  This address is already taken", true);
 							sleep(2);
 							erase(1);
-						} else break;
+						} else
+							break;
 					}
 
 					print();
 					person = User.create(
-						username,
-						password,
-						new int[]{ Integer.parseInt(calle), Integer.parseInt(carrera)}
-					);
+							username,
+							password,
+							new int[] { Integer.parseInt(calle), Integer.parseInt(carrera) });
 
 					center("✅ Your account was created successfully!", true, false);
 					sleep(2);

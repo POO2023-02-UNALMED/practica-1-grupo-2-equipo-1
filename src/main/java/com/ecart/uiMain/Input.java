@@ -139,7 +139,7 @@ public final class Input {
 			String input = scnr.nextLine();
 			print();
 
-			if (input.equals("0")) {
+			if (input.equals("0") || input.equals("")) {
 				if (ret)
 					return;
 				else

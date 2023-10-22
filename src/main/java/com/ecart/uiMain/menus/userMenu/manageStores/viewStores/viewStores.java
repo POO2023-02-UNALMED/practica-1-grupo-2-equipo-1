@@ -97,7 +97,7 @@ final public class viewStores {
 		print(2);
 		center("Only type what you wish to change. Press <Enter> for the rest", true);
 		print();
-		
+
 		String[] r = questionnaire(
 				new String[] {
 						"💁 New name",
@@ -234,7 +234,8 @@ final public class viewStores {
 		submenu.put("🩳 Create product", () -> createProduct(user, userStore));
 		submenu.put("❗ Remove product", () -> removeProduct(user, userStore));
 		submenu.put("💲 Update product", () -> updateProduct(user, userStore));
-		// submenu.put("💁 Remove members", () -> removeMembers(user, userStore)); // not for now
+		// submenu.put("💁 Remove members", () -> removeMembers(user, userStore)); //
+		// not for now
 		submenu.put("🗃️  Update settings", () -> updateSettings(user, userStore));
 
 		menu("management", submenu, true, false, true);
