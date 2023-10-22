@@ -6,15 +6,55 @@ import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 import java.util.ArrayList;
 
 public class Delivery extends Person {
-    private static ArrayList<Delivery> instances = new ArrayList<Delivery>();
+    private static ArrayList<Delivery> instances = new ArrayList<>();
     private ArrayList<Order> orders;
     private ArrayList<ShoppingCart> shoppingCarts;
 
     public Delivery(String username, String password, int[] address) {
         super(username, password, address);
-        instances.add(this);
+
+
         orders = new ArrayList<>();
         shoppingCarts = new ArrayList<>();
+        instances.add(this);
+    }
+
+    public static Delivery validate(String username) {
+        return validate(username, null, instances, false);
+    }
+
+    public static Delivery validate(String username, String password) {
+        return validate(username, password, instances, true);
+    }
+
+    public static Delivery validate(String username, ArrayList<Delivery> arr) {
+        return validate(username, null, arr, false);
+    }
+
+    public static Delivery validate(String username, String password, ArrayList<Delivery> arr, boolean checkPassword) {
+        for (Delivery delivery : arr) {
+            if (delivery.getName().equals(username)) {
+                if (checkPassword) {
+                    if (!delivery.getPassword().equals(password))
+                        continue;
+                }
+
+                return delivery;
+            }
+        }
+        return null;
+    }
+
+    public static Delivery create(String name, String password, int[] address) {
+        Delivery newDelivery = validate(name);
+        if (newDelivery != null)
+            return null;
+
+        if(!Person.isAddressAvailable(address))
+            return null;
+
+        newDelivery = new Delivery(name, password, address);
+        return newDelivery;
     }
 
     public void receiveOrder(Order order) {
