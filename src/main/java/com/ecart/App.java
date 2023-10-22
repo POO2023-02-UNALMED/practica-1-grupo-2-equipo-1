@@ -19,8 +19,8 @@ public class App {
 
 	public static void shutdown(boolean force) {
 		// <save db here>
-		clear();
-		if (force)
-			System.exit(0);
+		// clear();
+		// if (force)
+		// 	System.exit(0);
 	}
 }

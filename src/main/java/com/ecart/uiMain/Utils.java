@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 /** TUI Utilities */
 public final class Utils {
@@ -63,15 +65,24 @@ public final class Utils {
 		return (int) ((average / str.length) / (halve ? 2 : 1));
 	}
 
-	public static int getBiggestStringSize(String[] strings) {
-		int biggest = 0;
+	public static String getBiggestString(String[] strings) {
+		String biggest = "";
 
 		for (String line : strings) {
-			if (line.length() > biggest)
-				biggest = line.length();
+			if (line.length() > biggest.length())
+				biggest = line;
 		}
 
 		return biggest;
+	}
+
+	public static String[] lhmKeysToArray(LinkedHashMap<String, String> lhm) {
+		Set<String> keySet = lhm.keySet();
+		return keySet.toArray(new String[keySet.size()]);
+	}
+
+	public static int getBiggestStringSize(String[] strings) {
+		return getBiggestString(strings).length();
 	}
 
 	/** Print to STDOUT */
@@ -106,8 +117,10 @@ public final class Utils {
 						- offset
 						- (true_center ? str.length() / 2 : 0));
 
-		if (getSpace) return space;
-		else print(space + str, nl);
+		if (getSpace)
+			return space;
+		else
+			print(space + str, nl);
 
 		return "";
 	}

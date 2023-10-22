@@ -144,7 +144,7 @@ final public class viewStores {
 		}
 
 		String storeName = conditionalInquiry(
-				new String[] { "Please select one store you would you manage", "(type its name) 👉 " },
+				new String[] { "Please select one store you would like to manage", "(type its name) 👉 " },
 				i -> Store.validate(i, user.getStores()) == null);
 
 		Store userStore = Store.validate(storeName, user.getStores());

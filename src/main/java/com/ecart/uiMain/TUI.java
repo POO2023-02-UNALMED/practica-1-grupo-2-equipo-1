@@ -3,6 +3,7 @@ package com.ecart.uiMain;
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.*;
+import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.uiMain.menus.userMenu.userMenu;
 
 /** Textual User Interface */
@@ -36,6 +37,26 @@ public final class TUI {
 			center("===== Empower Your Passion, Share Your Creations =====", true);
 			center("(Ctrl + C to exit)", true);
 			print(2);
+
+			// Renderable unit = new Renderable(
+			// 	Tags.getByName("photography"), new String[] { "photography" }, new String[] {
+			// 		"Cool object",
+			// 		"$10 USD",
+			// 		"very low"
+			// });
+			//
+			// Renderer.drawCard(
+			// 	unit,
+			// 	new String[] {"bottoplceholdr"},
+			// 	new String[] {
+			// 		"Name: ",
+			// 		"Price: ",
+			// 		"Priority: "
+			// 	}
+			// );
+			// Renderer.drawAllTags();
+
+			if (true) return;
 
 			String[] r = questionnaire(
 					new String[] { "💁 Username", "🔒 Password" }, 6);
