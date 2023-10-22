@@ -79,6 +79,8 @@ public class Store extends Entity {
 		if (newUser != null)
 			return new Retval("Failed to join store. User is already a member of the store", false);
 
+		this.members.add(newUser);
+
 		return new Retval("Joined store successfully");
 	}
 
@@ -131,70 +133,4 @@ public class Store extends Entity {
 	public static void setInstances(ArrayList<Store> instances) {
 		Store.instances = instances;
 	}
-
-	//
-	// // meta constructor for dup name validation
-	// public static Store createStore(String name, String passcode, String
-	// description) {
-	// for (Store store : instances) {
-	// if (store.name.equals(name)) {
-	// return null; // Store with the same name already exists
-	// }
-	// }
-	//
-	// Store newStore = new Store(name, passcode, description);
-	// instances.add(newStore);
-	// return newStore;
-	// }
-	//
-	// public String getName() {
-	// return name;
-	// }
-	//
-	// public void setName(String name) {
-	// this.name = name;
-	// }
-	//
-	// public String getPasscode() {
-	// return passcode;
-	// }
-	//
-	// public void setPasscode(String passcode) {
-	// this.passcode = passcode;
-	// }
-	// // public static Store getById(UUID id) {
-	// // for (Store user : instances) {
-	// // if (user.getId().equals(id)) {
-	// // return user;
-	// // }
-	// // }
-	// // return null;
-	// // }
-	//
-	// public static Store getByCredentials(String name, String passcode) {
-	// for (Store store : instances) {
-	// if (store.getName().equals(name) && store.getPasscode().equals(passcode)) {
-	// return store;
-	// }
-	// }
-	// return null;
-	// }
-	//
-	// public String getDescription() {
-	// return description;
-	// }
-	//
-	// public void setDescription(String description) {
-	// this.description = description;
-	// }
-	//
-	// public void addMember(User user) {
-	// if (!members.contains(user))
-	// members.add(user);
-	// }
-	//
-	// // public ArrayList<ID> getProducts() {
-	// // return products;
-	// // }
-
 }
