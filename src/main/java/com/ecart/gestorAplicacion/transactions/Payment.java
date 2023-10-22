@@ -1,12 +1,14 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Payment {
+public class Payment implements Serializable {
     private double totalAmount;
     private boolean isOnCredit; //si es a cuotas o a credito
     private List<Double> installments; //cuotas
+    private static ArrayList<Payment> instances = new ArrayList<>();
 
     public Payment(double totalAmount) {
         this(totalAmount, false, 0);
@@ -16,6 +18,7 @@ public class Payment {
         this.totalAmount = amount;
         this.isOnCredit = isOnCredit;
         this.installments = new ArrayList<>();
+        instances.add(this);
 
         if (isOnCredit) {
             //calcula el valor de cada cuota
@@ -40,6 +43,10 @@ public class Payment {
 
     public List<Double> getInstallments() {
         return installments;
+    }
+
+    public static ArrayList<Payment> getInstances() {
+        return instances;
     }
 
     // Simular un proceso de pago

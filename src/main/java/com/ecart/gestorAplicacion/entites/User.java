@@ -1,5 +1,6 @@
 package com.ecart.gestorAplicacion.entites;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
@@ -7,7 +8,7 @@ import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 
-public class User extends Person {
+public class User extends Person implements Serializable {
 	private ArrayList<Store> stores;
 
 	private static ArrayList<User> instances = new ArrayList<>();

@@ -202,4 +202,8 @@ public class Serializador {
             e.printStackTrace();
         }
     }
+
+    //public static void serializarObjetos(ArrayList<Admin> instancesAdmin, ArrayList<Delivery> instancesDelivery, ArrayList<Person> instancesPerson, ArrayList<User> instancesUser, ArrayList<Product> instancesProduct, ArrayList<Store> instancesStore, ArrayList<Coupon> instancesCoupon
+//ArrayList<Review> instancesReview, ArrayList<BankAccount> instancesBankAccount, ArrayList<Order> instancesOrder
+//ArrayList<Payment> instancesPayment, ArrayList<Purchases> instancesPurchases, ArrayList<ShoppingCart> instancesShoppingCart)
 }

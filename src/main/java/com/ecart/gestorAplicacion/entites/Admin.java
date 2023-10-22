@@ -1,11 +1,11 @@
 package com.ecart.gestorAplicacion.entites;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Admin extends Person {
+public class Admin extends Person implements Serializable {
 	private static ArrayList<Admin> instances = new ArrayList<>();
 	private  ArrayList<Delivery> deliveries = new ArrayList<>();
-
 
 	public Admin(String username, String password, int[] address) {
 		super(username, password, address);
@@ -52,5 +52,8 @@ public class Admin extends Person {
 		return newAdmin;
 	}
 
+	public static ArrayList<Admin> getInstances() {
+		return instances;
+	}
 }
 

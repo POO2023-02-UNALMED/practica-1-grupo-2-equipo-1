@@ -3,9 +3,10 @@ package com.ecart.gestorAplicacion.entites;
 import com.ecart.gestorAplicacion.transactions.Order;
 import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Delivery extends Person {
+public class Delivery extends Person implements Serializable {
     private static ArrayList<Delivery> instances = new ArrayList<>();
     private ArrayList<Order> orders;
     private ArrayList<ShoppingCart> shoppingCarts;

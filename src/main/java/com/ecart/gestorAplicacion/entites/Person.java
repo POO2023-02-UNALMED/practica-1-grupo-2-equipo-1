@@ -1,18 +1,21 @@
 package com.ecart.gestorAplicacion.entites;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.ecart.gestorAplicacion.meta.Entity;
 
-public class Person extends Entity {
+public class Person extends Entity implements Serializable {
 	private int[] address;
 	private static ArrayList<int[]> addresses = new ArrayList<>();
+	private static ArrayList<Person> instances = new ArrayList<>();
 
 	public Person(String name, String password, int[] address) {
 		super(name, password);
 		this.address = address;
 
 		addresses.add(address);
+		instances.add(this);
 	}
 
 	public static boolean isAddressAvailable(int[] wantedAddress) {

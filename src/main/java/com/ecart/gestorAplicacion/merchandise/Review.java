@@ -1,14 +1,19 @@
 package com.ecart.gestorAplicacion.merchandise;
 
-public class Review implements ProductProp{
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Review implements ProductProp, Serializable {
     private String autor;
     private String comment;
     private int rating;
+    private static ArrayList<Review> instances = new ArrayList<>();
 
     public Review(String autor, String comment, int rating) {
         this.autor = autor;
         this.comment = comment;
         this.rating = rating;
+        instances.add(this);
     }
     
     public String getAuthor() {
@@ -21,5 +26,9 @@ public class Review implements ProductProp{
     
     public int getRating() {
     	return this.rating;
+    }
+
+    public static ArrayList<Review> getInstances() {
+        return instances;
     }
 }
