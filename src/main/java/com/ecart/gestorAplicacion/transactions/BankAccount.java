@@ -66,6 +66,10 @@ public class BankAccount implements Serializable {
     public static ArrayList<BankAccount> getInstances() {
         return instances;
     }
+
+    public static void setInstances(ArrayList<BankAccount> instances) {
+        BankAccount.instances = instances;
+    }
 }
 
 

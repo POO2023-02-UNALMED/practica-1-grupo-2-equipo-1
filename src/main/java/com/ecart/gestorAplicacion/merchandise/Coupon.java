@@ -31,4 +31,8 @@ public class Coupon implements ProductProp, Serializable {
 	public static ArrayList<Coupon> getInstances() {
 		return instances;
 	}
+
+	public static void setInstances(ArrayList<Coupon> instances) {
+		Coupon.instances = instances;
+	}
 }

@@ -209,5 +209,9 @@ public class Order implements Serializable {
     public static ArrayList<Order> getInstances() {
         return instances;
     }
+
+    public static void setInstances(ArrayList<Order> instances) {
+        Order.instances = instances;
+    }
 }
 

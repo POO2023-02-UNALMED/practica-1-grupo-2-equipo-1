@@ -70,6 +70,10 @@ public class Delivery extends Person implements Serializable {
         return instances;
     }
 
+    public static void setInstances(ArrayList<Delivery> instances) {
+        Delivery.instances = instances;
+    }
+
     public ArrayList<Order> getOrders() {
         return orders;
     }

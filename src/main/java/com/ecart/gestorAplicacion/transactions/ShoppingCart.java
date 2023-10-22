@@ -31,6 +31,10 @@ public class ShoppingCart implements Serializable {
         return instances;
     }
 
+    public static void setInstances(ArrayList<ShoppingCart> instances) {
+        ShoppingCart.instances = instances;
+    }
+
     public double calculateTotal() {
         double total = 0;
 

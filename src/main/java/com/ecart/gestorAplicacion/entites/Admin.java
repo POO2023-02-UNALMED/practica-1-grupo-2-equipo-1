@@ -55,5 +55,9 @@ public class Admin extends Person implements Serializable {
 	public static ArrayList<Admin> getInstances() {
 		return instances;
 	}
+
+	public static void setInstances(ArrayList<Admin> instances) {
+		Admin.instances = instances;
+	}
 }
 

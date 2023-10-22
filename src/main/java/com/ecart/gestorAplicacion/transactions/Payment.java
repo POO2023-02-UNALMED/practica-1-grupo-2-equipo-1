@@ -49,6 +49,10 @@ public class Payment implements Serializable {
         return instances;
     }
 
+    public static void setInstances(ArrayList<Payment> instances) {
+        Payment.instances = instances;
+    }
+
     // Simular un proceso de pago
     public boolean processPayment() {
         if (isOnCredit) {
