@@ -33,7 +33,7 @@ final public class manageStores {
 
 		clear();
 		print(3);
-		Renderer.renderAllTags();
+		Renderer.drawAllTags();
 
 		print(2);
 

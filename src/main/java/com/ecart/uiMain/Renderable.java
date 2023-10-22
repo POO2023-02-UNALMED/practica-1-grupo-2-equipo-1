@@ -2,7 +2,7 @@ package com.ecart.uiMain;
 
 import com.ecart.gestorAplicacion.merchandise.Tags;
 
-class Renderable {
+public class Renderable {
 	private Tags tag;
 	private String[] captions;
 	private String[] sideData;

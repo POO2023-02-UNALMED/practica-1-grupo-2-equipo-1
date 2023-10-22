@@ -9,6 +9,7 @@ import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
+import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 
 final public class viewStores {
@@ -25,7 +26,7 @@ final public class viewStores {
 
 		clear();
 		print(3);
-		Renderer.renderAllTags();
+		Renderer.drawAllTags();
 
 		print(2);
 
@@ -83,13 +84,18 @@ final public class viewStores {
 	private static void updateSettings(User user, Store userStore) {
 		Renderer.figletBanner("update  settings", 20);
 
-		LinkedHashMap<String, String> data = new LinkedHashMap<>();
+		Renderable unit = new Renderable(
+			userStore.getTag(),
+			new String[] {userStore.getTag().name()},
+			new String[] {
+				userStore.getName(),
+				userStore.getPassword(),
+				userStore.getDescription(),
+		});
 
-		data.put("Name: ", userStore.getName());
-		data.put("Passcode: ", userStore.getPassword());
-		data.put("Description: ", userStore.getDescription());
-
-		Renderer.renderCard(userStore.getTag(), data);
+		Renderer.drawCard(unit, null, new String[] {
+			"Name: ", "Passcode: ", "Description: "
+		});
 
 		print(2);
 		center("Only type what you wish to change. Press <Enter> for the rest", true);
@@ -139,7 +145,19 @@ final public class viewStores {
 			data.put("Tag: ", store.getTag().name());
 			data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
 
-			Renderer.renderCard(store.getTag(), data);
+			Renderable unit = new Renderable(
+				store.getTag(),
+				new String[] {store.getTag().name()},
+				new String[] {
+					store.getName(),
+					store.getTag().name(),
+					"🌟 🌟 🌟 🌟 🌟"
+			});
+
+			Renderer.drawCard(unit, null, new String[] {
+				"Name: ", "Tag: ", "Reviews: "
+			});
+
 			print();
 		}
 

@@ -38,26 +38,6 @@ public final class TUI {
 			center("(Ctrl + C to exit)", true);
 			print(2);
 
-			// Renderable unit = new Renderable(
-			// 	Tags.getByName("photography"), new String[] { "photography" }, new String[] {
-			// 		"Cool object",
-			// 		"$10 USD",
-			// 		"very low"
-			// });
-			//
-			// Renderer.drawCard(
-			// 	unit,
-			// 	new String[] {"bottoplceholdr"},
-			// 	new String[] {
-			// 		"Name: ",
-			// 		"Price: ",
-			// 		"Priority: "
-			// 	}
-			// );
-			// Renderer.drawAllTags();
-
-			if (true) return;
-
 			String[] r = questionnaire(
 					new String[] { "💁 Username", "🔒 Password" }, 6);
 
