@@ -50,4 +50,8 @@ public class Person extends Entity implements Serializable {
 	public static void setAddresses(ArrayList<int[]> addresses) {
 		Person.addresses = addresses;
 	}
+
+	public static ArrayList<Person> getInstances() {
+		return instances;
+	}
 }

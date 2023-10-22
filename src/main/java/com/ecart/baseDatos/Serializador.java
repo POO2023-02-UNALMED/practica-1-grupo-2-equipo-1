@@ -203,7 +203,19 @@ public class Serializador {
         }
     }
 
-    //public static void serializarObjetos(ArrayList<Admin> instancesAdmin, ArrayList<Delivery> instancesDelivery, ArrayList<Person> instancesPerson, ArrayList<User> instancesUser, ArrayList<Product> instancesProduct, ArrayList<Store> instancesStore, ArrayList<Coupon> instancesCoupon
-//ArrayList<Review> instancesReview, ArrayList<BankAccount> instancesBankAccount, ArrayList<Order> instancesOrder
-//ArrayList<Payment> instancesPayment, ArrayList<Purchases> instancesPurchases, ArrayList<ShoppingCart> instancesShoppingCart)
+    public static void saveObjects() {
+        serializarAdmin(Admin.getInstances());
+        serializarDelivery(Delivery.getInstances());
+        serializarPerson(Person.getInstances());
+        serializarUser(User.getInstances());
+        serializarProducts(Product.getInstances());
+        serializarStore(Store.getInstances());
+        serializarCoupon(Coupon.getInstances());
+        serializarReview(Review.getInstances());
+        serializarBankAccount(BankAccount.getInstances());
+        serializarOrder(Order.getInstances());
+        serializarPayment(Payment.getInstances());
+        serializarPurchases(Purchases.getInstances());
+        serializarShoppingCart(ShoppingCart.getInstances());
+    }
 }
