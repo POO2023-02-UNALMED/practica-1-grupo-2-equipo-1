@@ -13,6 +13,7 @@ import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
+import com.ecart.uiMain.menus.userMenu.goShopping.GoShopping;
 import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
 
 /*
@@ -100,7 +101,7 @@ final public class userMenu {
 		// maps are abstracts, while HashMaps aren't
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
 
-		options.put("🛍️  Go shopping!", () -> center("viewing stores", true));
+		options.put("🛍️  Go shopping!", () -> GoShopping.call(user) );
 		options.put("🏪 Manage your stores", () -> manageStores.call(user));
 		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> updateSettings(user));

@@ -22,6 +22,13 @@ public final class TUI {
 		q.createStore("unal", "pass1234", "super cool store", Tags.getByName("office"));
 		q.createProduct(Store.validate("unal", q.getStores()), "boombox", (double) 20, "super cool sound box", 10, Tags.getByName("music"));
 		q.createProduct(Store.validate("unal", q.getStores()), "pencil", (double) 20, "super cool pencil", 100, Tags.getByName("office"));
+		q.createProduct(Store.validate("unal", q.getStores()), "paper", (double) 20, "super cool paper", 100, Tags.getByName("office"));
+
+		User p = new User("p", "2", new int[]{51,51});
+		p.createStore("deli postres", "pass1234", "super cool postres", Tags.getByName("food"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "postresito", (double) 20, "super cool postresito", 10, Tags.getByName("materials"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "servilleta", (double) 20, "super cool servilleta", 100, Tags.getByName("food"));
+		p.createProduct(Store.validate("deli postres", p.getStores()), "plato", (double) 20, "super cool plato", 100, Tags.getByName("food"));
 	}
 
 	/** Render main menu */

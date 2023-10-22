@@ -205,12 +205,6 @@ final public class viewStores {
 		}
 
 		for (Store store : stores) {
-			LinkedHashMap<String, String> data = new LinkedHashMap<>();
-
-			data.put("Name: ", store.getName());
-			data.put("Tag: ", store.getTag().name());
-			data.put("Reviews: ", "🌟 🌟 🌟 🌟 🌟");
-
 			Renderable unit = new Renderable(
 					store.getTag(),
 					new String[] { store.getTag().name() },

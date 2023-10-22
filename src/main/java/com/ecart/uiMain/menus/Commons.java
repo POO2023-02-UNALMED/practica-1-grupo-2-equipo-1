@@ -24,6 +24,10 @@ final public class Commons {
 	}
 
 	public static void drawProducts(Store userStore) {
+		drawProducts(userStore, true);
+	}
+
+	public static void drawProducts(Store userStore, boolean includeListed) {
 		ArrayList<Product> storeProducts = userStore.getProducts();
 		int batchSize = storeProducts.size() < 3 ? storeProducts.size() : 3;
 
@@ -42,21 +46,34 @@ final public class Commons {
 			for (int j = i, k = 0; j < endIndex; j++, k++) {
 				Product sp = storeProducts.get(j);
 
+				String[] captions = new String[] {
+						sp.getName(),
+						"$" + Double.toString(sp.getPrice()),
+				};
+
+				if (includeListed)
+					captions[2] = Boolean.toString(sp.isListed());
+
 				unitsBatch[k] = new Renderable(
 						sp.getTag(),
 						new String[] {
-							sp.getName(),
-							"$" + Double.toString(sp.getPrice()),
-							Boolean.toString(sp.isListed())
+								sp.getName(),
+								"$" + Double.toString(sp.getPrice()),
+								Boolean.toString(sp.isListed())
 						},
 						null);
 			}
 
+			String[] captionLabels = new String[] {
+					"Name: ", "Price: "
+			};
+
+			if (includeListed)
+				captionLabels[2] = "Is listed: ";
+
 			Renderer.drawTiledPattern(
 					unitsBatch,
-					new String[] {
-						"Name: ", "Price: ", "Is listed: "
-					},
+					captionLabels,
 					null, batchSize, 0, 1, true);
 		}
 
@@ -90,4 +107,3 @@ final public class Commons {
 		}
 	}
 }
-
