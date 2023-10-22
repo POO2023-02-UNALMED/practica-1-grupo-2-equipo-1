@@ -15,8 +15,13 @@ public class Person extends Entity {
 		addresses.add(address);
 	}
 
-
 	public static boolean isAddressAvailable(int[] wantedAddress) {
+		if (wantedAddress[0] < 0 || wantedAddress[0] > 100)
+			return false;
+
+		if (wantedAddress[1] < 0 || wantedAddress[1] > 100)
+			return false;
+
 		for (int[] address : addresses) {
 			if (address[0] == wantedAddress[0] && address[1] == wantedAddress[1])
 				return false;
