@@ -49,20 +49,6 @@ public class Serializador {
         }
     }
 
-    public static void serializarPerson(ArrayList<Person> instancesPerson) {
-        try {
-            FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\Person.txt"));
-            ObjectOutputStream o = new ObjectOutputStream(f);
-            o.writeObject(instancesPerson);
-            o.close();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void serializarUser(ArrayList<User> instancesUser) {
         try {
             FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\User.txt"));
@@ -206,7 +192,6 @@ public class Serializador {
     public static void saveObjects() {
         serializarAdmin(Admin.getInstances());
         serializarDelivery(Delivery.getInstances());
-        serializarPerson(Person.getInstances());
         serializarUser(User.getInstances());
         serializarProducts(Product.getInstances());
         serializarStore(Store.getInstances());
