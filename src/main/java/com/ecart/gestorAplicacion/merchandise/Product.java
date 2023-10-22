@@ -16,6 +16,7 @@ public class Product {
 	private int quantity;
 	private Tags tag;
 	private boolean listed;
+	private User productHolder;
 
 	// private List<User> subscribers = new ArrayList<>();
 	// private List<Coupon> coupons = new ArrayList<>();
@@ -23,19 +24,20 @@ public class Product {
 
 	private static ArrayList<Product> instances = new ArrayList<>();
 
-	public Product(String name, double price, String description, int quantity, Tags tag) {
+	public Product(String name, double price, String description, int quantity, Tags tag, User productHolder) {
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		this.quantity = quantity;
 		this.tag = tag;
 		this.listed = true;
+		this.productHolder = productHolder;
 
 		instances.add(this);
 	}
 
-	public static Product create(String name, double price, String description, int quantity, Tags tag) {
-		return create(name, price, description, quantity, tag, instances);
+	public static Product create(String name, double price, String description, int quantity, Tags tag, User productHolder) {
+		return create(name, price, description, quantity, tag, productHolder, instances);
 	}
 
 	/**
@@ -47,13 +49,13 @@ public class Product {
 	 * @param quantity
 	 * @return
 	 */
-	public static Product create(String name, double price, String description, int quantity, Tags tag,
+	public static Product create(String name, double price, String description, int quantity, Tags tag, User productHolder,
 			ArrayList<Product> arr) {
 		Product newProduct = validate(name, arr);
 		if (newProduct != null)
 			return null;
 
-		newProduct = new Product(name, price, description, quantity, tag);
+		newProduct = new Product(name, price, description, quantity, tag, productHolder);
 
 		instances.add(newProduct);
 		return newProduct;

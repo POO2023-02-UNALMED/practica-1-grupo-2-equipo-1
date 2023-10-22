@@ -39,7 +39,6 @@ public class Person extends Entity {
 		return addresses;
 	}
 
-
 	public static void setAddresses(ArrayList<int[]> addresses) {
 		Person.addresses = addresses;
 	}

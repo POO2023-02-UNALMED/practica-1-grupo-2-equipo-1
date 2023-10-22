@@ -58,7 +58,7 @@ public class User extends Person {
 	}
 
 	public Retval createProduct(Store store, String name, double price, String description, int quantity, Tags tag) {
-		return store.createProduct(name, price, description, quantity, tag);
+		return store.createProduct(name, price, description, quantity, tag, this);
 	}
 
 	public Retval createStore(String name, String password, String description, Tags tag) {

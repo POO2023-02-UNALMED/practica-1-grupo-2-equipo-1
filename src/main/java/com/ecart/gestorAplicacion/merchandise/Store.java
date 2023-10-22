@@ -82,8 +82,8 @@ public class Store extends Entity {
 		return new Retval("Joined store successfully");
 	}
 
-	public Retval createProduct(String name, double price, String description, int quantity, Tags tag) {
-		Product newProduct = Product.create(name, price, description, quantity, tag, this.getProducts());
+	public Retval createProduct(String name, double price, String description, int quantity, Tags tag, User productHolder) {
+		Product newProduct = Product.create(name, price, description, quantity, tag, productHolder, this.getProducts());
 		if (newProduct == null)
 			return new Retval("Failed create product. The product already exists inside of the store", false);
 
