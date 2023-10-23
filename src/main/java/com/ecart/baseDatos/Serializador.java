@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Serializador {
-    private static File rutaTemp = new File("src\\baseDatos\\temp");
+    static File rutaTemp = new File("src\\baseDatos\\temp");
 
     public static void serializarAdmin(ArrayList<Admin> instancesAdmin) {
         try {

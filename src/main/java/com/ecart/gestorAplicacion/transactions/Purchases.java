@@ -33,4 +33,8 @@ public class Purchases implements Serializable {
     public static ArrayList<Purchases> getInstances() {
         return instances;
     }
+
+    public static void setInstances(ArrayList<Purchases> instances) {
+        Purchases.instances = instances;
+    }
 }

@@ -31,4 +31,8 @@ public class Review implements ProductProp, Serializable {
     public static ArrayList<Review> getInstances() {
         return instances;
     }
+
+    public static void setInstances(ArrayList<Review> instances) {
+        Review.instances = instances;
+    }
 }

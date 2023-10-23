@@ -90,5 +90,9 @@ public class Admin extends Person implements Serializable {
 		return instances;
 >>>>>>> 5f7aae087139979dd1b218b3a0a0c7a581cbb7b1
 	}
+
+	public static void setInstances(ArrayList<Admin> instances) {
+		Admin.instances = instances;
+	}
 }
 
