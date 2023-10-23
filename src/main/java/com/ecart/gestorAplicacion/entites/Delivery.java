@@ -11,11 +11,9 @@ public class Delivery extends Person implements Serializable {
 	private static ArrayList<Delivery> instances = new ArrayList<>();
 	private ArrayList<Order> orders;
 	private ArrayList<ShoppingCart> shoppingCarts;
-	private double pesoPaquete;
 
-	public Delivery(String username, String password, int[] address, double pesoPaquete) {
+	public Delivery(String username, String password, int[] address) {
 		super(username, password, address);
-		this.pesoPaquete = pesoPaquete;
 
 		orders = new ArrayList<>();
 		shoppingCarts = new ArrayList<>();
