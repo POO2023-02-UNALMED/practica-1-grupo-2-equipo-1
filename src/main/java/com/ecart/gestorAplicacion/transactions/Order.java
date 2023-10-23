@@ -223,6 +223,7 @@ public class Order implements Serializable {
 	}
 
 	public int[] getDireccionDestino() {
-		return User.getAddress();
+		return new int[] {};
+		// return User.getAddress();
 	}
 }

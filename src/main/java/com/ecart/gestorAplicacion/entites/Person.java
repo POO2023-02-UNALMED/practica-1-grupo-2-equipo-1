@@ -10,9 +10,8 @@ import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Notification;
 
 public abstract class Person extends Entity implements Serializable {
-	private static int[] address;
+	private int[] address;
 	private static ArrayList<int[]> addresses = new ArrayList<>();
-	private static ArrayList<Person> instances = new ArrayList<>();
 	private ArrayList<Notification> notifications = new ArrayList<>();
 
 	public Person(String name, String password, int[] address) {
@@ -20,7 +19,6 @@ public abstract class Person extends Entity implements Serializable {
 		this.address = address;
 
 		addresses.add(address);
-		instances.add(this);
 	}
 
 	public static boolean isAddressAvailable(int[] wantedAddress) {
@@ -37,7 +35,7 @@ public abstract class Person extends Entity implements Serializable {
 		return true;
 	}
 
-	public static int[] getAddress() {
+	public int[] getAddress() {
 		return address;
 	}
 
