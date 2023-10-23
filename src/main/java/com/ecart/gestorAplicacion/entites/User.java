@@ -16,7 +16,6 @@ public class User extends Person {
 	private ArrayList<Store> stores;
 	private ShoppingCart shoppingCart;
 
-
 	private static ArrayList<User> instances = new ArrayList<>();
 
 	public User(String username, String password, int[] address) {
@@ -149,7 +148,7 @@ public class User extends Person {
 		this.shoppingCart = shoppingCart;
 	}
 
-	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice){
+	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice) {
 		ArrayList<Store> allStores = Store.getInstances();
 		ArrayList<Store> userStores = this.getStores();
 		ArrayList<Store> availableStores = new ArrayList<>();
@@ -159,7 +158,6 @@ public class User extends Person {
 			if (!userStores.contains(store))
 				availableStores.add(store);
 		}
-
 
 		for (Store store : availableStores) {
 			for (Product product : store.getProducts()) {
@@ -186,34 +184,4 @@ public class User extends Person {
 		return recommendedProducts;
 	}
 
-
-
 }
-/*
-	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice) {
-		return stores.stream()
-				.filter(product -> product.getProducts() <= maxPrice &&
-						containsAllTags(product, tags) //&&
-						//!product.getStore().equals(ownStore))
-				.collect(Collectors.toMap(Product::getName, product -> product, (existing, replacement) -> existing, LinkedHashMap::new)));
-	}
-
-
-	private boolean containsAllTags(Product product, Tags[] tags) {
-		for (Tags tag : tags) {
-			boolean found = false;
-			for (Tags productTag : product.getTags()) {
-				if (tag.equals(productTag)) {
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-				return false;
-			}
-		}
-		return true;
-	}
-}
- */
-

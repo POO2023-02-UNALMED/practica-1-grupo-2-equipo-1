@@ -86,7 +86,8 @@ public class Store extends Entity implements Serializable {
 		return new Retval("Joined store successfully");
 	}
 
-	public Retval createProduct(String name, double price, String description, int quantity, Tags tag, User productHolder) {
+	public Retval createProduct(String name, double price, String description, int quantity, Tags tag,
+			User productHolder) {
 		Product newProduct = Product.create(name, price, description, quantity, tag, productHolder, this.getProducts());
 		if (newProduct == null)
 			return new Retval("Failed create product. The product already exists inside of the store", false);

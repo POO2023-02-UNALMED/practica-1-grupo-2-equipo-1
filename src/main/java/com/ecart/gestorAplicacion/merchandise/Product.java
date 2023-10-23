@@ -39,7 +39,8 @@ public class Product implements Serializable {
 		instances.add(this);
 	}
 
-	public static Product create(String name, double price, String description, int quantity, Tags tag, User productHolder) {
+	public static Product create(String name, double price, String description, int quantity, Tags tag,
+			User productHolder) {
 		return create(name, price, description, quantity, tag, productHolder, instances);
 	}
 
@@ -52,7 +53,8 @@ public class Product implements Serializable {
 	 * @param quantity
 	 * @return
 	 */
-	public static Product create(String name, double price, String description, int quantity, Tags tag, User productHolder,
+	public static Product create(String name, double price, String description, int quantity, Tags tag,
+			User productHolder,
 			ArrayList<Product> arr) {
 		Product newProduct = validate(name, arr);
 		if (newProduct != null)

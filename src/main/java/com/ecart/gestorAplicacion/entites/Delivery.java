@@ -8,198 +8,187 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Delivery extends Person implements Serializable {
-    private static ArrayList<Delivery> instances = new ArrayList<>();
-    private ArrayList<Order> orders;
-    private ArrayList<ShoppingCart> shoppingCarts;
-    private double pesoPaquete;
+	private static ArrayList<Delivery> instances = new ArrayList<>();
+	private ArrayList<Order> orders;
+	private ArrayList<ShoppingCart> shoppingCarts;
+	private double pesoPaquete;
 
-    public Delivery(String username, String password, int[] address, double pesoPaquete) {
-        super(username, password, address);
-        this.pesoPaquete = pesoPaquete;
+	public Delivery(String username, String password, int[] address, double pesoPaquete) {
+		super(username, password, address);
+		this.pesoPaquete = pesoPaquete;
 
+		orders = new ArrayList<>();
+		shoppingCarts = new ArrayList<>();
+		instances.add(this);
+	}
 
-        orders = new ArrayList<>();
-        shoppingCarts = new ArrayList<>();
-        instances.add(this);
-    }
+	public static Delivery validate(String username) {
+		return validate(username, null, instances, false);
+	}
 
-    public static Delivery validate(String username) {
-        return validate(username, null, instances, false);
-    }
+	public static Delivery validate(String username, String password) {
+		return validate(username, password, instances, true);
+	}
 
-    public static Delivery validate(String username, String password) {
-        return validate(username, password, instances, true);
-    }
+	public static Delivery validate(String username, ArrayList<Delivery> arr) {
+		return validate(username, null, arr, false);
+	}
 
-    public static Delivery validate(String username, ArrayList<Delivery> arr) {
-        return validate(username, null, arr, false);
-    }
+	public static Delivery validate(String username, String password, ArrayList<Delivery> arr, boolean checkPassword) {
+		for (Delivery delivery : arr) {
+			if (delivery.getName().equals(username)) {
+				if (checkPassword) {
+					if (!delivery.getPassword().equals(password))
+						continue;
+				}
 
-    public static Delivery validate(String username, String password, ArrayList<Delivery> arr, boolean checkPassword) {
-        for (Delivery delivery : arr) {
-            if (delivery.getName().equals(username)) {
-                if (checkPassword) {
-                    if (!delivery.getPassword().equals(password))
-                        continue;
-                }
-
-                return delivery;
-            }
-        }
-        return null;
-    }
-
-    public static Delivery create(String name, String password, int[] address) {
-        // Delivery newDelivery = validate(name);
-        // if (newDelivery != null)
-        //     return null;
-        //
-        // if(!Person.isAddressAvailable(address))
-        //     return null;
-        //
-        // newDelivery = new Delivery(name, password, getAddress());
-        // return newDelivery;
+				return delivery;
+			}
+		}
 		return null;
-    }
+	}
 
-    public void receiveOrder(Order order) {
-        orders.add(order);
-    }
+	public static Delivery create(String name, String password, int[] address) {
+		// Delivery newDelivery = validate(name);
+		// if (newDelivery != null)
+		// return null;
+		//
+		// if(!Person.isAddressAvailable(address))
+		// return null;
+		//
+		// newDelivery = new Delivery(name, password, getAddress());
+		// return newDelivery;
+		return null;
+	}
 
-    public void receiveShoppingCart(ShoppingCart shoppingCart) {
-        shoppingCarts.add(shoppingCart);
-    }
+	public void receiveOrder(Order order) {
+		orders.add(order);
+	}
 
-    public static ArrayList<Delivery> getInstances() {
-        return instances;
-    }
+	public void receiveShoppingCart(ShoppingCart shoppingCart) {
+		shoppingCarts.add(shoppingCart);
+	}
 
-    public static void setInstances(ArrayList<Delivery> instances) {
-        Delivery.instances = instances;
-    }
+	public static ArrayList<Delivery> getInstances() {
+		return instances;
+	}
 
-    public ArrayList<Order> getOrders() {
-        return orders;
-    }
+	public static void setInstances(ArrayList<Delivery> instances) {
+		Delivery.instances = instances;
+	}
 
-    public ArrayList<ShoppingCart> getShoppingCarts() {
-        return shoppingCarts;
-    }
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
 
+	public ArrayList<ShoppingCart> getShoppingCarts() {
+		return shoppingCarts;
+	}
 
-    public EntregaInfo tomarOrder(Order order) {
-        int[] coordenadasOrigen = order.getDireccionOrigen();
-        int[] coordenadasDestino = order.getDireccionDestino();
+	public EntregaInfo tomarOrder(Order order) {
+		int[] coordenadasOrigen = order.getDireccionOrigen();
+		int[] coordenadasDestino = order.getDireccionDestino();
 
-        double distanciaTotal = calcularDistancia(coordenadasOrigen, coordenadasDestino);
+		double distanciaTotal = calcularDistancia(coordenadasOrigen, coordenadasDestino);
 
-        double tarifaBase = 5.0; // Tarifa base por defecto
-        double tarifaPorDistancia = 1.0;  // Tarifa por kilómetro
+		double tarifaBase = 5.0; // Tarifa base por defecto
+		double tarifaPorDistancia = 1.0; // Tarifa por kilómetro
 
-        // Calcular el precio de entrega basado en la distancia
-        double precioEntrega = calcularPrecio(distanciaTotal);
+		// Calcular el precio de entrega basado en la distancia
+		double precioEntrega = calcularPrecio(distanciaTotal);
 
-        double velocidadPromedio = 30.0;
+		double velocidadPromedio = 30.0;
 
-        // duracion de la entrega
-        double tiempoEnHoras = calcularTiempo(distanciaTotal);
+		// duracion de la entrega
+		double tiempoEnHoras = calcularTiempo(distanciaTotal);
 
-        // Agregar la orden a la lista de órdenes
-        receiveOrder(order);
+		// Agregar la orden a la lista de órdenes
+		receiveOrder(order);
 
-        // Retorna la información de la entrega
-        return new EntregaInfo(getName(), distanciaTotal, precioEntrega, tiempoEnHoras);
-    }
+		// Retorna la información de la entrega
+		return new EntregaInfo(getName(), distanciaTotal, precioEntrega, tiempoEnHoras);
+	}
 
-    public static class EntregaInfo {
-        private String nombreRepartidor;
-        private double distanciaTotal;
-        private double precioEntrega;
-        private double tiempoEntregaEnHoras;
+	public static class EntregaInfo {
+		private String nombreRepartidor;
+		private double distanciaTotal;
+		private double precioEntrega;
+		private double tiempoEntregaEnHoras;
 
-        public EntregaInfo(String nombreRepartidor, double distanciaTotal, double precioEntrega, double tiempoEntregaEnHoras) {
-            this.nombreRepartidor = nombreRepartidor;
-            this.distanciaTotal = distanciaTotal;
-            this.precioEntrega = precioEntrega;
-            this.tiempoEntregaEnHoras = tiempoEntregaEnHoras;
-        }
+		public EntregaInfo(String nombreRepartidor, double distanciaTotal, double precioEntrega,
+				double tiempoEntregaEnHoras) {
+			this.nombreRepartidor = nombreRepartidor;
+			this.distanciaTotal = distanciaTotal;
+			this.precioEntrega = precioEntrega;
+			this.tiempoEntregaEnHoras = tiempoEntregaEnHoras;
+		}
 
-        public String getNombreRepartidor() {
-            return nombreRepartidor;
-        }
+		public String getNombreRepartidor() {
+			return nombreRepartidor;
+		}
 
-        public double getDistanciaTotal() {
-            return distanciaTotal;
-        }
+		public double getDistanciaTotal() {
+			return distanciaTotal;
+		}
 
-        public double getPrecioEntrega() {
-            return precioEntrega;
-        }
+		public double getPrecioEntrega() {
+			return precioEntrega;
+		}
 
-        public double getTiempoEntregaEnHoras() {
-            return tiempoEntregaEnHoras;
-        }
+		public double getTiempoEntregaEnHoras() {
+			return tiempoEntregaEnHoras;
+		}
 
-        public void setNombreRepartidor(String nombreRepartidor) {
-            this.nombreRepartidor = nombreRepartidor;
-        }
+		public void setNombreRepartidor(String nombreRepartidor) {
+			this.nombreRepartidor = nombreRepartidor;
+		}
 
-        public void setDistanciaTotal(double distanciaTotal) {
-            this.distanciaTotal = distanciaTotal;
-        }
+		public void setDistanciaTotal(double distanciaTotal) {
+			this.distanciaTotal = distanciaTotal;
+		}
 
-        public void setPrecioEntrega(double precioEntrega) {
-            this.precioEntrega = precioEntrega;
-        }
+		public void setPrecioEntrega(double precioEntrega) {
+			this.precioEntrega = precioEntrega;
+		}
 
-        public void setTiempoEntregaEnHoras(double tiempoEntregaEnHoras) {
-            this.tiempoEntregaEnHoras = tiempoEntregaEnHoras;
-        }
-    }
-    /*  Como se deberia llamar a Entregainfo
+		public void setTiempoEntregaEnHoras(double tiempoEntregaEnHoras) {
+			this.tiempoEntregaEnHoras = tiempoEntregaEnHoras;
+		}
+	}
 
-    Delivery.EntregaInfo informacion = delivery.tomarOrder(order);
-    System.out.println("Entrega realizada por: " + informacion.getNombreRepartidor());
-    System.out.println("Distancia total: " + informacion.getDistanciaTotal() + " km");
-    System.out.println("Precio de entrega: $" + informacion.getPrecioEntrega());
-    System.out.println("Tiempo de entrega: " + informacion.getTiempoEntregaEnHoras() + " horas");
-*/
+	private double calcularDistancia(int[] coordenadasA, int[] coordenadasB) {
+		if (coordenadasA.length != 2 || coordenadasB.length != 2) {
+			throw new IllegalArgumentException("Las coordenadas deben tener exactamente 2 elementos numéricos.");
+		}
 
-    private double calcularDistancia(int[] coordenadasA, int[] coordenadasB) {
-        if (coordenadasA.length != 2 || coordenadasB.length != 2) {
-            throw new IllegalArgumentException("Las coordenadas deben tener exactamente 2 elementos numéricos.");
-        }
+		double latitudA = Math.toRadians(coordenadasA[0]);
+		double longitudA = Math.toRadians(coordenadasA[1]);
+		double latitudB = Math.toRadians(coordenadasB[0]);
+		double longitudB = Math.toRadians(coordenadasB[1]);
 
-        double latitudA = Math.toRadians(coordenadasA[0]);
-        double longitudA = Math.toRadians(coordenadasA[1]);
-        double latitudB = Math.toRadians(coordenadasB[0]);
-        double longitudB = Math.toRadians(coordenadasB[1]);
+		double radioTierra = 6371; // radio en kilometros
 
-        double radioTierra = 6371; // radio en kilometros
+		double diferenciaLatitud = latitudB - latitudA;
+		double diferenciaLongitud = longitudB - longitudA;
 
-        double diferenciaLatitud = latitudB - latitudA;
-        double diferenciaLongitud = longitudB - longitudA;
+		double a = Math.sin(diferenciaLatitud / 2) * Math.sin(diferenciaLatitud / 2) +
+				Math.cos(latitudA) * Math.cos(latitudB) *
+						Math.sin(diferenciaLongitud / 2) * Math.sin(diferenciaLongitud / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        double a = Math.sin(diferenciaLatitud / 2) * Math.sin(diferenciaLatitud / 2) +
-                Math.cos(latitudA) * Math.cos(latitudB) *
-                        Math.sin(diferenciaLongitud / 2) * Math.sin(diferenciaLongitud / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		double distancia = radioTierra * c;
+		return distancia;
+	}
 
-        double distancia = radioTierra * c;
-        return distancia;
-    }
+	private double calcularTiempo(double distancia) {
+		double velocidadPromedio = 30.0;
+		return distancia / velocidadPromedio;
+	}
 
-    private double calcularTiempo(double distancia) {
-        double velocidadPromedio = 30.0;
-        return distancia / velocidadPromedio;
-    }
-
-    private double calcularPrecio(double distancia) {
-        double tarifaBase = 5.0;
-        double tarifaPorKilometro = 1.0;
-        return tarifaBase + (distancia * tarifaPorKilometro);
-    }
-
+	private double calcularPrecio(double distancia) {
+		double tarifaBase = 5.0;
+		double tarifaPorKilometro = 1.0;
+		return tarifaBase + (distancia * tarifaPorKilometro);
+	}
 
 }
-
