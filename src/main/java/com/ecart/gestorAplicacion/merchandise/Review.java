@@ -19,7 +19,12 @@ public class Review implements ProductProp, Serializable {
     public String getAuthor() {
     	return this.autor;
     }
-    
+
+    @Override
+    public String getContent() {
+        return this.autor;
+    }
+
     public String getComment() {
     	return this.comment;
     }

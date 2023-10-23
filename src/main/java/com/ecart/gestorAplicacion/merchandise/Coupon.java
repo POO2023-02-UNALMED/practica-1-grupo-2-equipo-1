@@ -15,11 +15,17 @@ public class Coupon implements ProductProp, Serializable {
 		this.discount = discount;
 		instances.add(this);
 	}
-	
+
+
 	public String getAuthor() {
 		return this.author;
 	}
-	
+
+	@Override
+	public String getContent() {
+		return this.code;
+	}
+
 	public String getCode() {
 		return this.code;
 	}
