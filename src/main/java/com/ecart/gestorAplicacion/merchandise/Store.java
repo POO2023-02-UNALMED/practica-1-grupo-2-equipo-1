@@ -2,6 +2,7 @@ package com.ecart.gestorAplicacion.merchandise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.meta.Entity;
@@ -10,7 +11,7 @@ import com.ecart.gestorAplicacion.meta.Retval;
 public class Store extends Entity implements Serializable {
 	private String description;
 	private Tags tag;
-
+	private static int[] storeAddress;
 	private ArrayList<Product> products;
 	private ArrayList<User> members;
 
@@ -133,5 +134,13 @@ public class Store extends Entity implements Serializable {
 
 	public static void setInstances(ArrayList<Store> instances) {
 		Store.instances = instances;
+	}
+
+	public static int[] getStoreAddress() {
+		return storeAddress;
+	}
+
+	public void setStoreAddress(int[] storeAddress) {
+		Store.storeAddress = storeAddress;
 	}
 }

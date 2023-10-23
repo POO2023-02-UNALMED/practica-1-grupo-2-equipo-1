@@ -2,11 +2,13 @@ package com.ecart.gestorAplicacion.entites;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.ecart.gestorAplicacion.meta.Entity;
 
 public class Person extends Entity implements Serializable {
-	private int[] address;
+	private static int[] address;
 	private static ArrayList<int[]> addresses = new ArrayList<>();
 	private static ArrayList<Person> instances = new ArrayList<>();
 
@@ -33,7 +35,7 @@ public class Person extends Entity implements Serializable {
 	}
 
 
-	public int[] getAddress() {
+	public static int[] getAddress() {
 		return address;
 	}
 

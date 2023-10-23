@@ -2,18 +2,19 @@ package com.ecart.gestorAplicacion.transactions;
 import com.ecart.gestorAplicacion.entites.Delivery;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Locale;
+import java.util.*;
 import java.text.NumberFormat;
 
+import com.ecart.gestorAplicacion.entites.Person;
+import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Product;
+import com.ecart.gestorAplicacion.merchandise.Store;
 
 public class Order implements Serializable {
     private Map<Product, Integer> selectedProducts;
     private int points;
     private static ArrayList<Order> instances = new ArrayList<>();
+
 
     public Order() {
         selectedProducts = new HashMap<>();
@@ -212,6 +213,14 @@ public class Order implements Serializable {
 
     public static void setInstances(ArrayList<Order> instances) {
         Order.instances = instances;
+    }
+
+    public int[] getDireccionOrigen() {
+        return Store.getStoreAddress();
+    }
+
+    public int[] getDireccionDestino() {
+        return User.getAddress();
     }
 }
 

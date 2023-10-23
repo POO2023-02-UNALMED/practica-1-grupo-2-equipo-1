@@ -3,6 +3,7 @@ package com.ecart.gestorAplicacion.entites;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
@@ -14,6 +15,7 @@ import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 public class User extends Person {
 	private ArrayList<Store> stores;
 	private ShoppingCart shoppingCart;
+
 
 	private static ArrayList<User> instances = new ArrayList<>();
 
@@ -183,6 +185,8 @@ public class User extends Person {
 
 		return recommendedProducts;
 	}
+
+
 
 }
 /*
