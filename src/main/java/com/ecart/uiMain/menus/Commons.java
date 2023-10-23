@@ -55,6 +55,8 @@ final public class Commons {
 
 				if (includeListed)
 					captions.add(Boolean.toString(sp.isListed()));
+				else
+					captions.add(String.valueOf(sp.getQuantity()));
 
 				unitsBatch[k] = new Renderable(
 						sp.getTag(),
@@ -71,6 +73,8 @@ final public class Commons {
 
 			if (includeListed)
 				captionLabels.add("Is listed: ");
+			else
+				captionLabels.add("Quantity: ");
 
 			Renderer.drawTiledPattern(
 					unitsBatch,

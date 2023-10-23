@@ -123,8 +123,12 @@ public final class Renderer {
 	}
 
 	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels) {
+		drawCard(unit, captionsLabels, sideDataLabels, false);
+	}
+
+	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels, boolean printCaptions) {
 		if (captionsLabels == null) captionsLabels = new String[] {"bottoplceholdr"};
-		drawTiledPattern(new Renderable[] {unit}, captionsLabels, sideDataLabels, 1, 8, 2, false);
+		drawTiledPattern(new Renderable[] {unit}, captionsLabels, sideDataLabels, 1, 8, 2, printCaptions);
 	}
 
 	public static void drawTiledPattern(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols, int offset, int verticalSpacers, boolean printCaptions) {

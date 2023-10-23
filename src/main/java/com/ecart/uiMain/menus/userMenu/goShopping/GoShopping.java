@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.User;
+import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
@@ -60,9 +61,9 @@ final public class GoShopping {
 		}
 
 		for (Store store : availableStores) {
-			center("-".repeat(50), true);
+			center("-".repeat(60), true);
 			drawStore(store);
-			center("-".repeat(50), true);
+			center("-".repeat(60), true);
 		}
 
 		print();
@@ -75,8 +76,43 @@ final public class GoShopping {
 
 		clear();
 		Renderer.figletBanner(chosenStore.getName());
-		drawStore(chosenStore);
-		sleep(2);
+		Commons.drawProducts(chosenStore, false);
+
+		print();
+
+		String productName = conditionalInquiry(
+				new String[] { "Which product would you like to view?", "(type the name) 👉 " },
+				i -> Product.validate(i, chosenStore.getProducts()) == null);
+
+		Product storeProduct = Product.validate(productName, chosenStore.getProducts());
+
+		clear();
+
+		Renderer.figletBanner(storeProduct.getName());
+
+		Renderable unit = new Renderable(
+				storeProduct.getTag(),
+				new String[] { storeProduct.getTag().name() },
+				new String[] {
+						storeProduct.getName(),
+						String.valueOf(storeProduct.getQuantity()),
+						"🌟 🌟 🌟 🌟 🌟",
+						storeProduct.getDescription(),
+				});
+
+		Renderer.drawCard(
+			unit,
+			new String[] { "Tag name: " },
+			new String[] { "Name: ", "Quantity: ", "Reviews: ", "Description: "},
+			true
+		);
+
+		print(2);
+
+		String yes = conditionalInquiry(
+				new String[] { "Would you like to buy the product?",
+						"[yes|no] 👉 " },
+				i_ -> !(i_.equals("yes") == true || i_.equals("no") == true));
 
 		// LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();
 		//
