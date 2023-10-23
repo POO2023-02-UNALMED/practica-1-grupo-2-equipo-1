@@ -38,6 +38,9 @@ final public class viewStores {
 
 		Retval retval = new Retval();
 		try {
+			if (r[0] == "" || r[1] == "" || r[2] == "" || r[3] == "")
+				throw new ClassCastException("Not enough values to cast");
+
 			retval = user.createProduct(userStore, r[0], Double.parseDouble(r[1]), r[2],
 					Integer.parseInt(r[3]),
 					Tags.getByName(tagName));
