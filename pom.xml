@@ -46,7 +46,7 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>3.2.0</version>
 					<configuration>
-						 <outputDirectory>${project.basedir}/bin</outputDirectory>
+						 <outputDirectory>${project.basedir}</outputDirectory>
 					</configuration>
 			  </plugin>
 		 </plugins>
