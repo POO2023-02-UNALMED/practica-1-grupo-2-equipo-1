@@ -47,15 +47,16 @@ public class Delivery extends Person implements Serializable {
     }
 
     public static Delivery create(String name, String password, int[] address) {
-        Delivery newDelivery = validate(name);
-        if (newDelivery != null)
-            return null;
-
-        if(!Person.isAddressAvailable(address))
-            return null;
-
-        newDelivery = new Delivery(name, password, getAddress());
-        return newDelivery;
+        // Delivery newDelivery = validate(name);
+        // if (newDelivery != null)
+        //     return null;
+        //
+        // if(!Person.isAddressAvailable(address))
+        //     return null;
+        //
+        // newDelivery = new Delivery(name, password, getAddress());
+        // return newDelivery;
+		return null;
     }
 
     public void receiveOrder(Order order) {

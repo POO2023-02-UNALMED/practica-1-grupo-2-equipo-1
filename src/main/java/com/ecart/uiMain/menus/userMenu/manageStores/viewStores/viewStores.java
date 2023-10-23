@@ -135,18 +135,6 @@ final public class viewStores {
 		Commons.dialog(retval);
 	}
 
-	private static void removeMembers(User user, Store userStore) {
-		Renderer.figletBanner("manage  members");
-
-		String memberName = conditionalInquiry(
-				new String[] { "Which member would you like to remove?", "(type their name) 👉 " },
-				i -> Tags.getByName(i) == null);
-
-		print(2);
-		// center(retval.getMessage(), true);
-		sleep(2);
-	}
-
 	private static void updateSettings(User user, Store userStore) {
 		Renderer.figletBanner("update  settings", 20);
 
@@ -237,6 +225,6 @@ final public class viewStores {
 		submenu.put("🗃️  Update settings", () -> updateSettings(user, userStore));
 		// submenu.put("💁 Remove members", () -> removeMembers(user, userStore)); //
 
-		menu("management", submenu, true, false, true);
+		menu("management", submenu, true);
 	}
 }

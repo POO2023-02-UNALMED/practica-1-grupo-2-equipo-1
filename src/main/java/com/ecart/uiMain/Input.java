@@ -77,16 +77,11 @@ public final class Input {
 	}
 
 	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret) {
-		menu(banner, options, ret, false, false, 15);
+		menu(banner, options, ret, false, 15);
 	}
 
 	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit) {
-		menu(banner, options, ret, exit, false, 15);
-	}
-
-	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit,
-			boolean useFiglet) {
-		menu(banner, options, ret, exit, useFiglet, 15);
+		menu(banner, options, ret, exit, 15);
 	}
 
 	/**
@@ -98,8 +93,7 @@ public final class Input {
 	 * @param ret
 	 * @param exit
 	 */
-	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit,
-			boolean useFiglet, int vcentr) {
+	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit, int vcentr) {
 
 		List<Map.Entry<String, Runnable>> optionsList = new ArrayList<>(options.entrySet());
 
@@ -108,10 +102,7 @@ public final class Input {
 
 			// banner
 			vcenter(vcentr);
-			if (useFiglet)
-				Renderer.figletBanner(banner, 0, 0);
-			else
-				Renderer.centerBanner(Banners.getByName(banner));
+			Renderer.figletBanner(banner, 0, 0);
 
 			print(4);
 

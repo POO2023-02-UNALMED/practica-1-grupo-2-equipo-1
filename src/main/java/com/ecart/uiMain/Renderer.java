@@ -11,11 +11,17 @@ import java.util.List;
 
 public final class Renderer {
 
-	public static void centerBanner(Banners banner) {
-		int averageLength = averageLength(banner.split(), true);
+	private static String spaceOutText(String text) {
+		StringBuilder spacedText = new StringBuilder();
 
-		for (String line : banner.split())
-			center(line, averageLength);
+		for (int i = 0; i < text.length(); i++) {
+			spacedText.append(text.charAt(i));
+			if (i < text.length() - 1) {
+				spacedText.append(" ");
+			}
+		}
+
+		return spacedText.toString();
 	}
 
 	public static void figletBanner(String banner) {
@@ -23,12 +29,19 @@ public final class Renderer {
 	}
 
 	public static void figletBanner(String banner, int vcentr) {
-		figletBanner(banner, vcentr, 3);
+		figletBanner(banner, vcentr, 3, true);
 	}
 
 	public static void figletBanner(String banner, int vcentr, int postSpaces) {
+		figletBanner(banner, vcentr, postSpaces, true);
+	}
+
+	public static void figletBanner(String banner, int vcentr, int postSpaces, boolean spaceOut) {
 		if (vcentr > 0)
 			vcenter(vcentr);
+
+		if (spaceOut)
+			banner = spaceOutText(banner);
 
 		try {
 			banner = FigletFont.convertOneLine(banner);
@@ -72,8 +85,11 @@ public final class Renderer {
 		return padding;
 	}
 
-	// private static String generateHorizontalLine(Renderable[] units, String biggestCaptionLabel, int cols, String border, String spacer, int captionIndex) {
-	private static String generateHorizontalLine(Renderable[] units, int cols, String border, String spacer,  String biggestCaptionLabel, String actualCaptionLabel, int captionIndex) {
+	// private static String generateHorizontalLine(Renderable[] units, String
+	// biggestCaptionLabel, int cols, String border, String spacer, int
+	// captionIndex) {
+	private static String generateHorizontalLine(Renderable[] units, int cols, String border, String spacer,
+			String biggestCaptionLabel, String actualCaptionLabel, int captionIndex) {
 		StringBuilder line = new StringBuilder();
 		int renderedCols = 1;
 		int biggestMbs = 0;
@@ -84,7 +100,8 @@ public final class Renderer {
 					u.getTag(),
 					biggestCaptionLabel,
 					getBiggestString(u.getCaptions()));
-			if (individualMbs > biggestMbs) biggestMbs = individualMbs;
+			if (individualMbs > biggestMbs)
+				biggestMbs = individualMbs;
 		}
 
 		for (int i = 0; i < units.length; i++) {
@@ -95,12 +112,11 @@ public final class Renderer {
 				int[] padding = boxPadding(biggestMbs, actualCaptionLabel + actualCaption);
 
 				line.append(
-					border +
-					" ".repeat(padding[0]) +
-					actualCaptionLabel + actualCaption.toLowerCase() +
-					" ".repeat(padding[1]) +
-					border
-				);
+						border +
+								" ".repeat(padding[0]) +
+								actualCaptionLabel + actualCaption.toLowerCase() +
+								" ".repeat(padding[1]) +
+								border);
 
 			} else {
 				line.append(border + spacer.repeat(biggestMbs) + border);
@@ -126,12 +142,15 @@ public final class Renderer {
 		drawCard(unit, captionsLabels, sideDataLabels, false);
 	}
 
-	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels, boolean printCaptions) {
-		if (captionsLabels == null) captionsLabels = new String[] {"bottoplceholdr"};
-		drawTiledPattern(new Renderable[] {unit}, captionsLabels, sideDataLabels, 1, 8, 2, printCaptions);
+	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels,
+			boolean printCaptions) {
+		if (captionsLabels == null)
+			captionsLabels = new String[] { "bottoplceholdr" };
+		drawTiledPattern(new Renderable[] { unit }, captionsLabels, sideDataLabels, 1, 8, 2, printCaptions);
 	}
 
-	public static void drawTiledPattern(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols, int offset, int verticalSpacers, boolean printCaptions) {
+	public static void drawTiledPattern(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols,
+			int offset, int verticalSpacers, boolean printCaptions) {
 		if (captionsLabels == null)
 			captionsLabels = new String[] { "" };
 
@@ -145,7 +164,8 @@ public final class Renderer {
 					u.getTag(),
 					biggestCaptionLabel,
 					getBiggestString(u.getCaptions()));
-			if (individualMbs > biggestMbs) biggestMbs = individualMbs;
+			if (individualMbs > biggestMbs)
+				biggestMbs = individualMbs;
 		}
 
 		String horizontalHeaders = generateHorizontalLine(units, cols, "+", "-", biggestCaptionLabel, null, -1);
@@ -155,7 +175,8 @@ public final class Renderer {
 		int linesCount = units[0].getTag().split().length;
 
 		for (int i = 0; i < captionsLabels.length; i++) {
-			horizontalCaptions[i] = generateHorizontalLine(units, cols, "|", " ", biggestCaptionLabel, captionsLabels[i], i);
+			horizontalCaptions[i] = generateHorizontalLine(units, cols, "|", " ", biggestCaptionLabel, captionsLabels[i],
+					i);
 		}
 
 		print(entireLeftPadding + horizontalHeaders);
@@ -192,7 +213,6 @@ public final class Renderer {
 			print();
 		}
 
-		
 		for (int i = 0; i < verticalSpacers; i++)
 			print(entireLeftPadding + horizontalSpacers);
 
