@@ -2,6 +2,7 @@ package com.ecart.gestorAplicacion.merchandise;
 
 import com.ecart.gestorAplicacion.entites.User;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class Product {
+public class Product implements Serializable {
 	private String name;
 	private double price;
 	private String description;
