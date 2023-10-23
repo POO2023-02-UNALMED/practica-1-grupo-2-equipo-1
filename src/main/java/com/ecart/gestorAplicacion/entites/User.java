@@ -2,6 +2,8 @@ package com.ecart.gestorAplicacion.entites;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
@@ -144,4 +146,70 @@ public class User extends Person {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
+
+	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice){
+		ArrayList<Store> allStores = Store.getInstances();
+		ArrayList<Store> userStores = this.getStores();
+		ArrayList<Store> availableStores = new ArrayList<>();
+		LinkedHashMap<String, Product> recommendedProducts = new LinkedHashMap<>();
+
+		for (Store store : allStores) {
+			if (!userStores.contains(store))
+				availableStores.add(store);
+		}
+
+
+		for (Store store : availableStores) {
+			for (Product product : store.getProducts()) {
+				boolean tagsMatch = true;
+				for (Tags tag : tags) {
+					boolean found = false;
+					for (Tags productTag : product.getTags()) {
+						if (tag.equals(productTag)) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						tagsMatch = false;
+						break;
+					}
+				}
+				if (tagsMatch) {
+					recommendedProducts.put(product.getName(), product);
+				}
+			}
+		}
+
+		return recommendedProducts;
+	}
+
 }
+/*
+	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice) {
+		return stores.stream()
+				.filter(product -> product.getProducts() <= maxPrice &&
+						containsAllTags(product, tags) //&&
+						//!product.getStore().equals(ownStore))
+				.collect(Collectors.toMap(Product::getName, product -> product, (existing, replacement) -> existing, LinkedHashMap::new)));
+	}
+
+
+	private boolean containsAllTags(Product product, Tags[] tags) {
+		for (Tags tag : tags) {
+			boolean found = false;
+			for (Tags productTag : product.getTags()) {
+				if (tag.equals(productTag)) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
+ */
+

@@ -18,6 +18,8 @@ public class Product implements Serializable {
 	private Tags tag;
 	private boolean listed;
 	private User productHolder;
+	// lista auxiliar de tags
+	private List<Tags> productTags;
 
 	// private List<User> subscribers = new ArrayList<>();
 	// private List<Coupon> coupons = new ArrayList<>();
@@ -116,6 +118,14 @@ public class Product implements Serializable {
 		return tag;
 	}
 
+	public List<Tags> getTags() {
+		return productTags;
+	}
+
+	public void setTags(List<Tags> productTags) {
+		this.productTags = productTags;
+	}
+
 	public void setTag(Tags tag) {
 		this.tag = tag;
 	}
@@ -136,4 +146,11 @@ public class Product implements Serializable {
 		Product.instances = instances;
 	}
 
+	public User getProductHolder() {
+		return productHolder;
+	}
+
+	public void setProductHolder(User productHolder) {
+		this.productHolder = productHolder;
+	}
 }
