@@ -88,6 +88,8 @@ public class App {
 		System.out.println("hello world 4");
 		sleep(1);
 		moveCursorUp(2);
+		System.out.println("############");
+
         // moveCursorUp(3); // Move the cursor up 3 lines
 
         // int[] dimensions = getTerminalDimensions();
