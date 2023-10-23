@@ -1,48 +1,55 @@
 package com.ecart.gestorAplicacion.transactions;
 
-import com.ecart.gestorAplicacion.entites.Delivery;
 import com.ecart.gestorAplicacion.merchandise.Product;
-import com.ecart.gestorAplicacion.merchandise.Tags;
+import com.ecart.gestorAplicacion.meta.Retval;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 
 public class ShoppingCart implements Serializable {
-    private List<Product> cartItems;
-    private static ArrayList<ShoppingCart> instances = new ArrayList<>();
+	private LinkedHashMap<Integer, Product> cartItems;
+	private static ArrayList<ShoppingCart> instances = new ArrayList<>();
 
-    public ShoppingCart() {
-        cartItems = new ArrayList<>();
-        instances.add(this);
-    }
+	public ShoppingCart() {
+		cartItems = new LinkedHashMap<>();
+		instances.add(this);
+	}
 
-    public void addProduct(Product product, int quantity) {
-			// temporary fix
-        // Product cartProduct = new Product(product.getName(), product.getPrice(), product.getDescription(), quantity, Tags.PHOTOGRAPHY);
-        // cartItems.add(cartProduct);
-    }
+	public Retval addProduct(Product product, int quantity) {
+		Retval retval = new Retval("Added product to cart succesfully!");
 
-    public List<Product> getCartItems() {
-        return cartItems;
-    }
+		if (quantity > product.getQuantity() || quantity <= 0)
+			return new Retval("There is not enough stock to add the product. Come back later!", false);
 
-    public static ArrayList<ShoppingCart> getInstances() {
-        return instances;
-    }
+		cartItems.put(Integer.valueOf(quantity), product);
 
-    public static void setInstances(ArrayList<ShoppingCart> instances) {
-        ShoppingCart.instances = instances;
-    }
+		return retval;
+	}
 
-    public double calculateTotal() {
-        double total = 0;
+	public static ArrayList<ShoppingCart> getInstances() {
+		return instances;
+	}
 
-        for (Product product : cartItems) {
-            total += product.getPrice() * product.getQuantity();
-        }
+	public static void setInstances(ArrayList<ShoppingCart> instances) {
+		ShoppingCart.instances = instances;
+	}
 
-        return total;
-    }
+	public double calculateTotal() {
+		double total = 0;
+
+		// for (Product product : cartItems) {
+		// 	total += product.getPrice() * product.getQuantity();
+		// }
+		//
+		return total;
+	}
+
+	public LinkedHashMap<Integer, Product> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(LinkedHashMap<Integer, Product> cartItems) {
+		this.cartItems = cartItems;
+	}
 }
-

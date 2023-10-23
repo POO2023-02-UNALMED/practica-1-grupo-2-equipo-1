@@ -7,16 +7,20 @@ import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
+import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 
-public class User extends Person implements Serializable {
+public class User extends Person {
 	private ArrayList<Store> stores;
+	private ShoppingCart shoppingCart;
 
 	private static ArrayList<User> instances = new ArrayList<>();
 
 	public User(String username, String password, int[] address) {
 		super(username, password, address);
 
+		this.shoppingCart = new ShoppingCart();
 		this.stores = new ArrayList<>();
+
 		instances.add(this);
 	}
 
@@ -51,7 +55,7 @@ public class User extends Person implements Serializable {
 		if (newUser != null)
 			return null;
 
-		if(!Person.isAddressAvailable(address))
+		if (!Person.isAddressAvailable(address))
 			return null;
 
 		newUser = new User(name, password, address);
@@ -84,7 +88,16 @@ public class User extends Person implements Serializable {
 			return new Retval("Error: the store does not exist", false);
 
 		Retval retval = existingStore.addUser(this.getName());
-		if (retval.ok()) this.stores.add(existingStore);
+		if (retval.ok())
+			this.stores.add(existingStore);
+
+		return retval;
+	}
+
+	public Retval addToShoppingCart(String productName, int quantity) {
+		Product existingProduct = Product.validate(productName);
+
+		Retval retval = shoppingCart.addProduct(existingProduct, quantity);
 
 		return retval;
 	}
@@ -108,12 +121,12 @@ public class User extends Person implements Serializable {
 	}
 
 	public void deleteStore(String name) {
-	  for (Store store : stores) {
+		for (Store store : stores) {
 			if (store.getName().equals(name)) {
-				 stores.remove(store);
-				 break;
+				stores.remove(store);
+				break;
 			}
-	  }
+		}
 	}
 
 	public static ArrayList<User> getInstances() {
@@ -122,5 +135,13 @@ public class User extends Person implements Serializable {
 
 	public static void setInstances(ArrayList<User> instances) {
 		User.instances = instances;
+	}
+
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 }

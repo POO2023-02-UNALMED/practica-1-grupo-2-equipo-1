@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-public class Admin extends Person implements Serializable {
+public class Admin extends Person {
 	private static ArrayList<Admin> instances = new ArrayList<>();
 	private  ArrayList<Delivery> delivery = new ArrayList<>();
 

@@ -104,7 +104,7 @@ final public class userMenu {
 
 		options.put("🛍️  Go shopping!", () -> GoShopping.call(user));
 		options.put("🏪 Manage your stores", () -> manageStores.call(user));
-		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
+		options.put("🗞️  View shopping cart", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> updateSettings(user));
 
 		menu("login", options, true, true);

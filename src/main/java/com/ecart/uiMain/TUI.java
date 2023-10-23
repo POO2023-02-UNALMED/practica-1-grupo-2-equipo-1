@@ -46,7 +46,6 @@ public final class TUI {
 		while (true) {
 
 			clear();
-			// vcenter(12);
 
 			Renderer.drawBanner("ECART", 4, 1);
 

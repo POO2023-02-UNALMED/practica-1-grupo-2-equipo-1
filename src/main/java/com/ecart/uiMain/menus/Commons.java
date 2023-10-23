@@ -24,10 +24,10 @@ final public class Commons {
 	}
 
 	public static void drawProducts(Store userStore) {
-		drawProducts(userStore, true);
+		drawProducts(userStore, true, 2);
 	}
 
-	public static void drawProducts(Store userStore, boolean includeListed) {
+	public static void drawProducts(Store userStore, boolean includeListed, int postSpaces) {
 		ArrayList<Product> storeProducts = userStore.getProducts();
 		int batchSize = storeProducts.size() < 3 ? storeProducts.size() : 3;
 
@@ -82,7 +82,7 @@ final public class Commons {
 					null, batchSize, 0, 1, true);
 		}
 
-		print(2);
+		print(postSpaces);
 	}
 
 	public static void drawAllTags() {
