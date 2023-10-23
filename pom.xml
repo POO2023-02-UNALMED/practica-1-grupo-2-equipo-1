@@ -26,6 +26,26 @@
   </dependencies>
 	<build>
 		 <plugins>
+			<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.2.4</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>com.ecart.App</mainClass>
+                            </transformer>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 			  <plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
@@ -47,6 +67,13 @@
 					<version>3.2.0</version>
 					<configuration>
 						 <outputDirectory>${project.basedir}</outputDirectory>
+					  <archive>
+						 <manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.ecart.App</mainClass>
+						 </manifest>
+					  </archive>
 					</configuration>
 			  </plugin>
 		 </plugins>
