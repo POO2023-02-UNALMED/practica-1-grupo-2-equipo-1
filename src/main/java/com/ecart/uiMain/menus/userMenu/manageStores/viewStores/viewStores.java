@@ -16,7 +16,7 @@ import com.ecart.uiMain.menus.Commons;
 
 final public class viewStores {
 	private static void createProduct(User user, Store userStore) {
-		Renderer.figletBanner("create  product");
+		Renderer.drawBanner("create  product");
 
 		String[] r = questionnaire(
 				new String[] {
@@ -52,7 +52,7 @@ final public class viewStores {
 	}
 
 	private static void removeProduct(User user, Store userStore) {
-		Renderer.figletBanner("remove  product");
+		Renderer.drawBanner("remove  product");
 
 		Commons.drawProducts(userStore);
 
@@ -66,7 +66,7 @@ final public class viewStores {
 	}
 
 	private static void updateProduct(User user, Store userStore) {
-		Renderer.figletBanner("update  product");
+		Renderer.drawBanner("update  product");
 
 		Commons.drawProducts(userStore);
 
@@ -75,7 +75,7 @@ final public class viewStores {
 				i -> Product.validate(i, userStore.getProducts()) == null);
 
 		clear();
-		Renderer.figletBanner("new  properties");
+		Renderer.drawBanner("new  properties");
 
 		Product storeProduct = Product.validate(productName, userStore.getProducts());
 
@@ -136,7 +136,7 @@ final public class viewStores {
 	}
 
 	private static void updateSettings(User user, Store userStore) {
-		Renderer.figletBanner("update  settings", 20);
+		Renderer.drawBanner("update  settings", 20);
 
 		Renderable unit = new Renderable(
 				userStore.getTag(),
@@ -182,7 +182,7 @@ final public class viewStores {
 	}
 
 	public static void call(User user) {
-		Renderer.figletBanner("your  stores");
+		Renderer.drawBanner("your  stores");
 
 		ArrayList<Store> stores = user.getStores();
 

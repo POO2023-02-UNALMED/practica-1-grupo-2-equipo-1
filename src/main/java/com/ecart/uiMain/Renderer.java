@@ -24,24 +24,18 @@ public final class Renderer {
 		return spacedText.toString();
 	}
 
-	public static void figletBanner(String banner) {
-		figletBanner(banner, 20);
+	public static void drawBanner(String banner) {
+		drawBanner(banner, 8);
 	}
 
-	public static void figletBanner(String banner, int vcentr) {
-		figletBanner(banner, vcentr, 3, true);
+	public static void drawBanner(String banner, int screenSection) {
+		drawBanner(banner, screenSection, 2);
 	}
 
-	public static void figletBanner(String banner, int vcentr, int postSpaces) {
-		figletBanner(banner, vcentr, postSpaces, true);
-	}
+	public static void drawBanner(String banner, int screenSection, int postSpaces) {
+		vcenter(screenSection, 0);
 
-	public static void figletBanner(String banner, int vcentr, int postSpaces, boolean spaceOut) {
-		if (vcentr > 0)
-			vcenter(vcentr);
-
-		if (spaceOut)
-			banner = spaceOutText(banner);
+		banner = spaceOutText(banner);
 
 		try {
 			banner = FigletFont.convertOneLine(banner);

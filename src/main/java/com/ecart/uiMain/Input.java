@@ -101,8 +101,7 @@ public final class Input {
 			clear();
 
 			// banner
-			vcenter(vcentr);
-			Renderer.figletBanner(banner, 0, 0);
+			Renderer.drawBanner(banner);
 
 			print(4);
 

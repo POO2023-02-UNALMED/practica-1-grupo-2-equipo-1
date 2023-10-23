@@ -29,7 +29,7 @@ import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
 final public class userMenu {
 
 	private static void updateSettings(User user) {
-		Renderer.figletBanner("update  settings", 20);
+		Renderer.drawBanner("update  settings");
 
 		Renderable unit = new Renderable(
 				Tags.getByName("decorations"),

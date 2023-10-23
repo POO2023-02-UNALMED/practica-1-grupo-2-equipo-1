@@ -16,7 +16,7 @@ import com.ecart.uiMain.menus.userMenu.manageStores.viewStores.viewStores;
 final public class manageStores {
 
 	private static void createStore(User user) {
-		Renderer.figletBanner("create  store");
+		Renderer.drawBanner("create  store");
 
 		String[] r = questionnaire(
 				new String[] {
@@ -49,7 +49,7 @@ final public class manageStores {
 	}
 
 	private static void joinStore(User user) {
-		Renderer.figletBanner("join  store");
+		Renderer.drawBanner("join  store");
 
 		String[] r = questionnaire(
 				new String[] {

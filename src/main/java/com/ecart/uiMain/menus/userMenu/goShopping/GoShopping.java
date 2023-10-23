@@ -40,7 +40,7 @@ final public class GoShopping {
 	}
 
 	public static void call(User user) {
-		Renderer.figletBanner("go  shopping!");
+		Renderer.drawBanner("go  shopping!");
 
 		ArrayList<Store> allStores = Store.getInstances();
 		ArrayList<Store> userStores = user.getStores();
@@ -75,7 +75,7 @@ final public class GoShopping {
 		Store chosenStore = Store.validate(storeName, availableStores);
 
 		clear();
-		Renderer.figletBanner(chosenStore.getName());
+		Renderer.drawBanner(chosenStore.getName());
 		Commons.drawProducts(chosenStore, false);
 
 		print();
@@ -88,7 +88,7 @@ final public class GoShopping {
 
 		clear();
 
-		Renderer.figletBanner(storeProduct.getName());
+		Renderer.drawBanner(storeProduct.getName());
 
 		Renderable unit = new Renderable(
 				storeProduct.getTag(),

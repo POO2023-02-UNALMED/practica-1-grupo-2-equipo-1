@@ -46,9 +46,9 @@ public final class TUI {
 		while (true) {
 
 			clear();
-			vcenter(12);
+			// vcenter(12);
 
-			Renderer.figletBanner("ECART", 40, 0);
+			Renderer.drawBanner("ECART", 4, 1);
 
 			center("===== Empower Your Passion, Share Your Creations =====", true);
 			center("(Ctrl + C to exit)", true);

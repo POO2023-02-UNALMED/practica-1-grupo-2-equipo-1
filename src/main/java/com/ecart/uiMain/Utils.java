@@ -125,10 +125,17 @@ public final class Utils {
 		return "";
 	}
 
-	/** Center text vertically in the screen */
-	public static void vcenter(int amount) {
+
+	/**
+	 * Center text vertically in the screen
+	 *
+	 * @param screenSection divide the screen in Halfs (2), Thirds (3), Fourths (4), etc.
+	 * @param amount
+	 */
+	public static void vcenter(int screenSection, int amount) {
+
 		int rows = getDimensions()[0];
-		rows = rows > 100 ? 9 : (rows / 2) - amount; // extreme case for virtual terminals (e.g. IDE's)
+		rows = rows > 100 ? 9 : (rows / screenSection) - amount; // extreme case for virtual terminals (e.g. IDE's)
 
 		System.out.print("\n".repeat(rows < 0 ? 0 : rows));
 	}
