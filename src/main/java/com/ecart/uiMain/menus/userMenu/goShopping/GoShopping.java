@@ -16,6 +16,28 @@ import com.ecart.uiMain.menus.Commons;
 import com.ecart.uiMain.menus.userMenu.manageStores.viewStores.viewStores;
 
 final public class GoShopping {
+
+	private static void drawStore(Store store) {
+
+		Renderable unit = new Renderable(
+				store.getTag(),
+				new String[] { store.getTag().name() },
+				new String[] {
+						store.getName(),
+						store.getTag().name(),
+						store.getDescription(),
+						"🌟 🌟 🌟 🌟 🌟"
+				});
+
+		Renderer.drawCard(unit, null, new String[] {
+				"Name: ", "Tag: ", "Reviews: ", "Description: "
+		});
+
+		print(2);
+
+		Commons.drawProducts(store, false);
+	}
+
 	public static void call(User user) {
 		Renderer.figletBanner("go  shopping!");
 
@@ -39,27 +61,21 @@ final public class GoShopping {
 
 		for (Store store : availableStores) {
 			center("-".repeat(50), true);
-
-			Renderable unit = new Renderable(
-					store.getTag(),
-					new String[] { store.getTag().name() },
-					new String[] {
-							store.getName(),
-							store.getTag().name(),
-							store.getDescription(),
-							"🌟 🌟 🌟 🌟 🌟"
-					});
-
-			Renderer.drawCard(unit, null, new String[] {
-					"Name: ", "Tag: ", "Reviews: ", "Description: "
-			});
-
-			print(2);
-
-			Commons.drawProducts(store, false);
+			drawStore(store);
 			center("-".repeat(50), true);
 		}
 
+		print();
+
+		String storeName = conditionalInquiry(
+				new String[] { "Please select one stores you would like to manage", "(type its name) 👉 " },
+				i -> Store.validate(i, availableStores) == null);
+
+		Store chosenStore = Store.validate(storeName, availableStores);
+
+		clear();
+		Renderer.figletBanner(chosenStore.getName());
+		drawStore(chosenStore);
 		sleep(2);
 
 		// LinkedHashMap<String, Runnable> submenu = new LinkedHashMap<>();

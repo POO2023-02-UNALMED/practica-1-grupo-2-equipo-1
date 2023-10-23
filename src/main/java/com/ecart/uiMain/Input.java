@@ -4,6 +4,7 @@ import static com.ecart.uiMain.Utils.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -99,8 +100,8 @@ public final class Input {
 	 */
 	public static void menu(String banner, LinkedHashMap<String, Runnable> options, boolean ret, boolean exit,
 			boolean useFiglet, int vcentr) {
-		// TODo: didn't know about LinkedHashMaps before writing this
-		ArrayList<Map.Entry<String, Runnable>> orderedOptions = new ArrayList<>(options.entrySet());
+
+		List<Map.Entry<String, Runnable>> optionsList = new ArrayList<>(options.entrySet());
 
 		while (true) {
 			clear();
@@ -116,17 +117,17 @@ public final class Input {
 
 			// left-align all of the options
 			int biggest = 0;
-			for (int i = 0; i < orderedOptions.size(); i++) {
-				Map.Entry<String, Runnable> entry = orderedOptions.get(i);
+			for (Map.Entry<String, Runnable> entry : options.entrySet()) {
 				if (entry.getKey().length() > biggest)
 					biggest = entry.getKey().length();
 			}
 
 			biggest = (getDimensions()[1] / 2) - biggest / 2;
 
-			for (int i = 0; i < orderedOptions.size(); i++) {
-				Map.Entry<String, Runnable> entry = orderedOptions.get(i);
-				print(" ".repeat(biggest) + "(" + (i + 1) + ") " + entry.getKey());
+			int j = 1;
+			for (Map.Entry<String, Runnable> entry : options.entrySet()) {
+				print(" ".repeat(biggest) + "(" + j + ") " + entry.getKey());
+				j++;
 			}
 
 			if (exit)
@@ -139,6 +140,8 @@ public final class Input {
 			String input = scnr.nextLine();
 			print();
 
+			int pickedOption = Integer.valueOf(input) - 1;
+
 			if (input.equals("0") || input.equals("")) {
 				if (ret)
 					return;
@@ -149,11 +152,13 @@ public final class Input {
 					App.shutdown(true);
 				else
 					errorMenu();
-			} else if ((Integer.valueOf(input) - 1) <= orderedOptions.size()) {
-				Map.Entry<String, Runnable> entry = orderedOptions.get(Integer.valueOf(input) - 1);
+			} else if (pickedOption <= options.size()) {
+				Map.Entry<String, Runnable> entry = optionsList.get(pickedOption);
 				Runnable fn = entry.getValue();
+
 				clear();
 				fn.run();
+
 			} else {
 				errorMenu();
 			}

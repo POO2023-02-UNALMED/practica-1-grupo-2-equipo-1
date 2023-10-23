@@ -46,34 +46,35 @@ final public class Commons {
 			for (int j = i, k = 0; j < endIndex; j++, k++) {
 				Product sp = storeProducts.get(j);
 
-				String[] captions = new String[] {
-						sp.getName(),
-						"$" + Double.toString(sp.getPrice()),
+				ArrayList<String> captions = new ArrayList<String>() {
+					{
+						add(sp.getName());
+						add("$" + Double.toString(sp.getPrice()));
+					}
 				};
 
 				if (includeListed)
-					captions[2] = Boolean.toString(sp.isListed());
+					captions.add(Boolean.toString(sp.isListed()));
 
 				unitsBatch[k] = new Renderable(
 						sp.getTag(),
-						new String[] {
-								sp.getName(),
-								"$" + Double.toString(sp.getPrice()),
-								Boolean.toString(sp.isListed())
-						},
+						captions.toArray(new String[captions.size()]),
 						null);
 			}
 
-			String[] captionLabels = new String[] {
-					"Name: ", "Price: "
+			ArrayList<String> captionLabels = new ArrayList<String>() {
+				{
+					add("Name: ");
+					add("Price: ");
+				}
 			};
 
 			if (includeListed)
-				captionLabels[2] = "Is listed: ";
+				captionLabels.add("Is listed: ");
 
 			Renderer.drawTiledPattern(
 					unitsBatch,
-					captionLabels,
+					captionLabels.toArray(new String[captionLabels.size()]),
 					null, batchSize, 0, 1, true);
 		}
 

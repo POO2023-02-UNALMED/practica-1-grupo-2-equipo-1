@@ -76,7 +76,8 @@ final public class userMenu {
 
 				int oldAddress[] = user.getAddress();
 
-				if (!Person.isAddressAvailable(new int[] { calle, carrera }) && calle != oldAddress[0] && carrera != oldAddress[1]) {
+				if (!Person.isAddressAvailable(new int[] { calle, carrera }) && calle != oldAddress[0]
+						&& carrera != oldAddress[1]) {
 					retval = new Retval("Error: that address is already taken", false);
 				} else {
 					if (r[0] != "")
@@ -101,7 +102,7 @@ final public class userMenu {
 		// maps are abstracts, while HashMaps aren't
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
 
-		options.put("🛍️  Go shopping!", () -> GoShopping.call(user) );
+		options.put("🛍️  Go shopping!", () -> GoShopping.call(user));
 		options.put("🏪 Manage your stores", () -> manageStores.call(user));
 		options.put("🗞️  Manage your orders", () -> center("manage your balance", true));
 		options.put("👱 Profile settings", () -> updateSettings(user));
