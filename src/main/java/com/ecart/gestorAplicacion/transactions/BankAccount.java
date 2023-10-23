@@ -1,16 +1,21 @@
 package com.ecart.gestorAplicacion.transactions;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class BankAccount {
+public class BankAccount implements Serializable {
     private double balance;
     private String cvv;
+    private static ArrayList<BankAccount> instances = new ArrayList<>();
 
     public BankAccount() {
         // saldo en cero al crear la cuenta
         this.balance = 0.0;
         // Generar un código de seguridad CVV
         this.cvv = generateCVV();
+
+        instances.add(this);
     }
 
     public double getBalance() {
@@ -56,6 +61,10 @@ public class BankAccount {
         Random random = new Random();
         int cvvNumber = random.nextInt(1000); // Generar un número aleatorio de 0 a 999
         return String.format("%03d", cvvNumber);
+    }
+
+    public static ArrayList<BankAccount> getInstances() {
+        return instances;
     }
 }
 

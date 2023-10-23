@@ -4,14 +4,17 @@ import com.ecart.gestorAplicacion.entites.Delivery;
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     private List<Product> cartItems;
+    private static ArrayList<ShoppingCart> instances = new ArrayList<>();
 
     public ShoppingCart() {
         cartItems = new ArrayList<>();
+        instances.add(this);
     }
 
     public void addProduct(Product product, int quantity) {
@@ -22,6 +25,10 @@ public class ShoppingCart {
 
     public List<Product> getCartItems() {
         return cartItems;
+    }
+
+    public static ArrayList<ShoppingCart> getInstances() {
+        return instances;
     }
 
     public double calculateTotal() {

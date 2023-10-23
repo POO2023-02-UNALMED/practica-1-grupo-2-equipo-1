@@ -1,14 +1,19 @@
 package com.ecart.gestorAplicacion.merchandise;
 
-public class Coupon implements ProductProp {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Coupon implements ProductProp, Serializable {
 	private String author;
 	private String code;
 	private int discount; //la cantidad de porcentaje del descuento de 1 a 100
+	private static ArrayList<Coupon> instances = new ArrayList<>();
 	
 	public Coupon(String author, String code, int discount) {
 		this.author = author;
 		this.code = code;
 		this.discount = discount;
+		instances.add(this);
 	}
 	
 	public String getAuthor() {
@@ -23,4 +28,7 @@ public class Coupon implements ProductProp {
 		return this.discount;
 	}
 
+	public static ArrayList<Coupon> getInstances() {
+		return instances;
+	}
 }

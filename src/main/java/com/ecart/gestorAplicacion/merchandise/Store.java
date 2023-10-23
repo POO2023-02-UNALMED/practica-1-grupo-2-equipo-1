@@ -1,12 +1,13 @@
 package com.ecart.gestorAplicacion.merchandise;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Retval;
 
-public class Store extends Entity {
+public class Store extends Entity implements Serializable {
 	private String description;
 	private Tags tag;
 

@@ -1,13 +1,16 @@
 package com.ecart.gestorAplicacion.entites;
 
+<<<<<<< HEAD
 import com.ecart.gestorAplicacion.meta.Retval;
 
+=======
+import java.io.Serializable;
+>>>>>>> 5f7aae087139979dd1b218b3a0a0c7a581cbb7b1
 import java.util.ArrayList;
 
-public class Admin extends Person {
+public class Admin extends Person implements Serializable {
 	private static ArrayList<Admin> instances = new ArrayList<>();
 	private  ArrayList<Delivery> delivery = new ArrayList<>();
-
 
 	public Admin(String username, String password, int[] address) {
 		super(username, password, address);
@@ -54,6 +57,7 @@ public class Admin extends Person {
 		return newAdmin;
 	}
 
+<<<<<<< HEAD
 	public Retval createDelivery(String name, String password){
 		Delivery newDelivery = Delivery.create(name, password, getAddress());
 		if (newDelivery == null)
@@ -81,6 +85,10 @@ public class Admin extends Person {
 	}
 */
 		return null;
+=======
+	public static ArrayList<Admin> getInstances() {
+		return instances;
+>>>>>>> 5f7aae087139979dd1b218b3a0a0c7a581cbb7b1
 	}
 }
 

@@ -1,5 +1,8 @@
 package com.ecart.gestorAplicacion.transactions;
 import com.ecart.gestorAplicacion.entites.Delivery;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Locale;
@@ -7,13 +10,14 @@ import java.text.NumberFormat;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
 
-public class Order {
+public class Order implements Serializable {
     private Map<Product, Integer> selectedProducts;
     private int points;
+    private static ArrayList<Order> instances = new ArrayList<>();
 
     public Order() {
-
         selectedProducts = new HashMap<>();
+        instances.add(this);
     }
 
     public void addProduct(Product product, int quantity) {
@@ -200,6 +204,10 @@ public class Order {
 
     public void sendOrder(Delivery delivery) {
         delivery.receiveOrder(this);
+    }
+
+    public static ArrayList<Order> getInstances() {
+        return instances;
     }
 }
 
