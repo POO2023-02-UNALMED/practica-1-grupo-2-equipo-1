@@ -130,8 +130,6 @@ public final class Input {
 			String input = scnr.nextLine();
 			print();
 
-			int pickedOption = Integer.valueOf(input) - 1;
-
 			if (input.equals("0") || input.equals("")) {
 				if (ret)
 					return;
@@ -142,8 +140,8 @@ public final class Input {
 					App.shutdown(true);
 				else
 					errorMenu();
-			} else if (pickedOption <= options.size()) {
-				Map.Entry<String, Runnable> entry = optionsList.get(pickedOption);
+			} else if ((Integer.valueOf(input) - 1) <= options.size()) {
+				Map.Entry<String, Runnable> entry = optionsList.get((Integer.valueOf(input) - 1));
 				Runnable fn = entry.getValue();
 
 				clear();
