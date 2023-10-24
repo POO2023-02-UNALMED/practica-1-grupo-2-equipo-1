@@ -15,6 +15,7 @@ import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
 import com.ecart.uiMain.menus.userMenu.goShopping.GoShopping;
 import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
+import com.ecart.uiMain.menus.userMenu.viewShoppingCart.ViewShoppingCart;
 
 /*
  * Structure:
@@ -104,7 +105,7 @@ final public class userMenu {
 
 		options.put("🛍️  Go shopping!", () -> GoShopping.call(user));
 		options.put("🏪 Manage your stores", () -> manageStores.call(user));
-		options.put("🗞️  View shopping cart", () -> center("manage your balance", true));
+		options.put("🗞️  View shopping cart", () -> ViewShoppingCart.call(user));
 		options.put("👱 Profile settings", () -> updateSettings(user));
 
 		menu("login", options, true, true);

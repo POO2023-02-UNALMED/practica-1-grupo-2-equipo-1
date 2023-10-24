@@ -57,7 +57,8 @@ final public class viewStores {
 	private static void removeProduct(User user, Store userStore) {
 		Renderer.drawBanner("remove  product");
 
-		Commons.drawProducts(userStore);
+		boolean showedProducts = Commons.drawProducts(userStore);
+		if (!showedProducts) return;
 
 		String productName = conditionalInquiry(
 				new String[] { "Removing a product will unlist it for the public", "(type the name) 👉 " },
@@ -71,7 +72,8 @@ final public class viewStores {
 	private static void updateProduct(User user, Store userStore) {
 		Renderer.drawBanner("update  product");
 
-		Commons.drawProducts(userStore);
+		boolean showedProducts = Commons.drawProducts(userStore);
+		if (!showedProducts) return;
 
 		String productName = conditionalInquiry(
 				new String[] { "Which product would you like to update?", "(type the name) 👉 " },

@@ -4,16 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
+import com.ecart.gestorAplicacion.transactions.Order;
 import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 
 public class User extends Person {
 	private ArrayList<Store> stores;
+	private ArrayList<Order> orders;
 	private ShoppingCart shoppingCart;
 
 	private static ArrayList<User> instances = new ArrayList<>();
@@ -146,6 +149,32 @@ public class User extends Person {
 
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
+	}
+
+	public Retval placeOrder() {
+		StringBuilder troublesomeProducts = new StringBuilder();
+		Retval retval = new Retval("Placed your order succesfully!");
+
+		LinkedHashMap<Product, Integer> userOrder = this.getShoppingCart().getCartItems();
+
+		// validate the actualOrder
+		for (Map.Entry<Product, Integer> entry : userOrder.entrySet()) {
+			Product product = entry.getKey();
+			int orderedQuantity = entry.getValue();
+			if (!ShoppingCart.isProductAvailable(product, orderedQuantity)) {
+				troublesomeProducts.append(
+						product.getName() + "(available: " + product.getQuantity() + ", ordered: " + orderedQuantity + ")");
+			}
+		}
+
+		if (!troublesomeProducts.toString().equals("")) {
+			retval = new Retval("Error, you are ordering unstocked items: " + troublesomeProducts.toString());
+		} else {
+			orders.add(new Order(userOrder));
+			this.getShoppingCart().clearItems();
+		}
+
+		return retval;
 	}
 
 	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice) {

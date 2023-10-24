@@ -23,18 +23,25 @@ final public class Commons {
 		sleep(2);
 	}
 
-	public static void drawProducts(Store userStore) {
-		drawProducts(userStore, true, 2);
+	public static boolean drawProducts(ArrayList<Product> storeProducts) {
+		return drawProducts(storeProducts, true, 2);
 	}
 
-	public static void drawProducts(Store userStore, boolean includeListed, int postSpaces) {
-		ArrayList<Product> storeProducts = userStore.getProducts();
+	public static boolean drawProducts(Store userStore) {
+		return drawProducts(userStore.getProducts(), true, 2);
+	}
+
+	public static boolean drawProducts(Store userStore, boolean includeListed, int postSpaces) {
+		return drawProducts(userStore.getProducts(), includeListed, postSpaces);
+	}
+
+	public static boolean drawProducts(ArrayList<Product> storeProducts, boolean includeListed, int postSpaces) {
 		int batchSize = storeProducts.size() < 3 ? storeProducts.size() : 3;
 
 		if (storeProducts.isEmpty()) {
 			center("Looks like you don't have any products yet on the store!", true);
 			sleep(2);
-			return;
+			return false;
 		}
 
 		// columns
@@ -83,6 +90,7 @@ final public class Commons {
 		}
 
 		print(postSpaces);
+		return true;
 	}
 
 	public static void drawAllTags() {

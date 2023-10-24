@@ -148,9 +148,7 @@ final public class GoShopping {
 
 				Retval retval = user.addToShoppingCart(storeProduct.getName(), Integer.valueOf(quantity));
 				Commons.dialog(retval);
-
 			}
-
 		}
 	}
 }

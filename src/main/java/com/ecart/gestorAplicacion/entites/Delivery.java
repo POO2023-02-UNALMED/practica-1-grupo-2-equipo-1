@@ -86,27 +86,27 @@ public class Delivery extends Person implements Serializable {
 	}
 
 	public EntregaInfo tomarOrder(Order order) {
-		int[] coordenadasOrigen = order.getDireccionOrigen();
-		int[] coordenadasDestino = order.getDireccionDestino();
+		// int[] coordenadasOrigen = order.getDireccionOrigen();
+		// int[] coordenadasDestino = order.getDireccionDestino();
 
-		double distanciaTotal = calcularDistancia(coordenadasOrigen, coordenadasDestino);
-
-		double tarifaBase = 5.0; // Tarifa base por defecto
-		double tarifaPorDistancia = 1.0; // Tarifa por kilómetro
-
-		// Calcular el precio de entrega basado en la distancia
-		double precioEntrega = calcularPrecio(distanciaTotal);
-
-		double velocidadPromedio = 30.0;
-
-		// duracion de la entrega
-		double tiempoEnHoras = calcularTiempo(distanciaTotal);
-
-		// Agregar la orden a la lista de órdenes
-		receiveOrder(order);
+		// double distanciaTotal = calcularDistancia(coordenadasOrigen, coordenadasDestino);
+		//
+		// double tarifaBase = 5.0; // Tarifa base por defecto
+		// double tarifaPorDistancia = 1.0; // Tarifa por kilómetro
+		//
+		// // Calcular el precio de entrega basado en la distancia
+		// double precioEntrega = calcularPrecio(distanciaTotal);
+		//
+		// double velocidadPromedio = 30.0;
+		//
+		// // duracion de la entrega
+		// double tiempoEnHoras = calcularTiempo(distanciaTotal);
+		//
+		// // Agregar la orden a la lista de órdenes
+		// receiveOrder(order);
 
 		// Retorna la información de la entrega
-		return new EntregaInfo(getName(), distanciaTotal, precioEntrega, tiempoEnHoras);
+		return new EntregaInfo(getName(), (double) 0, (double) 0, (double) 0);
 	}
 
 	public static class EntregaInfo {

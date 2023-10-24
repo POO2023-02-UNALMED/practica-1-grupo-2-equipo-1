@@ -43,14 +43,6 @@ public abstract class Person extends Entity implements Serializable {
 		this.address = address;
 	}
 
-	public static ArrayList<int[]> getAddresses() {
-		return addresses;
-	}
-
-	public static void setAddresses(ArrayList<int[]> addresses) {
-		Person.addresses = addresses;
-	}
-
 	public ArrayList<Notification> getNotifications() {
 		return notifications;
 	}
@@ -62,7 +54,6 @@ public abstract class Person extends Entity implements Serializable {
 	public static void sendNotification(Person toPerson, String message) {
 		Notification notification = new Notification(toPerson, message);
 		toPerson.addNotification(notification);
-
 	}
 
 	public void addNotification(Notification notification) {
@@ -70,12 +61,18 @@ public abstract class Person extends Entity implements Serializable {
 	}
 
 	public void deleteNotification(Notification notification) {
-
 		notifications.remove(notification);
-
 	}
 
 	public void receiveNotification(Notification notification) {
 		notifications.add(notification);
+	}
+
+	public static ArrayList<int[]> getAddresses() {
+		return addresses;
+	}
+
+	public static void setAddresses(ArrayList<int[]> addresses) {
+		Person.addresses = addresses;
 	}
 }
