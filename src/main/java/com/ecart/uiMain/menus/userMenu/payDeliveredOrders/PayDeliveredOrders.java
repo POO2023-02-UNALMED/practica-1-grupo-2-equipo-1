@@ -1,4 +1,4 @@
-package com.ecart.uiMain.menus.userMenu.deliverOrders;
+package com.ecart.uiMain.menus.userMenu.payDeliveredOrders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,62 +20,51 @@ import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
 import com.ecart.uiMain.menus.userMenu.suggestProducts.SuggestProducts;
 import com.ecart.uiMain.menus.userMenu.viewShoppingCart.ViewShoppingCart;
 
-final public class DeliverOrders {
+public final class PayDeliveredOrders {
 
 	public static void call(User user) {
-		Renderer.drawBanner("deliver  orders");
+		Renderer.drawBanner("pay  orders");
 
 		boolean atLeastOneOrder = false;
-		for (Order order : Order.getInstances()) {
-			if (order.getDeliveryUser() != null)
-				continue;
-
-			String destUser = order.getDestinationUser().getName();
-
-			if (destUser.equals(user.getName()))
-				continue;
-
+		for (Order order : user.getOrders()) {
 			atLeastOneOrder = true;
-
-			int calle = order.getDestinationUser().getAddress()[0];
-			int carrera = order.getDestinationUser().getAddress()[1];
 
 			Renderable unit = new Renderable(
 					Tags.getByName("decorations"),
 					new String[] { "decorations" },
 					new String[] {
-							order.getDestinationUser().getName(),
 							String.valueOf(order.getId()),
-							String.valueOf(calle),
-							String.valueOf(carrera),
+							String.valueOf(order.isDelivered()),
+							String.valueOf(order.getTotalPrice()),
+							String.valueOf(order.getPayedSoFar()),
+							String.valueOf(order.isPayedFullPrice()),
 					});
 
 			Renderer.drawCard(unit, null, new String[] {
-					"Order placer: ", "Order ID: ", "Destination calle: ", "Destination carrera: "
+				"Order ID: ", "Was delivered: ", "Total price: ", "Payed so far: ", "Fully payed: "
 			});
 		}
 
 		if (atLeastOneOrder == false) {
-			center("Looks like there are no available orders!", true);
+			center("Looks like you have not ordered anything!", true);
 			sleep(2);
 			return;
 		}
 
 		print(2);
 
-		String orderId = "";
-
 		ArrayList<Order> validOrders = new ArrayList<>();
 
-		for (Order order : Order.getInstances()) {
-			if (!order.getDestinationUser().getName().equals(user.getName()))
+		for (Order order : user.getOrders()) {
+			if (order.isDelivered())
 				validOrders.add(order);
 		}
 
+		String orderId = "";
 		try {
 			orderId = conditionalInquiry(
 					new String[] { "Please select the order ID (you can only pay orders that appear as delivered)", "(type its number) 👉 " },
-					i -> Order.validate(Integer.valueOf(i), true, validOrders) == null && i.equals("") == false);
+					i -> Order.validate(Integer.valueOf(i), false, validOrders) == null && i.equals("") == false);
 		} catch (NumberFormatException e) {
 			return;
 		}
@@ -83,9 +72,16 @@ final public class DeliverOrders {
 		if (orderId.equals(""))
 			return;
 
-		Order pickedOrder = Order.validate(Integer.valueOf(orderId), true);
-		Retval retval = user.deliverOrder(pickedOrder, pickedOrder.getDestinationUser());
-		Commons.dialog(retval);
+		Order pickedOrder = Order.validate(Integer.valueOf(orderId), false, user.getOrders());
 
+		String amounToAbonar = conditionalInquiry(
+				new String[] { "Please select how much money you would like to abonar", "(type a number) 👉 " },
+				i -> Double.parseDouble(i) < 0 && i.equals("") == false);
+
+		if (amounToAbonar.equals(""))
+			return;
+
+		Retval retval = user.abonarOrder(pickedOrder, Double.parseDouble(amounToAbonar));
+		Commons.dialog(retval);
 	}
 }

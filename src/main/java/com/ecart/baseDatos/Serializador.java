@@ -117,20 +117,6 @@ public class Serializador {
         }
     }
 
-    public static void serializarPayment(ArrayList<Payment> instancesPayment) {
-        try {
-            FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\Payment.txt"));
-            ObjectOutputStream o = new ObjectOutputStream(f);
-            o.writeObject(instancesPayment);
-            o.close();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void serializarShoppingCart(ArrayList<ShoppingCart> instancesShoppingCart) {
         try {
             FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\ShoppingCart.txt"));
@@ -153,7 +139,6 @@ public class Serializador {
         serializarReview(Review.getInstances());
         serializarBankAccount(BankAccount.getInstances());
         serializarOrder(Order.getInstances());
-        serializarPayment(Payment.getInstances());
         serializarShoppingCart(ShoppingCart.getInstances());
     }
 }

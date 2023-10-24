@@ -9,6 +9,7 @@ import java.util.Map;
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
+import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.gestorAplicacion.transactions.BankAccount;
 import com.ecart.gestorAplicacion.transactions.Order;
@@ -17,7 +18,6 @@ import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 public class User extends Person {
 	private ArrayList<Store> stores;
 	private ArrayList<Order> orders;
-	private BankAccount bankAccount;
 	private ShoppingCart shoppingCart;
 
 	private static ArrayList<User> instances = new ArrayList<>();
@@ -27,8 +27,7 @@ public class User extends Person {
 
 		this.shoppingCart = new ShoppingCart();
 		this.stores = new ArrayList<>();
-		this.bankAccount = new BankAccount(password);
-		this.bankAccount.setBalance((double) 100);
+		this.orders = new ArrayList<>();
 
 		instances.add(this);
 	}
@@ -154,9 +153,84 @@ public class User extends Person {
 		this.shoppingCart = shoppingCart;
 	}
 
+	public Retval deliverOrder(Order order, User finalUser) {
+		order.setDeliveryUser(this);
+		double totalPrice = getDeliveryPrice(order, finalUser);
+		order.setDelivered(true);
+		order.setTotalPrice(totalPrice);
+
+		Retval retval = new Retval("Delivered order! You will get payed '" + String.valueOf(totalPrice) + "' once the user pays");
+
+		return retval;
+	}
+
+	private double getDeliveryPrice(Order order, User finalUser) {
+		LinkedHashMap<Product, Integer> selectedProducts = order.getSelectedProducts();
+		ArrayList<int[]> route = new ArrayList<>();
+		double totalPrice = 0;
+
+		int[] currentAddress = this.getAddress();
+		route.add(currentAddress);
+
+		for (Product product : selectedProducts.keySet()) {
+			int[] productAddress = product.getProductHolder().getAddress();
+			int distance = calculateDistance(currentAddress, productAddress);
+
+			// standard rate of delivery
+			double price = (double) distance / 5 * 2;
+			totalPrice += price;
+
+			route.add(productAddress);
+
+			currentAddress = productAddress;
+		}
+
+		// calculate the distance and price from the last product to finalUser
+		int[] finalUserAddress = finalUser.getAddress();
+		int lastProductIndex = route.size() - 1;
+		int lastProductDistance = calculateDistance(route.get(lastProductIndex), finalUserAddress);
+		double lastProductPrice = (double) lastProductDistance / 5 * 2;
+		totalPrice += lastProductPrice;
+
+		route.add(finalUserAddress);
+
+		return totalPrice;
+	}
+
+	private int calculateDistance(int[] address1, int[] address2) {
+		int deltaX = Math.abs(address1[0] - address2[0]);
+		int deltaY = Math.abs(address1[1] - address2[1]);
+		return deltaX + deltaY;
+	}
+
+	public Retval abonarOrder(Order orderToPay, double abono) {
+		double toPay = abono;
+		if (abono > (orderToPay.getTotalPrice() - orderToPay.getPayedSoFar())) {
+			toPay = orderToPay.getTotalPrice() - orderToPay.getPayedSoFar();
+		}
+
+		if (this.getBankAccount().getBalance() < abono)
+			return new Retval("You do not have enough money in your bank account. Deposit some!", false);
+
+		orderToPay.abonar(toPay);
+		this.getBankAccount().withdraw(toPay);
+
+		if (orderToPay.getPayedSoFar() >= orderToPay.getTotalPrice()) {
+			orderToPay.setPayedFullPrice(true);
+			this.makePayment(orderToPay.getDeliveryUser(), orderToPay.getTotalPrice());
+		}
+
+		return new Retval("Abono money succesfully!");
+	}
+
+	public Retval makePayment(Entity toEntity, double moneyToPay) {
+		toEntity.getBankAccount().deposit(moneyToPay);
+		return new Retval("Deposited money to " + toEntity.getName());
+	}
+
 	public Retval placeOrder() {
 		StringBuilder troublesomeProducts = new StringBuilder();
-		Retval retval = new Retval("Placed your order succesfully!");
+		Retval retval = new Retval("Placed your order succesfully! Make sure to pay it after it being delivered");
 
 		LinkedHashMap<Product, Integer> userOrder = this.getShoppingCart().getCartItems();
 
@@ -190,7 +264,8 @@ public class User extends Person {
 				entry.getKey().setQuantity(oldQuantity - entry.getValue());
 			}
 
-			orders.add(new Order(userOrder, totalPrice));
+			Order newOrder = new Order(userOrder, this, totalPrice);
+			this.orders.add(newOrder);
 			this.getShoppingCart().clearItems();
 		}
 
@@ -228,13 +303,4 @@ public class User extends Person {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
-
-	public BankAccount getBankAccount() {
-		return bankAccount;
-	}
-
-	public void setBankAccount(BankAccount bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
 }

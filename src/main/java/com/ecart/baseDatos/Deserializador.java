@@ -128,22 +128,6 @@ public class Deserializador {
         }
     }
 
-    public static void deserializarPayment() {
-        try {
-            FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\Payment.txt"));
-            ObjectInputStream o = new ObjectInputStream(f);
-            Payment.setInstances((ArrayList<Payment>) o.readObject());
-            f.close();
-            o.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encuentra el archivo");
-        } catch (IOException e) {
-            System.out.println("Error flujo de inicializacion");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void deserializarShoppingCart() {
         try {
             FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\ShoppingCart.txt"));
@@ -168,7 +152,6 @@ public class Deserializador {
         deserializarReview();
         deserializarBankAccount();
         deserializarOrder();
-        deserializarPayment();
         deserializarShoppingCart();
     }
 

@@ -1,22 +1,16 @@
 package com.ecart.uiMain.menus.userMenu.manageBankAccount;
 
-import java.util.Arrays;
+import static com.ecart.uiMain.Input.menu;
+import static com.ecart.uiMain.Input.questionnaire;
+import static com.ecart.uiMain.Utils.center;
+import static com.ecart.uiMain.Utils.print;
+
 import java.util.LinkedHashMap;
 
-import static com.ecart.uiMain.Utils.*;
-import static com.ecart.uiMain.Input.*;
-
-import com.ecart.gestorAplicacion.entites.Person;
 import com.ecart.gestorAplicacion.entites.User;
-import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
-import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
-import com.ecart.uiMain.menus.userMenu.goShopping.GoShopping;
-import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
-import com.ecart.uiMain.menus.userMenu.suggestProducts.SuggestProducts;
-import com.ecart.uiMain.menus.userMenu.viewShoppingCart.ViewShoppingCart;
 
 final public class ManageBankAccount {
 	public static void withdrawMoney(User user) {
