@@ -1,20 +1,16 @@
 package com.ecart.uiMain.menus.userMenu.goShopping;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 
 import static com.ecart.uiMain.Utils.*;
 import static com.ecart.uiMain.Input.*;
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
-import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
 import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
-import com.ecart.uiMain.menus.userMenu.manageStores.viewStores.viewStores;
 
 final public class GoShopping {
 
