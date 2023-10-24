@@ -15,11 +15,14 @@ import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 import java.io.Serializable;
 
 public class User extends Person implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Store> stores;
 	private ArrayList<Order> orders;
 	private ShoppingCart shoppingCart;
 
 	private static ArrayList<User> instances = new ArrayList<>();
+
+	public User() {}
 
 	public User(String username, String password, int[] address) {
 		super(username, password, address);

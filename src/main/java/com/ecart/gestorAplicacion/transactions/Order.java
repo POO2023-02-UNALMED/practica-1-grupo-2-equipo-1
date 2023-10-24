@@ -18,6 +18,7 @@ public class Order implements Serializable {
 	private boolean delivered;
 	private boolean payedFullPrice;
 
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Order> instances = new ArrayList<>();
 
 	public Order(LinkedHashMap<Product, Integer> selectedProducts, User destinationUser, double totalPrice) {

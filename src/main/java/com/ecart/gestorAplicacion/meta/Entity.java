@@ -1,13 +1,13 @@
 package com.ecart.gestorAplicacion.meta;
 
-import com.ecart.gestorAplicacion.transactions.BankAccount;
-
 /**
  * For unique objects that "hold" other object
  * */
 public abstract class Entity {
 	private String name;
 	private String password = "";
+
+	public Entity() {}
 
 	public Entity(String username, String password) {
 		this.name = username;

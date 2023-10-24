@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 
 public class ShoppingCart implements Serializable {
 	private LinkedHashMap<Product, Integer> cartItems; // Integer is the amount of items to be bought
+
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<ShoppingCart> instances = new ArrayList<>();
 
 	public ShoppingCart() {

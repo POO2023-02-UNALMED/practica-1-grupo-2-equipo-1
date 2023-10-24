@@ -2,7 +2,6 @@ package com.ecart.gestorAplicacion.merchandise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.meta.Entity;
@@ -15,6 +14,7 @@ public class Store extends Entity implements Serializable {
 	private ArrayList<Product> products;
 	private ArrayList<User> members;
 
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Store> instances = new ArrayList<>();
 
 	public Store(String name, String password, String description, Tags tag) {

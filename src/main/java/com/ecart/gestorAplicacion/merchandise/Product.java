@@ -16,6 +16,7 @@ public class Product implements Serializable {
 	private User productHolder;
 	private List<Tags> productTags;
 
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Product> instances = new ArrayList<>();
 
 	public Product(String name, double price, String description, int quantity, Tags tag, User productHolder) {

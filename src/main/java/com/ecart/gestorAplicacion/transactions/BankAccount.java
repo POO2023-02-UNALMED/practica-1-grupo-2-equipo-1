@@ -2,13 +2,14 @@ package com.ecart.gestorAplicacion.transactions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.ecart.gestorAplicacion.meta.Retval;
 
 public class BankAccount implements Serializable {
 	private double balance;
 	private String cvv;
+
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<BankAccount> instances = new ArrayList<>();
 
 	public BankAccount(String cvv) {
