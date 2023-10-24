@@ -1,8 +1,6 @@
 package com.ecart.gestorAplicacion.entites;
 
-
 import com.ecart.gestorAplicacion.meta.Retval;
-
 
 import java.io.Serializable;
 
@@ -10,7 +8,7 @@ import java.util.ArrayList;
 
 public class Admin extends Person {
 	private static ArrayList<Admin> instances = new ArrayList<>();
-	private  ArrayList<Delivery> delivery = new ArrayList<>();
+	private ArrayList<Delivery> deliveries = new ArrayList<>();
 
 	public Admin(String username, String password, int[] address) {
 		super(username, password, address);
@@ -50,38 +48,34 @@ public class Admin extends Person {
 		if (newAdmin != null)
 			return null;
 
-		if(!Person.isAddressAvailable(address))
+		if (!Person.isAddressAvailable(address))
 			return null;
 
 		newAdmin = new Admin(name, password, address);
 		return newAdmin;
 	}
 
+	public Retval createDelivery(String name, String password, int[] address) {
+		Delivery newDelivery = Delivery.create(name, password, address);
 
-	public Retval createDelivery(String name, String password){
-		Delivery newDelivery = Delivery.create(name, password, getAddress());
 		if (newDelivery == null)
-			return new Retval("Failed to create store, name already in use", false);
+			return new Retval("Failed to create delivery, name already in use", false);
+
 		return this.addDelivery(newDelivery);
 	}
 
-	public Retval addDelivery(Delivery delivery){
-		return addDelivery(delivery.getName(), delivery.getPassword());
-
+	public Retval addDelivery(Delivery delivery) {
+		return addDelivery(delivery.getName());
 	}
 
+	public Retval addDelivery(String name) {
+		Delivery existingDelivery = Delivery.validate(name);
+		if (existingDelivery == null)
+			return new Retval("Error: the delivery does not exist", false);
 
+		deliveries.add(existingDelivery);
 
-	public Retval addDelivery(String name, String password) {
-		Delivery existingDelivery = Delivery.validate(name, password);
-		if (existingDelivery == null){
-			return new Retval("Error: the store does not exist", false);
-		}
-/*
-		Retval retval = Delivery.create(name, password, getAddress());
-		if (retval.ok()) this.delivery.add(existingDelivery);
-*/
-		return null;
+		return new Retval("Added delivery succesfully");
 	}
 
 	public static ArrayList<Admin> getInstances() {
@@ -92,4 +86,3 @@ public class Admin extends Person {
 		Admin.instances = instances;
 	}
 }
-

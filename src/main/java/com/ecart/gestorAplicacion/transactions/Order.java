@@ -8,11 +8,13 @@ import com.ecart.gestorAplicacion.merchandise.Product;
 
 public class Order implements Serializable {
 	private LinkedHashMap<Product, Integer> selectedProducts;
+	private boolean beingDelivered;
 	private static ArrayList<Order> instances = new ArrayList<>();
 
 	public Order(LinkedHashMap<Product, Integer> selectedProducts) {
 		this.selectedProducts = new LinkedHashMap<>();
 		this.selectedProducts.putAll(selectedProducts);
+		this.beingDelivered = false;
 
 		instances.add(this);
 	}
@@ -33,7 +35,13 @@ public class Order implements Serializable {
 		Order.instances = instances;
 	}
 
+	public boolean isBeingDelivered() {
+		return beingDelivered;
+	}
 
+	public void setBeingDelivered(boolean beingDelivered) {
+		this.beingDelivered = beingDelivered;
+	}
 
 	// public Order() {
 	// 	selectedProducts = new HashMap<>();

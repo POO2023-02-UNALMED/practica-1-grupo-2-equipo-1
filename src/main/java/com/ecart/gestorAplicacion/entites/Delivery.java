@@ -47,16 +47,13 @@ public class Delivery extends Person implements Serializable {
 	}
 
 	public static Delivery create(String name, String password, int[] address) {
-		// Delivery newDelivery = validate(name);
-		// if (newDelivery != null)
-		// return null;
-		//
-		// if(!Person.isAddressAvailable(address))
-		// return null;
-		//
-		// newDelivery = new Delivery(name, password, getAddress());
-		// return newDelivery;
-		return null;
+		Delivery newDelivery = validate(name);
+		if (newDelivery != null)
+			return null;
+
+		newDelivery = new Delivery(name, password, address );
+
+		return newDelivery;
 	}
 
 	public void receiveOrder(Order order) {
@@ -104,8 +101,9 @@ public class Delivery extends Person implements Serializable {
 		// receiveOrder(order);
 
 		// Retorna la información de la entrega
-		return new EntregaInfo(getName(), (double) 0, (double) 0, (double) 0);
+		return new EntregaInfo("fdsfd", (double) 0, (double) 0, (double) 0);
 	}
+
 
 	public static class EntregaInfo {
 		private String nombreRepartidor;
