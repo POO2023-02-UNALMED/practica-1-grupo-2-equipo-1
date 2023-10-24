@@ -1,6 +1,6 @@
 package com.ecart.gestorAplicacion.merchandise;
 
 public interface ProductProp {
-	public String getAuthor();
-	public String getContent();
+	public abstract String getAuthor();
+	public abstract String getContent();
 }

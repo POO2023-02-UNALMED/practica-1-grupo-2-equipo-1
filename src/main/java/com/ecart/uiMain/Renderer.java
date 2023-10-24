@@ -83,7 +83,7 @@ public final class Renderer {
 	// biggestCaptionLabel, int cols, String border, String spacer, int
 	// captionIndex) {
 	private static String generateHorizontalLine(Renderable[] units, int cols, String border, String spacer,
-			String biggestCaptionLabel, String actualCaptionLabel, int captionIndex) {
+												 String biggestCaptionLabel, String actualCaptionLabel, int captionIndex) {
 		StringBuilder line = new StringBuilder();
 		int renderedCols = 1;
 		int biggestMbs = 0;
@@ -137,14 +137,14 @@ public final class Renderer {
 	}
 
 	public static void drawCard(Renderable unit, String[] captionsLabels, String[] sideDataLabels,
-			boolean printCaptions) {
+								boolean printCaptions) {
 		if (captionsLabels == null)
 			captionsLabels = new String[] { "bottoplceholdr" };
 		drawTiledPattern(new Renderable[] { unit }, captionsLabels, sideDataLabels, 1, 8, 2, printCaptions);
 	}
 
 	public static void drawTiledPattern(Renderable[] units, String[] captionsLabels, String[] sideDataLabels, int cols,
-			int offset, int verticalSpacers, boolean printCaptions) {
+										int offset, int verticalSpacers, boolean printCaptions) {
 		if (captionsLabels == null)
 			captionsLabels = new String[] { "" };
 
