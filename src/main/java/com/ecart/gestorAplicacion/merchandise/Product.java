@@ -3,12 +3,8 @@ package com.ecart.gestorAplicacion.merchandise;
 import com.ecart.gestorAplicacion.entites.User;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 public class Product implements Serializable {
 	private String name;
@@ -18,12 +14,7 @@ public class Product implements Serializable {
 	private Tags tag;
 	private boolean listed;
 	private User productHolder;
-	// lista auxiliar de tags
 	private List<Tags> productTags;
-
-	// private List<User> subscribers = new ArrayList<>();
-	// private List<Coupon> coupons = new ArrayList<>();
-	// private List<Review> reviews = new ArrayList<>();
 
 	private static ArrayList<Product> instances = new ArrayList<>();
 
@@ -154,5 +145,13 @@ public class Product implements Serializable {
 
 	public void setProductHolder(User productHolder) {
 		this.productHolder = productHolder;
+	}
+
+	public List<Tags> getProductTags() {
+		return productTags;
+	}
+
+	public void setProductTags(List<Tags> productTags) {
+		this.productTags = productTags;
 	}
 }

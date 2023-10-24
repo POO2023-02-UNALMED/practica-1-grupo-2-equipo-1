@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Serializador {
@@ -133,6 +132,7 @@ public class Serializador {
 
     public static void saveObjects() {
         serializarUser(User.getInstances());
+
         serializarProducts(Product.getInstances());
         serializarStore(Store.getInstances());
         serializarCoupon(Coupon.getInstances());

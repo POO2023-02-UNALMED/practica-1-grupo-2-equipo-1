@@ -9,13 +9,12 @@ import java.util.Map;
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
-import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Retval;
-import com.ecart.gestorAplicacion.transactions.BankAccount;
 import com.ecart.gestorAplicacion.transactions.Order;
 import com.ecart.gestorAplicacion.transactions.ShoppingCart;
+import java.io.Serializable;
 
-public class User extends Person {
+public class User extends Person implements Serializable {
 	private ArrayList<Store> stores;
 	private ArrayList<Order> orders;
 	private ShoppingCart shoppingCart;

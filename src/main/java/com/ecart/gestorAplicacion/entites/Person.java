@@ -1,16 +1,12 @@
 package com.ecart.gestorAplicacion.entites;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Notification;
 import com.ecart.gestorAplicacion.transactions.BankAccount;
 
-public abstract class Person extends Entity implements Serializable {
+public abstract class Person extends Entity {
 	private int[] address;
 	private static ArrayList<int[]> addresses = new ArrayList<>();
 	private ArrayList<Notification> notifications = new ArrayList<>();
