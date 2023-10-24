@@ -53,4 +53,26 @@ Estas son todas las funcionalidades, tanto complejas como "simples", que hacen p
 Guia comprensiva de como usar la aplicacion.
 
 
+### • Ingresar al programa
+
+Debe ingresar el usuario y contraseña:
+```
+💁 Username:  (usuario, luego da enter)
+🔒 Password:  (contraseña, luego da enter)
+```
+Si el usuario y el password son correctos, ingresa al sistema, de lo contrario, saldrá el siguiente mensaje
+```
+Hmm looks like you don't have an account. Would you like to create one?
+                                [yes|no] 👉 (yes)
+```
+```
+We need your address to be able to register you in the system
+Your calle (number from 0 to 100): (# calle)
+```
+```
+We need your address to be able to register you in the system
+Your carrera (number from 0 to 100): (# carrera)
+```
+
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/Q_uKBniY)
