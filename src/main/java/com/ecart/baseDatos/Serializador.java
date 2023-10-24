@@ -1,7 +1,5 @@
 package com.ecart.baseDatos;
 
-import com.ecart.gestorAplicacion.entites.Admin;
-import com.ecart.gestorAplicacion.entites.Delivery;
 import com.ecart.gestorAplicacion.entites.Person;
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Coupon;
@@ -20,34 +18,6 @@ import java.util.ArrayList;
 
 public class Serializador {
     static File rutaTemp = new File("src\\baseDatos\\temp");
-
-    public static void serializarAdmin(ArrayList<Admin> instancesAdmin) {
-        try {
-            FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\Admin.txt"));
-            ObjectOutputStream o = new ObjectOutputStream(f);
-            o.writeObject(instancesAdmin);
-            o.close();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void serializarDelivery(ArrayList<Delivery> instancesDelivery) {
-        try {
-            FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\Delivery.txt"));
-            ObjectOutputStream o = new ObjectOutputStream(f);
-            o.writeObject(instancesDelivery);
-            o.close();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void serializarUser(ArrayList<User> instancesUser) {
         try {
@@ -161,20 +131,6 @@ public class Serializador {
         }
     }
 
-    public static void serializarPurchases(ArrayList<Purchases> instancesPurchases) {
-        try {
-            FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\Purchases.txt"));
-            ObjectOutputStream o = new ObjectOutputStream(f);
-            o.writeObject(instancesPurchases);
-            o.close();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void serializarShoppingCart(ArrayList<ShoppingCart> instancesShoppingCart) {
         try {
             FileOutputStream f = new FileOutputStream(new File(rutaTemp.getAbsolutePath()+"\\ShoppingCart.txt"));
@@ -190,8 +146,6 @@ public class Serializador {
     }
 
     public static void saveObjects() {
-        serializarAdmin(Admin.getInstances());
-        serializarDelivery(Delivery.getInstances());
         serializarUser(User.getInstances());
         serializarProducts(Product.getInstances());
         serializarStore(Store.getInstances());
@@ -200,7 +154,6 @@ public class Serializador {
         serializarBankAccount(BankAccount.getInstances());
         serializarOrder(Order.getInstances());
         serializarPayment(Payment.getInstances());
-        serializarPurchases(Purchases.getInstances());
         serializarShoppingCart(ShoppingCart.getInstances());
     }
 }

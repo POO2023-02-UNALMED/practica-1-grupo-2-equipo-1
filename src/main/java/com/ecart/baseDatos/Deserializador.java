@@ -1,7 +1,5 @@
 package com.ecart.baseDatos;
 
-import com.ecart.gestorAplicacion.entites.Admin;
-import com.ecart.gestorAplicacion.entites.Delivery;
 import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Coupon;
 import com.ecart.gestorAplicacion.merchandise.Product;
@@ -17,38 +15,6 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 public class Deserializador {
     static File rutaTemp = new File("src\\baseDatos\\temp");
-
-    public static void deserializarAdmin() {
-        try {
-            FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\Admin.txt"));
-            ObjectInputStream o = new ObjectInputStream(f);
-            Admin.setInstances((ArrayList<Admin>) o.readObject());
-            f.close();
-            o.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encuentra el archivo");
-        } catch (IOException e) {
-            System.out.println("Error flujo de inicializacion");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void deserializarDelivery() {
-        try {
-            FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\Delivery.txt"));
-            ObjectInputStream o = new ObjectInputStream(f);
-            Delivery.setInstances((ArrayList<Delivery>) o.readObject());
-            f.close();
-            o.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encuentra el archivo");
-        } catch (IOException e) {
-            System.out.println("Error flujo de inicializacion");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void deserializarUser() {
         try {
@@ -178,22 +144,6 @@ public class Deserializador {
         }
     }
 
-    public static void deserializarPurchases() {
-        try {
-            FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\Purchases.txt"));
-            ObjectInputStream o = new ObjectInputStream(f);
-            Purchases.setInstances((ArrayList<Purchases>) o.readObject());
-            f.close();
-            o.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encuentra el archivo");
-        } catch (IOException e) {
-            System.out.println("Error flujo de inicializacion");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void deserializarShoppingCart() {
         try {
             FileInputStream f = new FileInputStream(new File(rutaTemp.getAbsolutePath() + "\\ShoppingCart.txt"));
@@ -211,8 +161,6 @@ public class Deserializador {
     }
 
     public static void loadObjects() {
-        deserializarAdmin();
-        deserializarDelivery();
         deserializarUser();
         deserializarProducts();
         deserializarStore();
@@ -221,7 +169,6 @@ public class Deserializador {
         deserializarBankAccount();
         deserializarOrder();
         deserializarPayment();
-        deserializarPurchases();
         deserializarShoppingCart();
     }
 

@@ -1,7 +1,5 @@
 package com.ecart.gestorAplicacion.transactions;
 
-import com.ecart.gestorAplicacion.entites.Delivery;
-
 import java.io.Serializable;
 import java.util.*;
 import com.ecart.gestorAplicacion.merchandise.Product;

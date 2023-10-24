@@ -10,12 +10,14 @@ import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.merchandise.Tags;
 import com.ecart.gestorAplicacion.meta.Retval;
+import com.ecart.gestorAplicacion.transactions.BankAccount;
 import com.ecart.gestorAplicacion.transactions.Order;
 import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 
 public class User extends Person {
 	private ArrayList<Store> stores;
 	private ArrayList<Order> orders;
+	private BankAccount bankAccount;
 	private ShoppingCart shoppingCart;
 
 	private static ArrayList<User> instances = new ArrayList<>();
@@ -25,6 +27,8 @@ public class User extends Person {
 
 		this.shoppingCart = new ShoppingCart();
 		this.stores = new ArrayList<>();
+		this.bankAccount = new BankAccount(password);
+		this.bankAccount.setBalance((double) 100);
 
 		instances.add(this);
 	}
@@ -199,4 +203,21 @@ public class User extends Person {
 
 		return recommendedProducts;
 	}
+
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
 }

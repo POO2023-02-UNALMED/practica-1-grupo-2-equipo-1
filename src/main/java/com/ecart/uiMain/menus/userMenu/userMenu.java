@@ -14,6 +14,7 @@ import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
 import com.ecart.uiMain.menus.userMenu.goShopping.GoShopping;
+import com.ecart.uiMain.menus.userMenu.manageBankAccount.ManageBankAccount;
 import com.ecart.uiMain.menus.userMenu.manageStores.manageStores;
 import com.ecart.uiMain.menus.userMenu.suggestProducts.SuggestProducts;
 import com.ecart.uiMain.menus.userMenu.viewShoppingCart.ViewShoppingCart;
@@ -103,12 +104,13 @@ final public class userMenu {
 	public static void call(User user) {
 		// maps are abstracts, while HashMaps aren't
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
-
 		
 		options.put("🛍️  Go shopping!", () -> GoShopping.call(user));
 		options.put("🏪 Manage your stores", () -> manageStores.call(user));
 		options.put("🗞️  View shopping cart", () -> ViewShoppingCart.call(user));
 		options.put("🗳️  Suggest products", () -> SuggestProducts.call(user));
+		options.put("💳 Manage bank account", () -> ManageBankAccount.call(user));
+		options.put("🚲 Deliver Orders", () -> SuggestProducts.call(user));
 		options.put("👱 Profile settings", () -> updateSettings(user));
 
 		menu("login", options, true, true);

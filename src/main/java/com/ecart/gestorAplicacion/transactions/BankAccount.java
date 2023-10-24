@@ -4,72 +4,69 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.ecart.gestorAplicacion.meta.Retval;
+
 public class BankAccount implements Serializable {
-    private double balance;
-    private String cvv;
-    private static ArrayList<BankAccount> instances = new ArrayList<>();
+	private double balance;
+	private String cvv;
+	private static ArrayList<BankAccount> instances = new ArrayList<>();
 
-    public BankAccount() {
-        // saldo en cero al crear la cuenta
-        this.balance = 0.0;
-        // Generar un código de seguridad CVV
-        this.cvv = generateCVV();
+	public BankAccount(String cvv) {
+		this.balance = 0.0;
+		this.cvv = cvv;
 
-        instances.add(this);
-    }
+		instances.add(this);
+	}
 
-    public double getBalance() {
-        return balance;
-    }
+	public boolean validate(String password) {
+		if (this.getCVV().equals(password))
+			return true;
+		return false;
+	}
 
-    public String getCVV() {
-        return cvv;
-    }
+	public double getBalance() {
+		return balance;
+	}
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
+	public String getCVV() {
+		return cvv;
+	}
 
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
-    }
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
 
-    public void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            System.out.println("Depósito exitoso. Nuevo saldo: " + balance);
-        } else {
-            System.out.println("El monto del depósito debe ser mayor que cero.");
-        }
-    }
+	public void setCvv(String cvv) {
+		this.cvv = cvv;
+	}
 
-    public void withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            System.out.println("Retiro exitoso. Nuevo saldo: " + balance);
-        } else {
-            System.out.println("Monto no válido o saldo insuficiente.");
-        }
-    }
+	public Retval deposit(double amount) {
+		Retval retval = new Retval("Failed to deposit money", false);
 
-    public boolean validateCVV(String enteredCVV) {
-        return cvv.equals(enteredCVV);
-    }
+		if (amount > 0) {
+			balance += amount;
+			retval = new Retval("Deposited money successfully!");
+		}
 
+		return retval;
+	}
 
-    private String generateCVV() {
-        Random random = new Random();
-        int cvvNumber = random.nextInt(1000); // Generar un número aleatorio de 0 a 999
-        return String.format("%03d", cvvNumber);
-    }
+	public Retval withdraw(double amount) {
+		Retval retval = new Retval("Failed to withdraw money from account. Not enough balance", false);
 
-    public static ArrayList<BankAccount> getInstances() {
-        return instances;
-    }
+		if (amount > 0 && amount <= balance) {
+			balance -= amount;
+			retval = new Retval("Withdrew money successfully!");
+		}
 
-    public static void setInstances(ArrayList<BankAccount> instances) {
-        BankAccount.instances = instances;
-    }
+		return retval;
+	}
+
+	public static ArrayList<BankAccount> getInstances() {
+		return instances;
+	}
+
+	public static void setInstances(ArrayList<BankAccount> instances) {
+		BankAccount.instances = instances;
+	}
 }
-
-
