@@ -57,14 +57,15 @@ Guia comprensiva de como usar la aplicacion.
 
 Debe ingresar el usuario y contraseña:
 ```
-💁 Username:  (usuario, luego da enter)
-🔒 Password:  (contraseña, luego da enter)
+💁 Username:  (usuario, luego presionar enter)
+🔒 Password:  (contraseña, luego presionar enter)
 ```
 Si el usuario y el password son correctos, ingresa al sistema, de lo contrario, saldrá el siguiente mensaje
 ```
 Hmm looks like you don't have an account. Would you like to create one?
                                 [yes|no] 👉 (yes)
 ```
+Debe poner la direccion
 ```
 We need your address to be able to register you in the system
 Your calle (number from 0 to 100): (# calle)
@@ -73,6 +74,66 @@ Your calle (number from 0 to 100): (# calle)
 We need your address to be able to register you in the system
 Your carrera (number from 0 to 100): (# carrera)
 ```
+### • Menu Login
+Al guardar se crea la cuenta con el usuario y el password que estableció al inicio y se despliega este menu:
+```
+(1) 🛍️  Go shopping!
+(2) 🏪 Manage your stores
+(3) 🗞️  View shopping cart
+(4) 🗳️  Suggest prodcuts
+(5) 👱 Profile settings
+(9) 🚪 Exit
+(0) ⤵️  Return
+
+    Option 👉 (aca va la opcion)
+```
+### (1) 🛍️  Go shopping!
+Muestra las tiendas en las que el usuario se ha unido
+```
++--------------------+  
+|                    |  
+|                    |  
+| ─▄▀─▄▀     █▄▀▄▀▄█ |    Name: deli postres
+|──▀──▀     █░▀░▀░█▄ |    Tag: FOOD
+|█▀▀▀▀▀█▄   █░▀░░░█─█|    Reviews: super cool postres
+|█░░░░░█─█  █░░░▀░█▄▀|    Description: 🌟 🌟 🌟 🌟 🌟
+| ▀▄▄▄▄▄▀▀   ▀▀▀▀▀▀▀ |
+|                    |  
+|                    |  
++--------------------+  
+
+Please select one stores you would like to view (or press entre to go back)
+                (type its name or press entre) 👉 (nombre de la tienda)
+```
+Se pone el nombre de la tienda para ingresar y ver los productos, o se da enter si se regresar al menu anterior
+```
++--------------------+  +--------------------+  +--------------------+  
+|                    |  |                    |  |                    |  
+|────────▄█▀▄       .|  | ─▄▀─▄▀     █▄▀▄▀▄█ |  | ─▄▀─▄▀     █▄▀▄▀▄█ |
+|──────▄██▀▀▀▀▄     .|  |──▀──▀     █░▀░▀░█▄ |  |──▀──▀     █░▀░▀░█▄ |
+|────▄███▀▀▀▀▀▀▀▄   .|  |█▀▀▀▀▀█▄   █░▀░░░█─█|  |█▀▀▀▀▀█▄   █░▀░░░█─█|
+|──▄████▀▀▀▀▀▀▀▀▀▀▄ .|  |█░░░░░█─█  █░░░▀░█▄▀|  |█░░░░░█─█  █░░░▀░█▄▀|
+|▄█████▀▀▀▀▀▀▀▀▀▀▀▀▀▄|  | ▀▄▄▄▄▄▀▀   ▀▀▀▀▀▀▀ |  | ▀▄▄▄▄▄▀▀   ▀▀▀▀▀▀▀ |
+|                    |  |                    |  |                    |  
+|  Name: postresito  |  |  Name: servilleta  |  |    Name: plato     |  
+|    Price: $20.0    |  |    Price: $20.0    |  |    Price: $20.0    |  
+|    Quantity: 10    |  |   Quantity: 100    |  |   Quantity: 100    |  
++--------------------+  +--------------------+  +--------------------+
+
+                   Which product would you like to view?                                      
+                              (type the name) 👉 (nombre del producto)                                                               
+```
+Se pone el nombre del producto que se quiere ver
+
+
+
+
+
+
+
+
+
+
 
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/Q_uKBniY)
