@@ -24,11 +24,10 @@ final public class GoShopping {
 						store.getName(),
 						store.getTag().name(),
 						store.getDescription(),
-						"🌟 🌟 🌟 🌟 🌟"
 				});
 
 		Renderer.drawCard(unit, null, new String[] {
-				"Name: ", "Tag: ", "Reviews: ", "Description: "
+				"Name: ", "Tag: ", "Description: "
 		});
 
 		print(2);
@@ -63,7 +62,7 @@ final public class GoShopping {
 		return storeProduct;
 	}
 
-	private static void drawProduct(Product storeProduct) {
+	public static void drawProduct(Product storeProduct) {
 		Renderer.drawBanner(storeProduct.getName());
 
 		Renderable unit = new Renderable(
@@ -134,7 +133,6 @@ final public class GoShopping {
 					i -> !(i.equals("yes") == true || i.equals("no") == true));
 
 			if (response.equals("yes")) {
-				int actualProductQuantity = storeProduct.getQuantity();
 				String quantity = conditionalInquiry(
 						new String[] { "Hoy many would you like to buy?",
 								"(type the amount or press entre to go back) 👉 " },

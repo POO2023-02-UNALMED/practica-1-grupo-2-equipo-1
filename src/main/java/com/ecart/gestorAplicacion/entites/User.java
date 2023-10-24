@@ -1,11 +1,10 @@
 package com.ecart.gestorAplicacion.entites;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
@@ -177,11 +176,14 @@ public class User extends Person {
 		return retval;
 	}
 
-	public LinkedHashMap<String, Product> suggestProducts(Tags[] tags, int maxPrice) {
+	public ArrayList<Product> suggestProducts(Tags[] tags, Double maxPrice) {
+		ArrayList<Product> recommendedProducts = new ArrayList<>();
+
 		ArrayList<Store> allStores = Store.getInstances();
 		ArrayList<Store> userStores = this.getStores();
 		ArrayList<Store> availableStores = new ArrayList<>();
-		LinkedHashMap<String, Product> recommendedProducts = new LinkedHashMap<>();
+
+		List<Tags> tagsList = Arrays.asList(tags);
 
 		for (Store store : allStores) {
 			if (!userStores.contains(store))
@@ -190,27 +192,11 @@ public class User extends Person {
 
 		for (Store store : availableStores) {
 			for (Product product : store.getProducts()) {
-				boolean tagsMatch = true;
-				for (Tags tag : tags) {
-					boolean found = false;
-					for (Tags productTag : product.getTags()) {
-						if (tag.equals(productTag)) {
-							found = true;
-							break;
-						}
-					}
-					if (!found) {
-						tagsMatch = false;
-						break;
-					}
-				}
-				if (tagsMatch) {
-					recommendedProducts.put(product.getName(), product);
-				}
+				if (tagsList.contains(product.getTag()) == true && product.getPrice() <= maxPrice)
+					recommendedProducts.add(product);
 			}
 		}
 
 		return recommendedProducts;
 	}
-
 }
