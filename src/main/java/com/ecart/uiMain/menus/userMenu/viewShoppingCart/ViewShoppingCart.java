@@ -13,12 +13,13 @@ import static com.ecart.uiMain.Input.*;
 import static com.ecart.uiMain.Utils.*;
 
 final public class ViewShoppingCart {
-	private static void drawProducts(User user) {
-		Commons.drawProducts(user.getShoppingCart().getCartProducts());
+	private static boolean drawProducts(User user) {
+		return Commons.drawProducts(user.getShoppingCart().getCartProducts());
 	}
 
 	private static void placeOrder(User user) {
-		drawProducts(user);
+		boolean showedProducts = drawProducts(user);
+		if (!showedProducts) return;
 
 		String response = conditionalInquiry(
 				new String[] { "Would you like to place an order for your products?",
@@ -33,7 +34,8 @@ final public class ViewShoppingCart {
 	}
 
 	private static void deleteItems(User user) {
-		drawProducts(user);
+		boolean showedProducts = drawProducts(user);
+		if (!showedProducts) return;
 
 		String productToOrderName = conditionalInquiry(
 				new String[] { "Please select the product order you'd like to delete:", "(type its name) 👉 " },
@@ -46,7 +48,8 @@ final public class ViewShoppingCart {
 	}
 
 	private static void editItems(User user) {
-		drawProducts(user);
+		boolean showedProducts = drawProducts(user);
+		if (!showedProducts) return;
 
 		String productToOrderName = conditionalInquiry(
 				new String[] { "Please select the product order you'd like to manage:", "(type its name) 👉 " },
