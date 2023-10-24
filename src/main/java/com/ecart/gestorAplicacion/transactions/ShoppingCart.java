@@ -18,7 +18,7 @@ public class ShoppingCart implements Serializable {
 	}
 
 	public static boolean isProductAvailable(Product product, int quantity) {
-		if (quantity > product.getQuantity() || quantity <= 0)
+		if (quantity <= product.getQuantity() && quantity >= 0)
 			return true;
 
 		return false;
@@ -30,7 +30,7 @@ public class ShoppingCart implements Serializable {
 		if (cartItems.containsKey(product))
 			return new Retval("You cannot place the same product twice in your shopping cart", false);
 
-		if (isProductAvailable(product, quantity))
+		if (!isProductAvailable(product, quantity))
 			return new Retval("There is not enough stock to add the product. Come back later!", false);
 
 		cartItems.put(product, Integer.valueOf(quantity));

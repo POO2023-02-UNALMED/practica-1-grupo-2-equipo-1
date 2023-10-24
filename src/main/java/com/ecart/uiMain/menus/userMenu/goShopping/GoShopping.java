@@ -8,6 +8,7 @@ import com.ecart.gestorAplicacion.entites.User;
 import com.ecart.gestorAplicacion.merchandise.Product;
 import com.ecart.gestorAplicacion.merchandise.Store;
 import com.ecart.gestorAplicacion.meta.Retval;
+import com.ecart.gestorAplicacion.transactions.ShoppingCart;
 import com.ecart.uiMain.Renderable;
 import com.ecart.uiMain.Renderer;
 import com.ecart.uiMain.menus.Commons;
@@ -137,7 +138,7 @@ final public class GoShopping {
 				String quantity = conditionalInquiry(
 						new String[] { "Hoy many would you like to buy?",
 								"(type the amount or press entre to go back) 👉 " },
-						i -> (Integer.valueOf(i) > actualProductQuantity || Integer.valueOf(i) < 0) && i != "0");
+						i -> ShoppingCart.isProductAvailable(storeProduct, Integer.valueOf(i)) == false && i != "0");
 
 				if (quantity == "0")
 					continue;
