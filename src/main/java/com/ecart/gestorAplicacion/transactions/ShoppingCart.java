@@ -6,7 +6,6 @@ import com.ecart.gestorAplicacion.meta.Retval;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class ShoppingCart implements Serializable {
 	private LinkedHashMap<Product, Integer> cartItems; // Integer is the amount of items to be bought
@@ -61,16 +60,6 @@ public class ShoppingCart implements Serializable {
 
 	public  void clearItems() {
 		cartItems.clear();
-	}
-
-	public double calculateTotal() {
-		double total = 0;
-
-		// for (Product product : cartItems) {
-		// total += product.getPrice() * product.getQuantity();
-		// }
-		//
-		return total;
 	}
 
 	public LinkedHashMap<Product, Integer> getCartItems() {

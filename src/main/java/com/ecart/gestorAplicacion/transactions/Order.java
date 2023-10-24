@@ -7,12 +7,14 @@ import com.ecart.gestorAplicacion.merchandise.Product;
 public class Order implements Serializable {
 	private LinkedHashMap<Product, Integer> selectedProducts;
 	private boolean beingDelivered;
+	private double totalPrice;
 	private static ArrayList<Order> instances = new ArrayList<>();
 
-	public Order(LinkedHashMap<Product, Integer> selectedProducts) {
+	public Order(LinkedHashMap<Product, Integer> selectedProducts, double totalPrice) {
 		this.selectedProducts = new LinkedHashMap<>();
 		this.selectedProducts.putAll(selectedProducts);
 		this.beingDelivered = false;
+		this.totalPrice = totalPrice;
 
 		instances.add(this);
 	}

@@ -21,8 +21,8 @@ import com.ecart.uiMain.menus.userMenu.viewShoppingCart.ViewShoppingCart;
 final public class ManageBankAccount {
 	public static void withdrawMoney(User user) {
 		Renderer.drawBanner("withdraw money");
-		print(2);
 		center("==== Current Balance: " + String.valueOf(user.getBankAccount().getBalance()) + " ====", true);
+		print(2);
 
 		String[] r = questionnaire(
 				new String[] {
@@ -56,8 +56,9 @@ final public class ManageBankAccount {
 
 	public static void depositMoney(User user) {
 		Renderer.drawBanner("deposit money");
-		print(2);
 		center("==== Current Balance: " + String.valueOf(user.getBankAccount().getBalance()) + " ====", true);
+		print(2);
+
 
 		String[] r = questionnaire(
 				new String[] {

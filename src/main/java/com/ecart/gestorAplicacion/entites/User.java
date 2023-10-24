@@ -173,7 +173,24 @@ public class User extends Person {
 		if (!troublesomeProducts.toString().equals("")) {
 			retval = new Retval("Error, you are ordering unstocked items: " + troublesomeProducts.toString());
 		} else {
-			orders.add(new Order(userOrder));
+			double totalPrice = 0;
+			for (Map.Entry<Product, Integer> entry : userOrder.entrySet()) {
+				totalPrice += entry.getKey().getPrice() * entry.getValue();
+			}
+
+			// withdraw the money
+			Retval userRetval = this.getBankAccount().withdraw(totalPrice);
+			if (!userRetval.ok()) {
+				return userRetval;
+			}
+
+			// substract the quantities from the products
+			for (Map.Entry<Product, Integer> entry : userOrder.entrySet()) {
+				int oldQuantity = entry.getKey().getQuantity();
+				entry.getKey().setQuantity(oldQuantity - entry.getValue());
+			}
+
+			orders.add(new Order(userOrder, totalPrice));
 			this.getShoppingCart().clearItems();
 		}
 

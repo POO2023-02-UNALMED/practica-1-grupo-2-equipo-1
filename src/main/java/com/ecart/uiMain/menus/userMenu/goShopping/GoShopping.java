@@ -69,16 +69,17 @@ final public class GoShopping {
 				storeProduct.getTag(),
 				new String[] { storeProduct.getTag().name() },
 				new String[] {
-						storeProduct.getName(),
-						String.valueOf(storeProduct.getQuantity()),
-						"🌟 🌟 🌟 🌟 🌟",
-						storeProduct.getDescription(),
+					storeProduct.getName(),
+					String.valueOf(storeProduct.getQuantity()),
+					"$" + String.valueOf(storeProduct.getPrice()),
+					storeProduct.getDescription(),
+					"🌟 🌟 🌟 🌟 🌟",
 				});
 
 		Renderer.drawCard(
 				unit,
 				new String[] { "Tag name: " },
-				new String[] { "Name: ", "Available stock: ", "Reviews: ", "Description: " },
+				new String[] { "Name: ", "Available stock: ", "Price: ", "Description: ", "Reviews: " },
 				true);
 
 		print(2);

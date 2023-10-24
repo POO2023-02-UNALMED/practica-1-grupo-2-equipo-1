@@ -18,6 +18,7 @@ final public class ViewShoppingCart {
 	}
 
 	private static void placeOrder(User user) {
+		Renderer.drawBanner("place  order");
 		boolean showedProducts = drawProducts(user);
 		if (!showedProducts) return;
 
@@ -34,6 +35,7 @@ final public class ViewShoppingCart {
 	}
 
 	private static void deleteItems(User user) {
+		Renderer.drawBanner("delete  items");
 		boolean showedProducts = drawProducts(user);
 		if (!showedProducts) return;
 
@@ -51,6 +53,7 @@ final public class ViewShoppingCart {
 	}
 
 	private static void editItems(User user) {
+		Renderer.drawBanner("edit  items");
 		boolean showedProducts = drawProducts(user);
 		if (!showedProducts) return;
 
@@ -70,20 +73,20 @@ final public class ViewShoppingCart {
 				productToOrder.getTag(),
 				new String[] { productToOrder.getTag().name() },
 				new String[] {
-						productToOrder.getName(),
-						"$" + Double.toString(productToOrder.getPrice()),
-						Integer.toString(productToOrder.getQuantity()),
+					productToOrder.getName(),
+					"$" + Double.toString(productToOrder.getPrice()),
+					Integer.toString(productToOrder.getQuantity()),
 				});
 
 		Renderer.drawCard(unit, null, new String[] {
-				"Name: ", "Price: ", "Quantity: "
+				"Name: ", "Price: ", "Available stock: "
 		});
 
 		print(2);
 
 		String newQuantity = conditionalInquiry(
-				new String[] { "Please select the new quantity:", "(type its name) 👉 " },
-				i -> ShoppingCart.isProductAvailable(productToOrder, Integer.valueOf(i)) && i.equals("") == false);
+				new String[] { "Please select the new quantity:", "(type a number) 👉 " },
+				i -> ShoppingCart.isProductAvailable(productToOrder, Integer.valueOf(i)) == false && i.equals("") == false);
 
 		if (newQuantity.equals(""))
 			return;
