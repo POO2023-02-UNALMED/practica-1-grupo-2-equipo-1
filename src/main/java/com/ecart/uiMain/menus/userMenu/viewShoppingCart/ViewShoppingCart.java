@@ -39,7 +39,10 @@ final public class ViewShoppingCart {
 
 		String productToOrderName = conditionalInquiry(
 				new String[] { "Please select the product order you'd like to delete:", "(type its name) 👉 " },
-				i -> Product.validate(i, user.getShoppingCart().getCartProducts()) == null);
+				i -> Product.validate(i, user.getShoppingCart().getCartProducts()) == null && i.equals("") == false);
+
+		if (productToOrderName.equals(""))
+			return;
 
 		Product productToOrder = Product.validate(productToOrderName, user.getShoppingCart().getCartProducts());
 
@@ -53,7 +56,10 @@ final public class ViewShoppingCart {
 
 		String productToOrderName = conditionalInquiry(
 				new String[] { "Please select the product order you'd like to manage:", "(type its name) 👉 " },
-				i -> Product.validate(i, user.getShoppingCart().getCartProducts()) == null);
+				i -> Product.validate(i, user.getShoppingCart().getCartProducts()) == null && i.equals("") == false);
+
+		if (productToOrderName.equals(""))
+			return;
 
 		Product productToOrder = Product.validate(productToOrderName, user.getShoppingCart().getCartProducts());
 
@@ -77,7 +83,10 @@ final public class ViewShoppingCart {
 
 		String newQuantity = conditionalInquiry(
 				new String[] { "Please select the new quantity:", "(type its name) 👉 " },
-				i -> ShoppingCart.isProductAvailable(productToOrder, Integer.valueOf(i)));
+				i -> ShoppingCart.isProductAvailable(productToOrder, Integer.valueOf(i)) && i.equals("") == false);
+
+		if (newQuantity.equals(""))
+			return;
 
 		Retval retval = user.getShoppingCart().updateItem(productToOrder, Integer.valueOf(newQuantity));
 		Commons.dialog(retval);
