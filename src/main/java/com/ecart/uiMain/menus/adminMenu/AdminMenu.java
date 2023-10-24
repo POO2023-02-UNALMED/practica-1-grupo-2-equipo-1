@@ -55,6 +55,33 @@ final public class AdminMenu {
 		Commons.dialog(retval);
 	}
 
+	private static void createOtherAdmins() {
+		Renderer.drawBanner("create admin");
+
+		String[] r = questionnaire(
+				new String[] {
+						"💁 name",
+						"🔒 password",
+						"📄 Calle",
+						"📄 Carrera"
+				});
+
+		if (r[0].equals("") || r[1].equals("") || r[2].equals("") || r[3].equals(""))
+			Commons.dialog(new Retval("Not enough data provided", false));
+
+		int calle = Integer.valueOf(r[2]);
+		int carrera = Integer.valueOf(r[3]);
+
+		Admin newAdmin = Admin.create(r[0], r[1], new int[] {calle, carrera});
+
+		Retval retval = new Retval("Created admin successfully!");
+
+		if (newAdmin == null)
+			retval = new Retval("Failed to created an admin with the provided data");
+
+		Commons.dialog(retval);
+	}
+
 	// private static void payDelivery(Admin admin) {
 	//
 	// }
@@ -62,7 +89,10 @@ final public class AdminMenu {
 	public static void call(Admin admin) {
 		LinkedHashMap<String, Runnable> options = new LinkedHashMap<>();
 
+		
+
 		options.put("🙍 Create delivery", () -> createDelivery(admin));
+		options.put("⛹️  Create other admins", () -> createOtherAdmins());
 
 		menu("admin menu", options, true, true);
 	}
