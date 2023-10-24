@@ -10,6 +10,7 @@ public class Order implements Serializable {
 	private LinkedHashMap<Product, Integer> selectedProducts;
 	private double totalPrice;
 	private double payedSoFar;
+	private double deliveryPrice;
 
 	private int id;
 	private User destinationUser;
@@ -25,6 +26,7 @@ public class Order implements Serializable {
 		this.delivered = false;
 		this.totalPrice = totalPrice;
 		this.payedSoFar = 0;
+		this.deliveryPrice = 0;
 		this.destinationUser = destinationUser;
 		this.id = instances.size();
 
@@ -42,6 +44,10 @@ public class Order implements Serializable {
 		}
 
 		return null;
+	}
+
+	public ArrayList<Product> getOrderProducts() {
+		return new ArrayList<>(selectedProducts.keySet());
 	}
 
 	public LinkedHashMap<Product, Integer> getSelectedProducts() {
@@ -118,5 +124,13 @@ public class Order implements Serializable {
 
 	public void setPayedFullPrice(boolean payedFullPrice) {
 		this.payedFullPrice = payedFullPrice;
+	}
+
+	public double getDeliveryPrice() {
+		return deliveryPrice;
+	}
+
+	public void setDeliveryPrice(double deliveryPrice) {
+		this.deliveryPrice = deliveryPrice;
 	}
 }

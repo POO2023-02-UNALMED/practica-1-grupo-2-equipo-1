@@ -155,11 +155,12 @@ public class User extends Person {
 
 	public Retval deliverOrder(Order order, User finalUser) {
 		order.setDeliveryUser(this);
-		double totalPrice = getDeliveryPrice(order, finalUser);
+		double deliveryPrice = getDeliveryPrice(order, finalUser);
 		order.setDelivered(true);
-		order.setTotalPrice(totalPrice);
+		order.setTotalPrice(deliveryPrice + order.getTotalPrice());
+		order.setDeliveryPrice(deliveryPrice);
 
-		Retval retval = new Retval("Delivered order! You will get payed '" + String.valueOf(totalPrice) + "' once the user pays");
+		Retval retval = new Retval("Delivered order! You will get payed '" + String.valueOf(deliveryPrice) + "' once the user pays");
 
 		return retval;
 	}
@@ -217,15 +218,20 @@ public class User extends Person {
 
 		if (orderToPay.getPayedSoFar() >= orderToPay.getTotalPrice()) {
 			orderToPay.setPayedFullPrice(true);
-			this.makePayment(orderToPay.getDeliveryUser(), orderToPay.getTotalPrice());
+
+			this.makePayment(orderToPay.getDeliveryUser(), orderToPay.getDeliveryPrice());
+
+			for (Map.Entry<Product, Integer> entry : orderToPay.getSelectedProducts().entrySet()) {
+				this.makePayment(entry.getKey().getProductHolder(), entry.getValue() * entry.getKey().getPrice());
+			}
 		}
 
 		return new Retval("Abono money succesfully!");
 	}
 
-	public Retval makePayment(Entity toEntity, double moneyToPay) {
-		toEntity.getBankAccount().deposit(moneyToPay);
-		return new Retval("Deposited money to " + toEntity.getName());
+	public Retval makePayment(User toUser, double moneyToPay) {
+		toUser.getBankAccount().deposit(moneyToPay);
+		return new Retval("Deposited money to " + toUser.getName());
 	}
 
 	public Retval placeOrder() {
@@ -250,12 +256,6 @@ public class User extends Person {
 			double totalPrice = 0;
 			for (Map.Entry<Product, Integer> entry : userOrder.entrySet()) {
 				totalPrice += entry.getKey().getPrice() * entry.getValue();
-			}
-
-			// withdraw the money
-			Retval userRetval = this.getBankAccount().withdraw(totalPrice);
-			if (!userRetval.ok()) {
-				return userRetval;
 			}
 
 			// substract the quantities from the products

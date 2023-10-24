@@ -8,15 +8,19 @@ import java.util.List;
 
 import com.ecart.gestorAplicacion.meta.Entity;
 import com.ecart.gestorAplicacion.meta.Notification;
+import com.ecart.gestorAplicacion.transactions.BankAccount;
 
 public abstract class Person extends Entity implements Serializable {
 	private int[] address;
 	private static ArrayList<int[]> addresses = new ArrayList<>();
 	private ArrayList<Notification> notifications = new ArrayList<>();
+	private BankAccount bankAccount;
 
 	public Person(String name, String password, int[] address) {
 		super(name, password);
 		this.address = address;
+		this.bankAccount = new BankAccount(password);
+		this.bankAccount.setBalance((double) 100);
 
 		addresses.add(address);
 	}
@@ -74,5 +78,13 @@ public abstract class Person extends Entity implements Serializable {
 
 	public static void setAddresses(ArrayList<int[]> addresses) {
 		Person.addresses = addresses;
+	}
+
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
 	}
 }

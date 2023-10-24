@@ -44,7 +44,7 @@ public class BankAccount implements Serializable {
 		Retval retval = new Retval("Failed to deposit money", false);
 
 		if (amount > 0) {
-			balance += amount;
+			this.balance += amount;
 			retval = new Retval("Deposited money successfully!");
 		}
 
@@ -55,7 +55,7 @@ public class BankAccount implements Serializable {
 		Retval retval = new Retval("Failed to withdraw money from account. Not enough balance", false);
 
 		if (amount > 0 && amount <= balance) {
-			balance -= amount;
+			this.balance -= amount;
 			retval = new Retval("Withdrew money successfully!");
 		}
 
